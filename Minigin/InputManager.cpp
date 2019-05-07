@@ -5,8 +5,13 @@
 
 bool dae::InputManager::ProcessInput()
 {
-	mPrevState = mState;
-	XInputGetState(0, &mState);
+	//gamepad
+	mPrevGamepadState = mGamepadState;
+	XInputGetState(0, &mGamepadState);
+
+	//keyboard
+	mPrevKeyboardState = mKeyboardState;
+	GetKeyboardState(&mKeyboardState);
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -34,11 +39,20 @@ bool dae::InputManager::ProcessInput()
 //	mMappings.push_back(keyInfo);
 //}
 
-dae::KeyState dae::InputManager::GetKeyState(ControllerButton button) const
+//void dae::InputManager::HandleInput()
+//{
+//	for (size_t i{ 0 }; i < mMappings.size(); ++i)
+//	{
+//		if (GetKeyState(mMappings[i].button) == mMappings[i].executeState) mMappings[i].command->Execute();
+//	}
+//}
+
+
+dae::KeyState dae::InputManager::GetGamepadKeyState(ControllerButton button) const
 {
-	if (WasPressed(button))
+	if (WasGamepadPressed(button))
 	{
-		if (IsPressed(button))
+		if (IsGamepadPressed(button))
 		{
 			return dae::KeyState::Down;
 		}
@@ -47,7 +61,7 @@ dae::KeyState dae::InputManager::GetKeyState(ControllerButton button) const
 			return dae::KeyState::Released;
 		}
 	}
-	if (IsPressed(button))
+	if (IsGamepadPressed(button))
 	{
 		return dae::KeyState::Pressed;
 	}
@@ -57,44 +71,37 @@ dae::KeyState dae::InputManager::GetKeyState(ControllerButton button) const
 	}
 }
 
-bool dae::InputManager::IsPressed(ControllerButton button) const
+bool dae::InputManager::IsGamepadPressed(ControllerButton button) const
 {
-	return (mState.Gamepad.wButtons & WORD(button)) != 0;
+	return (mGamepadState.Gamepad.wButtons & WORD(button)) != 0;
 }
 
-bool dae::InputManager::WasPressed(ControllerButton button) const
+bool dae::InputManager::WasGamepadPressed(ControllerButton button) const
 {
-	return (mPrevState.Gamepad.wButtons & WORD(button)) != 0;
+	return (mPrevGamepadState.Gamepad.wButtons & WORD(button)) != 0;
 }
 
-bool dae::InputManager::Released(ControllerButton button) const
+bool dae::InputManager::GamepadReleased(ControllerButton button) const
 {
-	if (GetKeyState(button) == dae::KeyState::Released) return true;
+	if (GetGamepadKeyState(button) == dae::KeyState::Released) return true;
 	return false;
 }
 
-bool dae::InputManager::Up(ControllerButton button) const
+bool dae::InputManager::GamepadUp(ControllerButton button) const
 {
-	if (GetKeyState(button) == dae::KeyState::Up) return true;
+	if (GetGamepadKeyState(button) == dae::KeyState::Up) return true;
 	return false;
 }
 
-bool dae::InputManager::Down(ControllerButton button) const
+bool dae::InputManager::GamepadDown(ControllerButton button) const
 {
-	if (GetKeyState(button) == dae::KeyState::Down) return true;
+	if (GetGamepadKeyState(button) == dae::KeyState::Down) return true;
 	return false;
 }
 
-bool dae::InputManager::Pressed(ControllerButton button) const
+bool dae::InputManager::GamepadPressed(ControllerButton button) const
 {
-	if (GetKeyState(button) == dae::KeyState::Pressed) return true;
+	if (GetGamepadKeyState(button) == dae::KeyState::Pressed) return true;
 	return false;
 }
 
-//void dae::InputManager::HandleInput()
-//{
-//	for (size_t i{ 0 }; i < mMappings.size(); ++i)
-//	{
-//		if (GetKeyState(mMappings[i].button) == mMappings[i].executeState) mMappings[i].command->Execute();
-//	}
-//}

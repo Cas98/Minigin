@@ -42,20 +42,38 @@ namespace dae
 	public:
 		bool ProcessInput();
 		
-		bool Down(ControllerButton button) const;
-		bool Pressed(ControllerButton button) const;
-		bool Released(ControllerButton button) const;
-		bool Up(ControllerButton button) const;
+		//gamepad
+		bool GamepadDown(ControllerButton button) const;
+		bool GamepadPressed(ControllerButton button) const;
+		bool GamepadReleased(ControllerButton button) const;
+		bool GamepadUp(ControllerButton button) const;
+		KeyState GetGamepadKeyState(ControllerButton button) const;
+
+		//keyboard
+		bool KeyboardDown(int keyboardCode) const;
+		bool KeyboardPressed(int keyboardCode) const;
+		bool KeyboardReleased(int keyboardCode) const;
+		bool KeyboardUp(int keyboardCode) const;
+		KeyState GetKeyboardKeyState(int keyboardCode) const;
+
 		//void MapKey(ControllerButton button, std::shared_ptr<Command> command, dae::KeyState executeState);
 		//void HandleInput();
-		KeyState GetKeyState(ControllerButton button) const;
+		
 	private:
-		bool WasPressed(ControllerButton button) const;
-		bool IsPressed(ControllerButton button) const;
+		//gamepad
+		bool WasGamepadPressed(ControllerButton button) const;
+		bool IsGamepadPressed(ControllerButton button) const;
+
+		//keyboard
+		bool WasKeyboardPressed(int keyboardCode) const;
+		bool IsKeyboardPressed(int keyboardCode) const;
+
 		std::vector<KeyInfo> mMappings;
 
-		XINPUT_STATE mState;
-		XINPUT_STATE mPrevState;
+		XINPUT_STATE mGamepadState;
+		XINPUT_STATE mPrevGamepadState;
+		BYTE mKeyboardState;
+		BYTE mPrevKeyboardState;
 	};
 
 }

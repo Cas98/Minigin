@@ -10,7 +10,7 @@ void dae::FPSComponent::Update()
 {
 	//update queue
 	if (mPrevDeltaTimes.size() > mAverageAmount)mPrevDeltaTimes.pop_back();
-	mPrevDeltaTimes.push_back(Time::GetInstance().GetDeltaTime());
+	mPrevDeltaTimes.push_front(Time::GetInstance().GetDeltaTime());
 
 	//get average time
 	float averageTime = 0.0f;

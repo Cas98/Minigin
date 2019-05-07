@@ -15,7 +15,6 @@
 #include "FPSComponent.h"
 #include "Scene.h"
 #include "Time.h"
-#include <iostream>
 
 
 void dae::Minigin::Initialize()
@@ -110,9 +109,12 @@ void dae::Minigin::Run()
 		{
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
-			
-			if (input.Pressed(ControllerButton::ButtonA)) 
-				std::cout << "A Pressed\n";
+
+			/*if (input.GamepadPressed(ControllerButton::ButtonA))
+			{
+				int i = 0;
+				i += 0;
+			}	*/
 				
 			time.Update();
 			renderer.Render();

@@ -1,6 +1,6 @@
 #include "MiniginPCH.h"
 #include "Font.h"
-
+//test
 TTF_Font* dae::Font::GetFont() const {
 	return mFont;
 }

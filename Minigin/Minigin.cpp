@@ -15,6 +15,7 @@
 #include "FPSComponent.h"
 #include "Scene.h"
 #include "Time.h"
+#include <iostream>
 
 
 void dae::Minigin::Initialize()
@@ -105,20 +106,15 @@ void dae::Minigin::Run()
 		auto& time = Time::GetInstance();
 
 		bool doContinue = true;
-		float lag = 0.0f;
 		while (doContinue)
 		{
-			lag += time.GetDeltaTime();
-			time.Update();
-			
 			doContinue = input.ProcessInput();
-
-			while (lag > float(time.msPerFrame / 1000.0f))
-			{
-				sceneManager.Update();
-				lag -= float(1.0f / time.msPerFrame);
-			}
-
+			sceneManager.Update();
+			
+			if (input.Pressed(ControllerButton::ButtonA)) 
+				std::cout << "A Pressed\n";
+				
+			time.Update();
 			renderer.Render();
 		}
 	}

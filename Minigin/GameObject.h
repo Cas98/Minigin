@@ -12,7 +12,7 @@ namespace dae
 {
 	class BaseComponent;
 
-	class GameObject : public SceneObject
+	class GameObject final : public SceneObject
 	{
 	public:
 		void Update() override;

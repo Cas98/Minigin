@@ -1,5 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
+#include <queue>
 
 namespace dae
 {
@@ -15,6 +16,10 @@ namespace dae
 		FPSComponent(FPSComponent&& other) = delete;
 		FPSComponent& operator=(const FPSComponent& other) = delete;
 		FPSComponent& operator=(FPSComponent&& other) = delete;
+
+	private:
+		std::deque<float> mPrevDeltaTimes;
+		const int mAverageAmount = 20;
 	};
 }
 

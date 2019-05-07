@@ -1,0 +1,27 @@
+#pragma once
+#include "BaseComponent.h"
+#include <string>
+struct SDL_Texture;
+
+namespace dae
+{
+	class TextureComponent  final : public BaseComponent
+	{
+	public:
+		TextureComponent() {};
+		TextureComponent(const std::string& filePath);
+		~TextureComponent() override;
+
+		SDL_Texture* GetSDLTexture() const;
+		void SetTexture(const std::string& filePath);
+		void SetTexture(SDL_Texture* texture);
+
+		TextureComponent(const TextureComponent &) = delete;
+		TextureComponent(TextureComponent &&) = delete;
+		TextureComponent & operator= (const TextureComponent &) = delete;
+		TextureComponent & operator= (const TextureComponent &&) = delete;
+	private:
+		SDL_Texture* mTexture{nullptr};
+	};
+}
+

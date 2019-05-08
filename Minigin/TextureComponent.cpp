@@ -1,31 +1,33 @@
 #include "MiniginPCH.h"
 #include "TextureComponent.h"
 #include <SDL.h>
-#include "ResourceManager.h"
+
+dae::TextureComponent::TextureComponent()
+{
+	mTexture = new Texture2D();
+}
 
 dae::TextureComponent::TextureComponent(const std::string& filePath)
 {
-	SetTexture(filePath);
+	mTexture = new Texture2D(filePath);
 }
 
 dae::TextureComponent::~TextureComponent()
 {
-	SDL_DestroyTexture(mTexture);
+	delete mTexture;
 }
 
 SDL_Texture* dae::TextureComponent::GetSDLTexture() const
 {
-	return mTexture;
+	return mTexture->GetSDLTexture();
 }
 
 void dae::TextureComponent::SetTexture(const std::string& filePath)
 {
-	SDL_DestroyTexture(mTexture);
-	mTexture = ResourceManager::GetInstance().LoadTexture(filePath);
+	mTexture->SetTexture(filePath);
 }
 
 void dae::TextureComponent::SetTexture(SDL_Texture* texture)
 {
-	SDL_DestroyTexture(mTexture);
-	mTexture = texture;
+	mTexture->SetTexture(texture);
 }

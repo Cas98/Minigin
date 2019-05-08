@@ -1,14 +1,14 @@
 #pragma once
 #include "BaseComponent.h"
 #include <string>
-struct SDL_Texture;
+#include "Texture2D.h"
 
 namespace dae
 {
 	class TextureComponent  final : public BaseComponent
 	{
 	public:
-		TextureComponent() {};
+		TextureComponent();
 		TextureComponent(const std::string& filePath);
 		~TextureComponent() override;
 
@@ -21,7 +21,7 @@ namespace dae
 		TextureComponent & operator= (const TextureComponent &) = delete;
 		TextureComponent & operator= (const TextureComponent &&) = delete;
 	private:
-		SDL_Texture* mTexture{nullptr};
+		Texture2D* mTexture{nullptr};
 	};
 }
 

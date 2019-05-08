@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseComponent.h"
-#include <SDL_ttf.h>
+#include "Font.h"
 
 namespace dae
 {
@@ -22,7 +22,7 @@ namespace dae
 	private:
 		bool mNeedsUpdate;
 		std::string mText;
-		TTF_Font* mFont;
+		Font* mFont;
 	};
 }
 

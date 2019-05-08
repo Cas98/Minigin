@@ -9,28 +9,19 @@
 dae::TextComponent::TextComponent(const std::string& text, const std::string& fontPath, unsigned int size)
 {
 	mText = text;
-
-	mFont = ResourceManager::GetInstance().LoadFont(fontPath, size);
-	if (mFont == nullptr)
-	{
-		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
-	}
+	mFont = new Font(fontPath, size);
 
 	mNeedsUpdate = true;
 }
 
 dae::TextComponent::TextComponent(const std::string& fontPath, unsigned int size)
 {
-	mFont = ResourceManager::GetInstance().LoadFont(fontPath, size);
-	if (mFont == nullptr)
-	{
-		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
-	}
+	mFont = new Font(fontPath, size);
 }
 
 dae::TextComponent::~TextComponent()
 {
-	TTF_CloseFont(mFont);
+	delete mFont;
 }
 
 void dae::TextComponent::TextComponent::Update()
@@ -46,7 +37,7 @@ void dae::TextComponent::TextComponent::Update()
 		}
 
 		const SDL_Color color = { 255,255,255 }; // only white text is supported now
-		const auto surf = TTF_RenderText_Blended(mFont, mText.c_str(), color);
+		const auto surf = TTF_RenderText_Blended(mFont->GetFont(), mText.c_str(), color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());

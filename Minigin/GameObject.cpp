@@ -7,9 +7,16 @@
 
 dae::GameObject::~GameObject()
 {
+	//delete components
 	for (size_t i{ 0 }; i < mComponents.size(); ++i)
 	{
 		delete mComponents[i];
+	}
+
+	//delete children objects
+	for (size_t i{ 0 }; i < mChildren.size(); ++i)
+	{
+		delete mChildren[i];
 	}
 }
 

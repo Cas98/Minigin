@@ -7,3 +7,8 @@ void dae::Transform::SetPosition(const float x, const float y, const float z)
 	mPosition.y = y;
 	mPosition.z = z;
 }
+
+void dae::Transform::SetPosition(const glm::vec3& pos)
+{
+	mPosition = pos;
+}

@@ -19,6 +19,10 @@ namespace dae
 		void Render() const override;
 
 		void AddComponent(BaseComponent* component);
+		void RemoveComponent(BaseComponent* component);
+
+		void AddChild(GameObject* gameObject);
+		void RemoveChild(GameObject* gameObject);
 
 		template<typename compType>
 		compType* GetComponent();
@@ -32,6 +36,9 @@ namespace dae
 
 	private:
 		std::vector<BaseComponent*> mComponents;
+		std::vector<GameObject*> mChildren;
+
+		GameObject* mpParent = nullptr;
 	};
 }
 

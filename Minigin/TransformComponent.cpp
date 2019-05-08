@@ -3,18 +3,16 @@
 
 
 dae::TransformComponent::TransformComponent(const glm::vec3& pos)
-	:mPosition(pos)
 {
+	transform.SetPosition(pos);
 }
 
 const glm::vec3& dae::TransformComponent::GetPosition() const
 {
-	return mPosition;
+	return transform.GetPosition();
 }
 
-void dae::TransformComponent::SetPosition(float x, float y, float z)
+void dae::TransformComponent::SetPosition(const float x, const  float y, const  float z)
 {
-	mPosition.x = x;
-	mPosition.y = y;
-	mPosition.z = z;
+	transform.SetPosition(x, y, z);
 }

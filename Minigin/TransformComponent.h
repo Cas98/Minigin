@@ -1,9 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
-#pragma warning(push)
-#pragma warning (disable:4201)
-#include <glm/vec3.hpp>
-#pragma warning(pop)
+#include "Transform.h"
+
 namespace dae
 {
 	class TransformComponent final : public BaseComponent
@@ -13,10 +11,10 @@ namespace dae
 		~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const;
-		void SetPosition(float x, float y, float z);
+		void SetPosition(const float x, const  float y, const  float z);
 	
 	private:
-		glm::vec3 mPosition;
+		Transform transform;
 	};
 }
 

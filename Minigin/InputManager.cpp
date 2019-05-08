@@ -10,8 +10,19 @@ bool dae::InputManager::ProcessInput()
 	XInputGetState(0, &mGamepadState);
 
 	//keyboard
-	mPrevKeyboardState = mKeyboardState;
-	GetKeyboardState(&mKeyboardState);
+	if (mKeyboardState0Active)
+	{
+		GetKeyboardState(mpKeyboardState1);
+		mpPrevKeyboardState = mpKeyboardState0;
+		mpKeyboardState = mpKeyboardState1;
+	}
+	else
+	{
+		GetKeyboardState(mpKeyboardState0);
+		mpPrevKeyboardState = mpKeyboardState1;
+		mpKeyboardState = mpKeyboardState0;
+	}
+	mKeyboardState0Active = !mKeyboardState0Active;
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -27,6 +38,21 @@ bool dae::InputManager::ProcessInput()
 	}
 
 	return true;
+}
+
+void dae::InputManager::Destroy()
+{
+	delete mpKeyboardState;
+	delete mpPrevKeyboardState;
+}
+
+void dae::InputManager::Init()
+{
+	mpKeyboardState0 = new BYTE[256];
+	mpKeyboardState1 = new BYTE[256];
+
+	GetKeyboardState(mpKeyboardState0);
+	GetKeyboardState(mpKeyboardState1);
 }
 
 //void dae::InputManager::MapKey(ControllerButton button, std::shared_ptr<Command> command, dae::KeyState executeState)
@@ -47,7 +73,7 @@ bool dae::InputManager::ProcessInput()
 //	}
 //}
 
-
+//gamepad
 dae::KeyState dae::InputManager::GetGamepadKeyState(ControllerButton button) const
 {
 	if (WasGamepadPressed(button))
@@ -105,3 +131,62 @@ bool dae::InputManager::GamepadPressed(ControllerButton button) const
 	return false;
 }
 
+//keyboard
+dae::KeyState dae::InputManager::GetKeyboardKeyState(int key) const
+{
+	if (WasKeyboardPressed(key))
+	{
+		if (IsKeyboardPressed(key))
+		{
+			return dae::KeyState::Down;
+		}
+		else
+		{
+			return dae::KeyState::Released;
+		}
+	}
+	if (IsKeyboardPressed(key))
+	{
+		return dae::KeyState::Pressed;
+	}
+	else
+	{
+		return dae::KeyState::Up;
+	}
+}
+
+bool dae::InputManager::IsKeyboardPressed(int key) const
+{
+	if (mpKeyboardState == nullptr) return false;
+	return (mpKeyboardState[key] & 0xF0) != 0;
+}
+
+bool dae::InputManager::WasKeyboardPressed(int key) const
+{
+	if (mpPrevKeyboardState == nullptr) return false;
+	return (mpPrevKeyboardState[key] & 0xF0) != 0;
+}
+
+bool dae::InputManager::KeyboardReleased(int key) const
+{
+	if (GetKeyboardKeyState(key) == dae::KeyState::Released) return true;
+	return false;
+}
+
+bool dae::InputManager::KeyboardUp(int key) const
+{
+	if (GetKeyboardKeyState(key) == dae::KeyState::Up) return true;
+	return false;
+}
+
+bool dae::InputManager::KeyboardDown(int key) const
+{
+	if (GetKeyboardKeyState(key) == dae::KeyState::Down) return true;
+	return false;
+}
+
+bool dae::InputManager::KeyboardPressed(int key) const
+{
+	if (GetKeyboardKeyState(key) == dae::KeyState::Pressed) return true;
+	return false;
+}

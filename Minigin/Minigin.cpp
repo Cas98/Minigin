@@ -82,6 +82,7 @@ void dae::Minigin::LoadGame() const
 void dae::Minigin::Cleanup()
 {
 	Renderer::GetInstance().Destroy();
+	InputManager::GetInstance().Destroy();
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	SDL_Quit();
@@ -94,6 +95,7 @@ void dae::Minigin::Run()
 	// tell the resource manager where he can find the game data
 	ResourceManager::GetInstance().Init("../Data/");
 	Time::GetInstance().Init();
+	InputManager::GetInstance().Init();
 
 	LoadGame();
 
@@ -103,19 +105,13 @@ void dae::Minigin::Run()
 		auto& sceneManager = SceneManager::GetInstance();
 		auto& input = InputManager::GetInstance();
 		auto& time = Time::GetInstance();
-
+		
 		bool doContinue = true;
 		while (doContinue)
 		{
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
 
-			/*if (input.GamepadPressed(ControllerButton::ButtonA))
-			{
-				int i = 0;
-				i += 0;
-			}	*/
-				
 			time.Update();
 			renderer.Render();
 		}

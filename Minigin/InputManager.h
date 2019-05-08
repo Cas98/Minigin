@@ -41,6 +41,8 @@ namespace dae
 	{
 	public:
 		bool ProcessInput();
+		void Init();
+		void Destroy();
 		
 		//gamepad
 		bool GamepadDown(ControllerButton button) const;
@@ -72,8 +74,8 @@ namespace dae
 
 		XINPUT_STATE mGamepadState;
 		XINPUT_STATE mPrevGamepadState;
-		BYTE mKeyboardState;
-		BYTE mPrevKeyboardState;
+		BYTE *mpKeyboardState, *mpPrevKeyboardState, *mpKeyboardState0, *mpKeyboardState1;
+		bool mKeyboardState0Active = true;
 	};
 
 }

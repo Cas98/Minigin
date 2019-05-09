@@ -15,7 +15,7 @@
 #include "FPSComponent.h"
 #include "Scene.h"
 #include "Time.h"
-
+#pragma comment (lib, "xinput.lib")
 
 void dae::Minigin::Initialize()
 {

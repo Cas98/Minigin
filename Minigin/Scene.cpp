@@ -29,3 +29,7 @@ void dae::Scene::Render() const
 	}
 }
 
+std::string dae::Scene::GetName()
+{
+	return mName;
+}

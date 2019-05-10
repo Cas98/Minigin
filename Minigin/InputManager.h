@@ -1,6 +1,7 @@
 #pragma once
 #include <XInput.h>
 #include "Singleton.h"
+#include "Command.h"
 
 namespace dae
 {
@@ -19,7 +20,8 @@ namespace dae
 		ButtonA = 0x1000,
 		ButtonB = 0x2000,
 		ButtonX = 0x4000,
-		ButtonY = 0x8000
+		ButtonY = 0x8000,
+		NONE = 0x0000
 	};
 
 	enum class KeyState
@@ -33,8 +35,9 @@ namespace dae
 	struct KeyInfo
 	{
 		ControllerButton button;
+		int keyboard;
 		KeyState executeState;
-		//std::shared_ptr<Command> command;
+		std::shared_ptr<Command> command;
 	};
 
 	class InputManager final : public Singleton<InputManager>
@@ -58,8 +61,8 @@ namespace dae
 		bool KeyboardUp(int keyboardCode) const;
 		KeyState GetKeyboardKeyState(int keyboardCode) const;
 
-		//void MapKey(ControllerButton button, std::shared_ptr<Command> command, dae::KeyState executeState);
-		//void HandleInput();
+		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState);
+		void HandleInput();
 		
 	private:
 		//gamepad

@@ -55,23 +55,25 @@ void dae::InputManager::Init()
 	GetKeyboardState(mpKeyboardState1);
 }
 
-//void dae::InputManager::MapKey(ControllerButton button, std::shared_ptr<Command> command, dae::KeyState executeState)
-//{
-//	KeyInfo keyInfo;
-//	keyInfo.button = button;
-//	keyInfo.command = command;
-//	keyInfo.executeState = executeState;
-//
-//	mMappings.push_back(keyInfo);
-//}
+void dae::InputManager::MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState)
+{
+	KeyInfo keyInfo;
+	keyInfo.button = button;
+	keyInfo.keyboard = keyboard;
+	keyInfo.command = command;
+	keyInfo.executeState = executeState;
 
-//void dae::InputManager::HandleInput()
-//{
-//	for (size_t i{ 0 }; i < mMappings.size(); ++i)
-//	{
-//		if (GetKeyState(mMappings[i].button) == mMappings[i].executeState) mMappings[i].command->Execute();
-//	}
-//}
+	mMappings.push_back(keyInfo);
+}
+
+void dae::InputManager::HandleInput()
+{
+	for (size_t i{ 0 }; i < mMappings.size(); ++i)
+	{
+		if (GetGamepadKeyState(mMappings[i].button) == mMappings[i].executeState
+			|| GetKeyboardKeyState(mMappings[i].keyboard) == mMappings[i].executeState) mMappings[i].command->Execute();
+	}
+}
 
 //gamepad
 dae::KeyState dae::InputManager::GetGamepadKeyState(ControllerButton button) const

@@ -2,9 +2,9 @@
 #include "TransformComponent.h"
 
 
-dae::TransformComponent::TransformComponent(const glm::vec3& pos)
+dae::TransformComponent::TransformComponent(const float x, const  float y, const  float z)
 {
-	transform.SetPosition(pos);
+	transform.SetPosition(x,y,z);
 }
 
 const glm::vec3& dae::TransformComponent::GetPosition() const

@@ -7,14 +7,8 @@
 #include "Renderer.h"
 #include "ResourceManager.h"
 #include <SDL.h>
-#include "GameObject.h"
-#include "TextureComponent.h"
-#include "RenderComponent.h"
-#include "TransformComponent.h"
-#include "TextComponent.h"
-#include "FPSComponent.h"
-#include "Scene.h"
 #include "Time.h"
+#include <vld.h>
 #pragma comment (lib, "xinput.lib")
 
 void dae::Minigin::Initialize()
@@ -38,6 +32,9 @@ void dae::Minigin::Initialize()
 	}
 
 	Renderer::GetInstance().Init(window);
+	ResourceManager::GetInstance().Init("../Data/");
+	Time::GetInstance().Init();
+	InputManager::GetInstance().Init();
 }
 
 /**
@@ -45,39 +42,7 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
-	SceneManager::GetInstance().SetActiveScene("Demo");
-
-	//background
-	auto object0 = std::make_shared<GameObject>();
-	object0->AddComponent(new RenderComponent());
-	object0->AddComponent(new TextureComponent("background.jpg"));
-	object0->AddComponent(new TransformComponent(glm::vec3(0.0f,0.0f,0.0f)));
-	scene.Add(object0);
-
-	//logo
-	auto object1 = std::make_shared<GameObject>();
-	object1->AddComponent(new RenderComponent());
-	object1->AddComponent(new TextureComponent("logo.png"));
-	object1->AddComponent(new TransformComponent(glm::vec3(216.0f, 180.0f, 0.0f)));
-	scene.Add(object1);
-
-	//text
-	auto object2 = std::make_shared<GameObject>();
-	object2->AddComponent(new RenderComponent());
-	object2->AddComponent(new TextureComponent());
-	object2->AddComponent(new TransformComponent(glm::vec3(80.0f, 50.0f, 0.0f)));
-	object2->AddComponent(new TextComponent("Programming 4 Assignment","Lingua.otf",36));
-	scene.Add(object2);
-
-	//FPS
-	auto object3 = std::make_shared<GameObject>();
-	object3->AddComponent(new RenderComponent());
-	object3->AddComponent(new TextureComponent());
-	object3->AddComponent(new TransformComponent(glm::vec3(10.0f, 10.0f, 0.0f)));
-	object3->AddComponent(new TextComponent("Lingua.otf", 36));
-	object3->AddComponent(new FPSComponent());
-	scene.Add(object3);
+	
 }
 
 void dae::Minigin::Cleanup()
@@ -91,13 +56,6 @@ void dae::Minigin::Cleanup()
 
 void dae::Minigin::Run()
 {
-	Initialize();
-
-	// tell the resource manager where he can find the game data
-	ResourceManager::GetInstance().Init("../Data/");
-	Time::GetInstance().Init();
-	InputManager::GetInstance().Init();
-
 	LoadGame();
 
 	{

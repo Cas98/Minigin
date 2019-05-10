@@ -7,7 +7,7 @@ namespace dae
 	class TransformComponent final : public BaseComponent
 	{
 	public:
-		TransformComponent(const glm::vec3& pos = glm::vec3(0.0f,0.0f,0.0f));
+		TransformComponent(const float x = 0.0f, const  float y = 0.0f, const  float z = 0.0f);
 		~TransformComponent() = default;
 
 		const glm::vec3& GetPosition() const;

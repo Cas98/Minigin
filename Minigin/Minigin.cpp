@@ -71,11 +71,6 @@ void dae::Minigin::Run()
 			doContinue = input.ProcessInput();
 			sceneManager.Update();
 
-			if(input.KeyboardPressed('G'))
-			{
-				sceneManager.RemoveScene("Demo");
-			}
-
 			time.Update();
 			renderer.Render();
 		}

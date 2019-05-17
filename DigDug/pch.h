@@ -13,6 +13,6 @@
 #include <iostream> // std::cout
 #include <memory> // smart pointers
 #include <vector>
-
+#include "MiniginPCH.h"
 
 #endif //PCH_H

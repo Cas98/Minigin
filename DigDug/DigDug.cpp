@@ -11,7 +11,14 @@
 #include "TextureComponent.h"
 #include "GameObject.h"
 #include "Scene.h"
+#include "Command.h"
+#include "InputComponent.h"
 
+class TestCommand : public dae::Command
+{
+public:
+	void Execute() override { std::cout << "test" << std::endl; }
+};
 
 int main(int , char **)
 {
@@ -26,6 +33,9 @@ int main(int , char **)
 	object0->AddComponent(new dae::RenderComponent());
 	object0->AddComponent(new dae::TextureComponent("background.jpg"));
 	object0->AddComponent(new dae::TransformComponent(0.0f, 0.0f, 0.0f));
+	dae::InputComponent* comp = new dae::InputComponent(1);
+	comp->MapKey(dae::ControllerButton::ButtonA, 'A', std::make_shared<TestCommand>(TestCommand()), dae::KeyState::Released);
+	object0->AddComponent(comp);
 	scene.Add(object0);
 
 	//logo

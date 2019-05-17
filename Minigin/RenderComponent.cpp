@@ -4,7 +4,6 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "Renderer.h"
-#include <SDL.h>
 
 void dae::RenderComponent::Render()
 {

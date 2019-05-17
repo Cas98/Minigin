@@ -2,6 +2,7 @@
 #include <XInput.h>
 #include "Singleton.h"
 #include "Command.h"
+#include <map>
 
 namespace dae
 {
@@ -38,6 +39,7 @@ namespace dae
 		int keyboard;
 		KeyState executeState;
 		std::shared_ptr<Command> command;
+		int userIndex;
 	};
 
 	class InputManager final : public Singleton<InputManager>
@@ -48,11 +50,11 @@ namespace dae
 		void Destroy();
 		
 		//gamepad
-		bool GamepadDown(ControllerButton button) const;
-		bool GamepadPressed(ControllerButton button) const;
-		bool GamepadReleased(ControllerButton button) const;
-		bool GamepadUp(ControllerButton button) const;
-		KeyState GetGamepadKeyState(ControllerButton button) const;
+		bool GamepadDown(ControllerButton button, const  int playerIndex) const;
+		bool GamepadPressed(ControllerButton button, const  int playerIndex) const;
+		bool GamepadReleased(ControllerButton button, const  int playerIndex) const;
+		bool GamepadUp(ControllerButton button, const  int playerIndex) const;
+		KeyState GetGamepadKeyState(ControllerButton button, const  int playerIndex) const;
 
 		//keyboard
 		bool KeyboardDown(int keyboardCode) const;
@@ -61,13 +63,13 @@ namespace dae
 		bool KeyboardUp(int keyboardCode) const;
 		KeyState GetKeyboardKeyState(int keyboardCode) const;
 
-		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState);
+		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex);
 		void HandleInput();
-		
+
 	private:
 		//gamepad
-		bool WasGamepadPressed(ControllerButton button) const;
-		bool IsGamepadPressed(ControllerButton button) const;
+		bool WasGamepadPressed(ControllerButton button, const  int playerIndex) const;
+		bool IsGamepadPressed(ControllerButton button, const  int playerIndex) const;
 
 		//keyboard
 		bool WasKeyboardPressed(int keyboardCode) const;
@@ -75,8 +77,9 @@ namespace dae
 
 		std::vector<KeyInfo> mMappings;
 
-		XINPUT_STATE mGamepadState;
-		XINPUT_STATE mPrevGamepadState;
+		const int m_MaxUsers = 4;
+		std::vector <XINPUT_STATE> mGamepadState;
+		std::vector <XINPUT_STATE> mPrevGamepadState;
 		BYTE *mpKeyboardState, *mpPrevKeyboardState, *mpKeyboardState0, *mpKeyboardState1;
 		bool mKeyboardState0Active = true;
 	};

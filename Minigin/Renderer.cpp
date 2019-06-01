@@ -48,3 +48,14 @@ void dae::Renderer::RenderTexture(SDL_Texture* texture, const float x, const flo
 	dst.h = static_cast<int>(height);
 	SDL_RenderCopy(GetSDLRenderer(), texture, nullptr, &dst);
 }
+
+void dae::Renderer::RenderTexture(SDL_Texture* texture, const float x, const float y, const float scaleX, const float scaleY, const float rotation) const
+{
+	SDL_Rect dst;
+	dst.x = static_cast<int>(x);
+	dst.y = static_cast<int>(y);
+	SDL_QueryTexture(texture, nullptr, nullptr, &dst.w, &dst.h);
+	dst.w = int(dst.w * scaleX);
+	dst.h = int(dst.h * scaleY);
+	SDL_RenderCopyEx(GetSDLRenderer(), texture, nullptr, &dst, double(rotation) ,nullptr, SDL_RendererFlip::SDL_FLIP_NONE);
+}

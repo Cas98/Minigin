@@ -8,16 +8,24 @@
 void dae::RenderComponent::Render()
 {
 	//get texture to render
-	auto texture = GetParentObject()->GetComponent<TextureComponent>()->GetSDLTexture();
+	auto textureComp = GetParentObject()->GetComponent<TextureComponent>();
+	if (textureComp == nullptr)
+	{
+		std::cout << "ERROR: No texture component to render\n";
+		return;
+	}
+
+	auto texture = textureComp->GetSDLTexture();
 	
 	if (texture == nullptr)
 	{
+		std::cout << "ERROR: No texture in texture component\n";
 		return;
 	}
 
 	////get pos
-	auto position = GetParentObject()->GetComponent<TransformComponent>()->GetPosition();
+	auto transform = GetParentObject()->GetComponent<TransformComponent>();
 
 	//render texture
-	Renderer::GetInstance().RenderTexture(texture, position.x, position.y);
+	Renderer::GetInstance().RenderTexture(texture, transform->GetPosition().x, transform->GetPosition().y, transform->GetScale().x, transform->GetScale().y, transform->GetRotation());
 }

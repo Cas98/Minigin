@@ -39,6 +39,8 @@ namespace dae
 		std::vector<GameObject*> mChildren;
 
 		GameObject* mpParent = nullptr;
+
+		bool m_IsInit = false;
 	};
 }
 

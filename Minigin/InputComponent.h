@@ -4,7 +4,7 @@
 
 namespace dae
 {
-	class InputComponent : public BaseComponent
+	class InputComponent final : public BaseComponent
 	{
 	public:
 		InputComponent(int playerIndex);

@@ -22,6 +22,15 @@ dae::GameObject::~GameObject()
 
 void dae::GameObject::Update()
 {
+	if(!m_IsInit)
+	{
+		for (size_t i{ 0 }; i < mComponents.size(); ++i)
+		{
+			mComponents[i]->Init();
+		}
+		m_IsInit = true;
+	}
+
 	for (size_t i{ 0 }; i < mComponents.size(); ++i)
 	{
 		mComponents[i]->Update();
@@ -40,6 +49,7 @@ void dae::GameObject::AddComponent(BaseComponent* component)
 {
 	component->SetParentObject(this);
 	mComponents.push_back(component);
+	if(m_IsInit) component->Init();
 }
 
 void dae::GameObject::RemoveComponent(BaseComponent* component)

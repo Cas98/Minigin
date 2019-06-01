@@ -13,6 +13,7 @@
 #include "Scene.h"
 #include "Command.h"
 #include "InputComponent.h"
+#include "TestScript.h"
 
 class TestCommand : public dae::Command
 {
@@ -39,17 +40,20 @@ int main(int , char **)
 	scene.Add(object0);
 
 	//logo
-	auto object1 = std::make_shared<dae::GameObject>();
-	object1->AddComponent(new dae::RenderComponent());
-	object1->AddComponent(new dae::TextureComponent("logo.png"));
-	object1->AddComponent(new dae::TransformComponent(216.0f, 180.0f, 0.0f));
-	scene.Add(object1);
+	for (int i{ 0 }; i < 100; ++i)
+	{
+		auto object1 = std::make_shared<dae::GameObject>();
+		object1->AddComponent(new dae::RenderComponent());
+		object1->AddComponent(new dae::TextureComponent("logo.png"));
+		object1->AddComponent(new dae::TransformComponent(216.0f + i, -180.0f - i, 0.0f));
+		scene.Add(object1);
+	}
 
 	//text
 	auto object2 = std::make_shared<dae::GameObject>();
 	object2->AddComponent(new dae::RenderComponent());
 	object2->AddComponent(new dae::TextureComponent());
-	object2->AddComponent(new dae::TransformComponent(80.0f, 50.0f, 0.0f));
+	object2->AddComponent(new dae::TransformComponent(80.0f, -50.0f, 0.0f));
 	object2->AddComponent(new dae::TextComponent("Programming 4 Assignment", "Lingua.otf", 36));
 	scene.Add(object2);
 
@@ -57,11 +61,19 @@ int main(int , char **)
 	auto object3 = std::make_shared<dae::GameObject>();
 	object3->AddComponent(new dae::RenderComponent());
 	object3->AddComponent(new dae::TextureComponent());
-	object3->AddComponent(new dae::TransformComponent(10.0f, 10.0f, 0.0f));
+	object3->AddComponent(new dae::TransformComponent(10.0f, -10.0f, 0.0f));
 	object3->AddComponent(new dae::TextComponent("Lingua.otf", 36));
 	object3->AddComponent(new dae::FPSComponent());
 	scene.Add(object3);
 
+	//test object
+	auto testObj = std::make_shared<dae::GameObject>();
+	testObj->AddComponent(new dae::RenderComponent());
+	testObj->AddComponent(new dae::TextureComponent("Block.jpg"));
+	testObj->AddComponent(new dae::TransformComponent(0, -100.0f, 0.0f));
+	testObj->AddComponent(new dae::InputComponent(0));
+	testObj->AddComponent(new TestScript());
+	scene.Add(testObj);
 
 	
 	engine.Run();

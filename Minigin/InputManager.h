@@ -3,6 +3,10 @@
 #include "Singleton.h"
 #include "Command.h"
 #include <map>
+#pragma warning(push)
+#pragma warning (disable:4201)
+#include <glm/vec2.hpp>
+
 
 namespace dae
 {
@@ -62,6 +66,9 @@ namespace dae
 		bool KeyboardReleased(int keyboardCode) const;
 		bool KeyboardUp(int keyboardCode) const;
 		KeyState GetKeyboardKeyState(int keyboardCode) const;
+
+		//mouse
+		glm::vec2 GetMousePos() const;
 
 		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex);
 		void HandleInput();

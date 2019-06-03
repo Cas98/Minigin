@@ -3,6 +3,7 @@
 #include <SDL_ttf.h>
 struct SDL_Texture;
 
+//http://thatgamesguy.co.uk/game-engine-dev-9/ (reference)
 namespace dae
 {
 	class ResourceManager final : public Singleton<ResourceManager>

@@ -24,6 +24,9 @@
     <ClInclude Include="TestScript.h">
       <Filter>Source Files\scripts</Filter>
     </ClInclude>
+    <ClInclude Include="CameraMovementScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -33,6 +36,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TestScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMovementScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>

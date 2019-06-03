@@ -69,3 +69,8 @@ void dae::InputComponent::MapKey(dae::ControllerButton button, int keyboard, std
 {
 	dae::InputManager::GetInstance().MapKey(button, keyboard, command, executeState, m_PlayerIndex);
 }
+
+glm::vec2 dae::InputComponent::GetMousePos() const
+{
+	return(dae::InputManager::GetInstance().GetMousePos());
+}

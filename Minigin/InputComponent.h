@@ -26,6 +26,9 @@ namespace dae
 
 		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, KeyState executeState);
 
+		//mouse
+		glm::vec2 GetMousePos() const;
+
 	private:
 		int m_PlayerIndex;
 	};

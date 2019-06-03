@@ -14,6 +14,7 @@ namespace dae
 		void RemoveScene(const std::string& name);
 
 		void SetActiveScene(const std::string& name);
+		std::shared_ptr<Scene> GetActiveScene();
 
 		void Update();
 		void Render();

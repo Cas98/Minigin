@@ -1,9 +1,11 @@
 #pragma once
 #include "SceneManager.h"
+#include "CameraComponent.h"
 
 namespace dae
 {
 	class SceneObject;
+	class CameraComponent;
 	class Scene
 	{
 		friend Scene& SceneManager::CreateScene(const std::string& name);
@@ -14,6 +16,9 @@ namespace dae
 		void Render() const;
 
 		std::string GetName();
+
+		CameraComponent* GetActiveCamera() const;
+		void SetActiveCamera(CameraComponent* pActiveCamera);
 
 		~Scene();
 		Scene(const Scene& other) = delete;
@@ -26,6 +31,7 @@ namespace dae
 
 		std::string mName{};
 		std::vector < std::shared_ptr<SceneObject>> mObjects{};
+		CameraComponent* m_pActiveCamera = nullptr;
 
 		static unsigned int idCounter; 
 	};

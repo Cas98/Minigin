@@ -50,3 +50,4 @@ TTF_Font* dae::ResourceManager::LoadFont(const std::string& file, unsigned int s
 
 	return font;
 }
+

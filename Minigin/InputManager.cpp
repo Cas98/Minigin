@@ -207,3 +207,11 @@ bool dae::InputManager::KeyboardPressed(int key) const
 	if (GetKeyboardKeyState(key) == dae::KeyState::Pressed) return true;
 	return false;
 }
+
+glm::vec2 dae::InputManager::GetMousePos() const
+{
+	int x;
+	int y;
+	SDL_GetMouseState(&x, &y);
+	return(glm::vec2(x,y));
+}

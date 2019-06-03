@@ -2,7 +2,6 @@
 #include <vector>
 #include "Observer.h"
 
-class Player;
 
 class Subject
 {

@@ -3,6 +3,7 @@
 #pragma warning (disable:4201)
 #include <glm/vec3.hpp>
 #include <glm/vec2.hpp>
+
 #pragma warning(pop)
 
 namespace dae
@@ -12,7 +13,7 @@ namespace dae
 		glm::vec3 m_Position;
 		glm::vec2 m_Scale;
 		float m_Rotation;
-
+		
 	public:
 		//transform
 		void SetTransform(const glm::vec3& pos, const glm::vec2& scale, const float rotation);

@@ -3,7 +3,13 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 #include "BaseComponent.h"
+#include "TransformComponent.h"
 
+dae::GameObject::GameObject(glm::vec3 pos, float rotation, glm::vec2 scale)
+{
+	//every gameobject has a transform
+	AddComponent(new dae::TransformComponent(pos, rotation, scale));
+}
 
 dae::GameObject::~GameObject()
 {
@@ -75,5 +81,15 @@ void dae::GameObject::RemoveChild(dae::GameObject* gameObject)
 	{
 		mChildren.erase(it);
 	}
+}
+
+void dae::GameObject::SetScene(dae::Scene* scene)
+{
+	m_pScene = scene;
+}
+
+dae::Scene* dae::GameObject::GetScene()
+{
+	return m_pScene;
 }
 

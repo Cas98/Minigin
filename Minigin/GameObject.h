@@ -3,6 +3,7 @@
 #include "Transform.h"
 #include "SceneObject.h"
 #include <vector>
+#include "Scene.h"
 
 //test
 
@@ -24,10 +25,13 @@ namespace dae
 		void AddChild(GameObject* gameObject);
 		void RemoveChild(GameObject* gameObject);
 
+		virtual void SetScene(Scene* scene);
+		Scene* GetScene();
+
 		template<typename compType>
 		compType* GetComponent();
 
-		GameObject() = default;
+		GameObject(glm::vec3 pos = { 0.0f,0.0f,0.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
 		virtual ~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -39,6 +43,7 @@ namespace dae
 		std::vector<GameObject*> mChildren;
 
 		GameObject* mpParent = nullptr;
+		Scene* m_pScene = nullptr;
 
 		bool m_IsInit = false;
 	};

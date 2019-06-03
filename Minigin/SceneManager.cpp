@@ -53,3 +53,8 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 		mpActiveScene = *it;
 	}
 }
+
+std::shared_ptr<dae::Scene> dae::SceneManager::GetActiveScene()
+{
+	return mpActiveScene;
+}

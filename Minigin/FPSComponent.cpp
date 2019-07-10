@@ -5,6 +5,11 @@
 #include "TextComponent.h"
 #include "Time.h"
 
+dae::FPSComponent::FPSComponent()
+	:BaseComponent(dae::CompType::FPS)
+{
+	
+}
 
 void dae::FPSComponent::Update()
 {
@@ -21,5 +26,5 @@ void dae::FPSComponent::Update()
 	std::string str;
 	str += std::to_string((1.0 / averageTime)) + " FPS";
 
-	GetParentObject()->GetComponent<TextComponent>()->SetText(str);
+	GetGameObject()->GetComponent<TextComponent>()->SetText(str);
 }

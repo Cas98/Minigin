@@ -4,7 +4,10 @@
 
 unsigned int dae::Scene::idCounter = 0;
 
-dae::Scene::Scene(const std::string& name) : mName(name) {}
+dae::Scene::Scene(const std::string& name)
+: mName(name)
+{
+}
 
 dae::Scene::~Scene() = default;
 
@@ -14,15 +17,22 @@ void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
 	mObjects.push_back(object);
 }
 
-void dae::Scene::Update()
+void dae::Scene::RootInitialize()
+{
+	Initialize();
+}
+
+void dae::Scene::RootUpdate()
 {
 	for(auto gameObject : mObjects)
 	{
 		gameObject->Update();
 	}
+
+	Update();
 }
 
-void dae::Scene::Render() const
+void dae::Scene::RootRender() const
 {
 	for (const auto gameObject : mObjects)
 	{
@@ -35,12 +45,4 @@ std::string dae::Scene::GetName()
 	return mName;
 }
 
-void dae::Scene::SetActiveCamera(dae::CameraComponent* pActiveCamera)
-{
-	m_pActiveCamera = pActiveCamera;
-}
 
-dae::CameraComponent* dae::Scene::GetActiveCamera() const
-{
-	return m_pActiveCamera;
-}

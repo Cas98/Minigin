@@ -4,9 +4,7 @@
 #include "SceneObject.h"
 #include <vector>
 #include "Scene.h"
-
-//test
-
+#include "TransformComponent.h"
 
 
 namespace dae
@@ -24,9 +22,14 @@ namespace dae
 
 		void AddChild(GameObject* gameObject);
 		void RemoveChild(GameObject* gameObject);
+		GameObject* GetParentObject() const;
+
+		bool HasComponent(BaseComponent* component) const;
 
 		virtual void SetScene(Scene* scene);
 		Scene* GetScene();
+
+		TransformComponent* GetTransformComponent() const;
 
 		template<typename compType>
 		compType* GetComponent();
@@ -44,6 +47,8 @@ namespace dae
 
 		GameObject* mpParent = nullptr;
 		Scene* m_pScene = nullptr;
+
+		TransformComponent* m_pTransform = nullptr;
 
 		bool m_IsInit = false;
 	};
@@ -63,3 +68,5 @@ compType* dae::GameObject::GetComponent()
 
 	return nullptr;
 }
+
+

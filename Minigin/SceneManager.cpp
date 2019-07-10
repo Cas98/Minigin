@@ -6,19 +6,21 @@
 
 void dae::SceneManager::Update()
 {
-	if (mpActiveScene) mpActiveScene->Update();
+	if (mpActiveScene) mpActiveScene->RootUpdate();
 }
 
 void dae::SceneManager::Render()
 {
-	if (mpActiveScene) mpActiveScene->Render();
+	if (mpActiveScene) mpActiveScene->RootRender();
 }
 
-dae::Scene& dae::SceneManager::CreateScene(const std::string& name)
+void dae::SceneManager::AddScene(std::shared_ptr<dae::Scene> scene)
 {
-	const auto scene = std::shared_ptr<Scene>(new Scene(name));
-	mScenes.push_back(scene);
-	return *scene;
+	if (scene)
+	{
+		mScenes.push_back(scene);
+		scene->RootInitialize();
+	}
 }
 
 void dae::SceneManager::RemoveScene(const std::string& name)

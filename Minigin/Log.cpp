@@ -1,8 +1,8 @@
 #include "MiniginPCH.h"
-//#include "Log.h"
-//#include <iostream>
-//
-//
+#include "Log.h"
+#include <iostream>
+
+
 //std::basic_streambuf<char>::int_type dae::DebugStreambuf::overflow(int_type c)
 //{
 //	if (c != EOF)

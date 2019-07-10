@@ -1,6 +1,6 @@
 #pragma once
-//#include <streambuf>
-//
+#include <streambuf>
+
 //namespace dae
 //{
 //	class DebugStreambuf : public std::streambuf 

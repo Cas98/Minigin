@@ -2,6 +2,7 @@
 #include "InputComponent.h"
 
 dae::InputComponent::InputComponent(int playerIndex)
+	:BaseComponent(dae::CompType::Input)
 {
 	if(playerIndex >= 0)
 	{

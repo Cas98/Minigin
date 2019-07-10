@@ -7,7 +7,7 @@ namespace dae
 	class FPSComponent final : public BaseComponent
 	{
 	public:
-		FPSComponent() = default;
+		FPSComponent();
 		~FPSComponent() = default;
 
 		void Update() override;

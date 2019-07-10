@@ -5,8 +5,8 @@
 
 void TestScript::Init()
 {
-	m_InputRef = GetParentObject()->GetComponent<dae::InputComponent>();
-	m_TransformRef = GetParentObject()->GetComponent<dae::TransformComponent>();
+	m_InputRef = GetGameObject()->GetComponent<dae::InputComponent>();
+	m_TransformRef = GetGameObject()->GetComponent<dae::TransformComponent>();
 }
 
 void TestScript::Update()

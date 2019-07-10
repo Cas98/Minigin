@@ -3,7 +3,6 @@
 #include <SDL.h>
 #include "SceneManager.h"
 #include "Scene.h"
-#include "CameraComponent.h"
 
 
 void dae::Renderer::Init(SDL_Window * window)
@@ -18,12 +17,6 @@ void dae::Renderer::Init(SDL_Window * window)
 
 void dae::Renderer::Render()
 {
-	CameraComponent* camera = SceneManager::GetInstance().GetActiveScene()->GetActiveCamera();
-	if (camera)
-	{
-		m_pCameraTransform = camera->GetTransform();
-	}
-
 	SDL_RenderClear(mRenderer);
 
 	SceneManager::GetInstance().Render();
@@ -68,13 +61,6 @@ void dae::Renderer::RenderTexture(SDL_Texture* texture, const float x, const flo
 	SDL_QueryTexture(texture, nullptr, nullptr, &dst.w, &dst.h);
 	dst.w = int(dst.w * scaleX);
 	dst.h = int(dst.h * scaleY);
-
-	if(m_pCameraTransform)
-	{
-		dst.x -= static_cast<int>(m_pCameraTransform->GetPosition().x);
-		dst.y -= static_cast<int>(m_pCameraTransform->GetPosition().y);
-		SDL_RenderSetScale(mRenderer, m_pCameraTransform->GetScale().x, m_pCameraTransform->GetScale().y);
-	}
 
 	SDL_RenderCopyEx(GetSDLRenderer(), texture, nullptr, &dst, double(rotation) , NULL, SDL_RendererFlip::SDL_FLIP_NONE);
 }

@@ -3,11 +3,13 @@
 #include <SDL.h>
 
 dae::TextureComponent::TextureComponent()
+	:BaseComponent(dae::CompType::Texture)
 {
 	mTexture = new Texture2D();
 }
 
 dae::TextureComponent::TextureComponent(const std::string& filePath)
+	: BaseComponent(dae::CompType::Texture)
 {
 	mTexture = new Texture2D(filePath);
 }

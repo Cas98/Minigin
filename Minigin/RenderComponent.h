@@ -6,7 +6,7 @@ namespace dae
 	class RenderComponent final : public BaseComponent
 	{
 	public:
-		RenderComponent() = default;
+		RenderComponent();
 		~RenderComponent() = default;
 
 		void Render() override;

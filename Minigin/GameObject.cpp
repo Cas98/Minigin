@@ -4,11 +4,13 @@
 #include "Renderer.h"
 #include "BaseComponent.h"
 #include "TransformComponent.h"
+#include <algorithm>
 
 dae::GameObject::GameObject(glm::vec3 pos, float rotation, glm::vec2 scale)
 {
 	//every gameobject has a transform
-	AddComponent(new dae::TransformComponent(pos, rotation, scale));
+	m_pTransform = new dae::TransformComponent(pos, rotation, scale);
+	AddComponent(m_pTransform);
 }
 
 dae::GameObject::~GameObject()
@@ -20,10 +22,10 @@ dae::GameObject::~GameObject()
 	}
 
 	//delete children objects
-	for (size_t i{ 0 }; i < mChildren.size(); ++i)
+	/*for (size_t i{ 0 }; i < mChildren.size(); ++i)
 	{
 		delete mChildren[i];
-	}
+	}*/
 }
 
 void dae::GameObject::Update()
@@ -53,7 +55,13 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::AddComponent(BaseComponent* component)
 {
-	component->SetParentObject(this);
+	if(HasComponent(component))
+	{
+		std::cout << "ERROR: Can't give game object same component twice \n";
+		return;
+	}
+
+	component->SetGameObject(this);
 	mComponents.push_back(component);
 	if(m_IsInit) component->Init();
 }
@@ -67,6 +75,20 @@ void dae::GameObject::RemoveComponent(BaseComponent* component)
 	}
 }
 
+bool dae::GameObject::HasComponent(BaseComponent* component) const
+{
+	auto it = std::find_if(mComponents.begin(), mComponents.end(), [component](BaseComponent* comp)
+	{
+		return component->GetComponentType() == comp->GetComponentType();
+	});
+
+	if(it != mComponents.end())
+	{
+		return true;
+	}
+
+	return false;
+}
 
 void dae::GameObject::AddChild(GameObject* gameObject)
 {
@@ -83,6 +105,11 @@ void dae::GameObject::RemoveChild(dae::GameObject* gameObject)
 	}
 }
 
+dae::GameObject* dae::GameObject::GetParentObject() const
+{
+	return mpParent;
+}
+
 void dae::GameObject::SetScene(dae::Scene* scene)
 {
 	m_pScene = scene;
@@ -93,3 +120,7 @@ dae::Scene* dae::GameObject::GetScene()
 	return m_pScene;
 }
 
+dae::TransformComponent* dae::GameObject::GetTransformComponent() const
+{
+	return m_pTransform;
+}

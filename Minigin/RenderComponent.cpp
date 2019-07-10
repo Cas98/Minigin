@@ -5,10 +5,16 @@
 #include "GameObject.h"
 #include "Renderer.h"
 
+dae::RenderComponent::RenderComponent()
+	:BaseComponent(dae::CompType::Render)
+{
+	
+}
+
 void dae::RenderComponent::Render()
 {
 	//get texture to render
-	auto textureComp = GetParentObject()->GetComponent<TextureComponent>();
+	auto textureComp = GetGameObject()->GetComponent<TextureComponent>();
 	if (textureComp == nullptr)
 	{
 		std::cout << "ERROR: No texture component to render\n";
@@ -24,8 +30,8 @@ void dae::RenderComponent::Render()
 	}
 
 	////get pos
-	auto transform = GetParentObject()->GetComponent<TransformComponent>();
+	auto transform = GetGameObject()->GetTransformComponent();
 
 	//render texture
-	Renderer::GetInstance().RenderTexture(texture, transform->GetPosition().x, transform->GetPosition().y, transform->GetScale().x, transform->GetScale().y, transform->GetRotation());
+	Renderer::GetInstance().RenderTexture(texture, transform->GetWorldPosition().x, transform->GetWorldPosition().y, transform->GetWorldScale().x, transform->GetWorldScale().y, transform->GetWorldRotation());
 }

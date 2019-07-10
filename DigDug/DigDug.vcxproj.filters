@@ -16,6 +16,9 @@
     <Filter Include="Source Files\scripts">
       <UniqueIdentifier>{c0885d26-d548-48ce-9cd9-d002cf342d3c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Scenes">
+      <UniqueIdentifier>{d938cb7b-a349-4890-bb6b-a7722ed02f0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -24,22 +27,22 @@
     <ClInclude Include="TestScript.h">
       <Filter>Source Files\scripts</Filter>
     </ClInclude>
-    <ClInclude Include="CameraMovementScript.h">
-      <Filter>Source Files\scripts</Filter>
+    <ClInclude Include="TestScene.h">
+      <Filter>Source Files\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DigDug.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="TestScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
-    <ClCompile Include="CameraMovementScript.cpp">
-      <Filter>Source Files\scripts</Filter>
+    <ClCompile Include="Pengo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScene.cpp">
+      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

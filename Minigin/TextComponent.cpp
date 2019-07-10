@@ -7,6 +7,7 @@
 
 
 dae::TextComponent::TextComponent(const std::string& text, const std::string& fontPath, unsigned int size)
+	:BaseComponent(dae::CompType::Text)
 {
 	mText = text;
 	mFont = new Font(fontPath, size);
@@ -15,6 +16,7 @@ dae::TextComponent::TextComponent(const std::string& text, const std::string& fo
 }
 
 dae::TextComponent::TextComponent(const std::string& fontPath, unsigned int size)
+	:BaseComponent(dae::CompType::Text)
 {
 	mFont = new Font(fontPath, size);
 }
@@ -29,7 +31,7 @@ void dae::TextComponent::TextComponent::Update()
 	if (mNeedsUpdate)
 	{
 		//look for parent texture component
-		auto textureComp = GetParentObject()->GetComponent<TextureComponent>();
+		auto textureComp = GetGameObject()->GetComponent<TextureComponent>();
 
 		if (textureComp == nullptr)
 		{

@@ -5,18 +5,31 @@ namespace dae
 {
 	class GameObject;
 
+	enum class CompType
+	{
+		Camera,
+		FPS,
+		Input,
+		Render,
+		Script,
+		Text,
+		Transform, 
+		Texture
+	};
+
 	class BaseComponent
 	{
 	public:
-		BaseComponent();
+		BaseComponent(CompType compType);
 		virtual ~BaseComponent() = default;
 
 		virtual void Init() {};
 		virtual void Update() {};
 		virtual void Render() {};
 
-		void SetParentObject(GameObject* object);
-		GameObject* GetParentObject() const;
+		void SetGameObject(GameObject* object);
+		GameObject* GetGameObject() const;
+		CompType GetComponentType();
 
 		BaseComponent(const BaseComponent& other) = delete;
 		BaseComponent(BaseComponent&& other) = delete;
@@ -24,7 +37,8 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 	private:
-		GameObject* mParentObject;
+		GameObject* m_GameObject;
+		CompType m_CompType;
 	};
 
 }

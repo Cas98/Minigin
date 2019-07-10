@@ -2,17 +2,23 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
-dae::BaseComponent::BaseComponent()
+dae::BaseComponent::BaseComponent(CompType compType)
 {
+	m_CompType = compType;
 }
 
 
-void dae::BaseComponent::SetParentObject(GameObject* object)
+void dae::BaseComponent::SetGameObject(GameObject* object)
 {
-	mParentObject = object;
+	m_GameObject = object;
 }
 
-dae::GameObject* dae::BaseComponent::GetParentObject() const
+dae::GameObject* dae::BaseComponent::GetGameObject() const
 {
-	return mParentObject;
+	return m_GameObject;
+}
+
+dae::CompType dae::BaseComponent::GetComponentType()
+{
+	return m_CompType;
 }

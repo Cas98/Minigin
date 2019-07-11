@@ -14,7 +14,9 @@ namespace dae
 		Script,
 		Text,
 		Transform, 
-		Texture
+		Texture,
+		FSM,
+		Grid
 	};
 
 	class BaseComponent

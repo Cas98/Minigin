@@ -10,18 +10,19 @@ namespace dae
 	class SceneManager final : public Singleton<SceneManager>
 	{
 	public:
-		void AddScene(std::shared_ptr<dae::Scene> scene);
+		void AddScene(Scene* scene);
 		void RemoveScene(const std::string& name);
 
 		void SetActiveScene(const std::string& name);
-		std::shared_ptr<Scene> GetActiveScene();
+		Scene* GetActiveScene();
 
 		void Update();
 		void Render();
+		void Destroy();
 
 	private:
-		std::vector<std::shared_ptr<Scene>> mScenes;
-		std::shared_ptr<Scene> mpActiveScene;
+		std::vector<Scene*> mScenes;
+		Scene* mpActiveScene;
 	};
 
 }

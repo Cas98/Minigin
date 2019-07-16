@@ -13,43 +13,63 @@ dae::GameObject::GameObject(glm::vec3 pos, float rotation, glm::vec2 scale)
 	AddComponent(m_pTransform);
 }
 
+void dae::GameObject::Destroy()
+{
+	//Destroy children
+	for (auto child : mChildren)
+	{
+		child->Destroy();
+	}
+
+	//Remove from parent
+	if(mpParent)
+	{
+		mpParent->RemoveChild(this);
+	}
+
+	//Remove gameobject from scene
+	auto scene = GetScene();
+
+	if (scene)
+	{
+		scene->Remove(this);
+	}
+
+	//Delete gameobject
+	delete this;
+}
+
 dae::GameObject::~GameObject()
 {
 	//delete components
-	for (size_t i{ 0 }; i < mComponents.size(); ++i)
+	for (auto component : mComponents)
 	{
-		delete mComponents[i];
+		delete component;
 	}
-
-	//delete children objects
-	/*for (size_t i{ 0 }; i < mChildren.size(); ++i)
-	{
-		delete mChildren[i];
-	}*/
 }
 
 void dae::GameObject::Update()
 {
 	if(!m_IsInit)
 	{
-		for (size_t i{ 0 }; i < mComponents.size(); ++i)
+		for (auto component : mComponents)
 		{
-			mComponents[i]->Init();
+			component->Init();
 		}
 		m_IsInit = true;
 	}
 
-	for (size_t i{ 0 }; i < mComponents.size(); ++i)
+	for (auto component : mComponents)
 	{
-		mComponents[i]->Update();
+		component->Update();
 	}
 }
 
 void dae::GameObject::Render() const
 {
-	for (size_t i{ 0 }; i < mComponents.size(); ++i)
+	for (auto component : mComponents)
 	{
-		mComponents[i]->Render();
+		component->Render();
 	}
 }
 

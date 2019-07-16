@@ -5,7 +5,7 @@ class TestScene :
 {
 public:
 	TestScene();
-	~TestScene();
+	//~TestScene();
 
 protected:
 	virtual void Initialize() override;

@@ -9,12 +9,27 @@ dae::Scene::Scene(const std::string& name)
 {
 }
 
-dae::Scene::~Scene() = default;
+dae::Scene::~Scene()
+{
+	while(mObjects.size() > 0)
+	{
+		mObjects[0]->Destroy();
+	}
+};
 
-void dae::Scene::Add(const std::shared_ptr<SceneObject>& object)
+void dae::Scene::Add(GameObject* object)
 {
 	object->SetScene(this);
 	mObjects.push_back(object);
+}
+
+void dae::Scene::Remove(dae::GameObject* object)
+{
+	auto it = std::find(mObjects.begin(), mObjects.end(), object);
+	if (it != mObjects.end())
+	{
+		mObjects.erase(it);
+	}
 }
 
 void dae::Scene::RootInitialize()

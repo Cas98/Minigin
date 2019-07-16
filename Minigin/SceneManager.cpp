@@ -14,7 +14,15 @@ void dae::SceneManager::Render()
 	if (mpActiveScene) mpActiveScene->RootRender();
 }
 
-void dae::SceneManager::AddScene(std::shared_ptr<dae::Scene> scene)
+void  dae::SceneManager::Destroy()
+{
+	for(auto scene : mScenes)
+	{
+		delete scene;
+	}
+}
+
+void dae::SceneManager::AddScene(Scene* scene)
 {
 	if (scene)
 	{
@@ -25,7 +33,7 @@ void dae::SceneManager::AddScene(std::shared_ptr<dae::Scene> scene)
 
 void dae::SceneManager::RemoveScene(const std::string& name)
 {
-	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](std::shared_ptr<Scene> scene)->bool
+	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](Scene* scene)->bool
 	{
 		return scene->GetName() == name;
 	});
@@ -45,7 +53,7 @@ void dae::SceneManager::RemoveScene(const std::string& name)
 
 void dae::SceneManager::SetActiveScene(const std::string& name)
 {
-	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](std::shared_ptr<Scene> scene)->bool
+	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](Scene* scene)->bool
 	{
 		return scene->GetName() == name;
 	});
@@ -56,7 +64,7 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 	}
 }
 
-std::shared_ptr<dae::Scene> dae::SceneManager::GetActiveScene()
+dae::Scene* dae::SceneManager::GetActiveScene()
 {
 	return mpActiveScene;
 }

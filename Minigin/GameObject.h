@@ -11,11 +11,13 @@ namespace dae
 {
 	class BaseComponent;
 
-	class GameObject final : public SceneObject
+	class GameObject final /*: public SceneObject*/
 	{
 	public:
-		void Update() override;
-		void Render() const override;
+		void Update();
+		void Render() const;
+
+		void Destroy();
 
 		void AddComponent(BaseComponent* component);
 		void RemoveComponent(BaseComponent* component);
@@ -26,7 +28,7 @@ namespace dae
 
 		bool HasComponent(BaseComponent* component) const;
 
-		virtual void SetScene(Scene* scene);
+		void SetScene(Scene* scene);
 		Scene* GetScene();
 
 		TransformComponent* GetTransformComponent() const;
@@ -35,13 +37,15 @@ namespace dae
 		compType* GetComponent();
 
 		GameObject(glm::vec3 pos = { 0.0f,0.0f,0.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
-		virtual ~GameObject();
+		
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		~GameObject();
+
 		std::vector<BaseComponent*> mComponents;
 		std::vector<GameObject*> mChildren;
 

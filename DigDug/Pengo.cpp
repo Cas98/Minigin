@@ -12,7 +12,7 @@ int main(int , char **)
 	dae::Minigin engine;
 	engine.Initialize();
 
-	auto scene = std::make_shared<TestScene>();
+	auto scene = new TestScene();
 	dae::SceneManager::GetInstance().AddScene(scene);
 	dae::SceneManager::GetInstance().SetActiveScene("TestScene");
 

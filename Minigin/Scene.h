@@ -3,12 +3,13 @@
 
 namespace dae
 {
-	class SceneObject;
+	class GameObject;
 	class Scene
 	{
 	public:
 		Scene(const std::string& name);
-		void Add(const std::shared_ptr<SceneObject>& object);
+		void Add(GameObject* object);
+		void Remove(GameObject* object);
 
 		std::string GetName();
 
@@ -30,7 +31,7 @@ namespace dae
 		void RootRender() const;
 
 		std::string mName{};
-		std::vector < std::shared_ptr<SceneObject>> mObjects{};
+		std::vector <GameObject*> mObjects{};
 
 		static unsigned int idCounter; 
 	};

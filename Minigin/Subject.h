@@ -13,7 +13,7 @@ public:
 	void RemoveObserver(Observer* observer);
 
 protected:
-	void Notify();
+	void Notify(std::string message);
 
 private:
 	std::vector<Observer*> m_pObservers;

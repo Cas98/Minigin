@@ -3,6 +3,6 @@ class Observer
 {
 public:
 	virtual ~Observer() {}
-	virtual void OnNotify() = 0;
+	virtual void OnNotify(std::string message) = 0;
 };
 

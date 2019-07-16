@@ -19,10 +19,10 @@ void Subject::RemoveObserver(Observer* observer)
 	}
 }
 
-void Subject::Notify()
+void Subject::Notify(std::string message)
 {
 	for (size_t i{ 0 }; i < m_pObservers.size(); i++)
 	{
-		m_pObservers[i]->OnNotify();
+		m_pObservers[i]->OnNotify(message);
 	}
 }

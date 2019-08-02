@@ -11,7 +11,7 @@ namespace dae
 {
 	class BaseComponent;
 
-	class GameObject final /*: public SceneObject*/
+	class GameObject final 
 	{
 	public:
 		void Update();
@@ -32,6 +32,9 @@ namespace dae
 		Scene* GetScene();
 
 		TransformComponent* GetTransformComponent() const;
+
+		std::string GetTag() const;
+		void SetTag(const std::string& newTag);
 
 		template<typename compType>
 		compType* GetComponent();
@@ -55,6 +58,8 @@ namespace dae
 		TransformComponent* m_pTransform = nullptr;
 
 		bool m_IsInit = false;
+
+		std::string m_Tag = "Object";
 	};
 }
 

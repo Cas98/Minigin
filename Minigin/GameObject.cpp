@@ -144,3 +144,13 @@ dae::TransformComponent* dae::GameObject::GetTransformComponent() const
 {
 	return m_pTransform;
 }
+
+std::string dae::GameObject::GetTag() const
+{
+	return m_Tag;
+}
+
+void dae::GameObject::SetTag(const std::string& newTag)
+{
+	m_Tag = newTag;
+}

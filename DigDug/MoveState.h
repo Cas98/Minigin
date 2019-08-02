@@ -20,7 +20,7 @@ private:
 	glm::vec2 m_Direction;
 	bool m_ChangeState = false;
 	float m_Offset;
-	float m_Speed = 500.0f;
+	float m_Speed = 128.0f;
 };
 
 

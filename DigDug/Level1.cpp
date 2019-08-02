@@ -38,7 +38,7 @@ void Level1::Initialize()
 	player->AddComponent(new dae::RenderComponent());
 	player->AddComponent(new dae::TextureComponent("Block.jpg"));
 	player->AddComponent(new dae::InputComponent(1));
-	//player->AddComponent(new GridMovementScript());
+	player->SetTag("Player");
 
 	auto playerFSM = new dae::FSMComponent(new IdleState(player, grid));
 	player->AddComponent(playerFSM);
@@ -46,6 +46,7 @@ void Level1::Initialize()
 	Add(player);
 
 	grid->GetComponent<dae::GridComponent>()->SetGameObject(0, 0, player);
+
 
 }
 

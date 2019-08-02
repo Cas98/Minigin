@@ -7,7 +7,7 @@ namespace dae
 	class FSMComponent final : public dae::BaseComponent
 	{
 	public:
-		FSMComponent();
+		FSMComponent(State* pStartState);
 		~FSMComponent();
 
 		void Init() override;

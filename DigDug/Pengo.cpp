@@ -4,7 +4,7 @@
 #include "pch.h"
 #include "Minigin.h"
 #include "SceneManager.h"
-#include "TestScene.h"
+#include "Level1.h"
 
 
 int main(int , char **)
@@ -12,9 +12,9 @@ int main(int , char **)
 	dae::Minigin engine;
 	engine.Initialize();
 
-	auto scene = new TestScene();
+	auto scene = new Level1();
 	dae::SceneManager::GetInstance().AddScene(scene);
-	dae::SceneManager::GetInstance().SetActiveScene("TestScene");
+	dae::SceneManager::GetInstance().SetActiveScene("Level1");
 
 	engine.Run();
 	return 0;

@@ -2,8 +2,8 @@
 #include "GridComponent.h"
 #include "GameObject.h"
 
-dae::GridComponent::GridComponent(int width, int height)
-	:BaseComponent(CompType::Grid)
+dae::GridComponent::GridComponent(int width, int height, float offset)
+	:BaseComponent(CompType::Grid),m_Offset(offset)
 {
 	if(width <= 0)
 	{
@@ -20,7 +20,7 @@ dae::GridComponent::GridComponent(int width, int height)
 	}
 	else
 	{
-		m_Width = height;
+		m_Height = height;
 	}
 
 
@@ -74,6 +74,13 @@ void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* p
 
 	BaseComponent::GetGameObject()->AddChild(pGameObject);
 	m_pGameObjects[width][height] = pGameObject;
+
+	//set pos gameobject
+	auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
+	newPos.x += m_Offset * width;
+	newPos.y += m_Offset * height;
+
+	pGameObject->GetTransformComponent()->SetPosition(newPos);
 }
 
 void dae::GridComponent::RemoveGameObject(dae::GameObject* pGameObject)
@@ -84,6 +91,7 @@ void dae::GridComponent::RemoveGameObject(dae::GameObject* pGameObject)
 		{
 			if(pGameObject == m_pGameObjects[w][h])
 			{
+				BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[w][h]);
 				m_pGameObjects[w][h] = nullptr;
 				return;
 			}
@@ -105,5 +113,39 @@ void dae::GridComponent::RemoveGameObject(int width, int height)
 		return;
 	}
 
+	BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
 	m_pGameObjects[width][height] = nullptr;
+}
+
+int dae::GridComponent::GetWidth() const
+{
+	return m_Width;
+}
+
+int dae::GridComponent::GetHeight() const
+{
+	return m_Height;
+}
+
+float dae::GridComponent::GetOffset() const
+{
+	return m_Offset;
+}
+
+glm::vec2 dae::GridComponent::GetGameObjectPos(dae::GameObject* pGameObject)
+{
+	glm::vec2 coords{-1,-1};
+
+	for (int w{ 0 }; w < m_Width; ++w)
+	{
+		for (int h{ 0 }; h < m_Height; ++h)
+		{
+			if (pGameObject == m_pGameObjects[w][h])
+			{
+				coords = {w,h};
+			}
+		}
+	}
+
+	return coords;
 }

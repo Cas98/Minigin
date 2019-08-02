@@ -33,5 +33,5 @@ void dae::RenderComponent::Render()
 	auto transform = GetGameObject()->GetTransformComponent();
 
 	//render texture
-	Renderer::GetInstance().RenderTexture(texture, transform->GetWorldPosition().x, transform->GetWorldPosition().y, transform->GetWorldScale().x, transform->GetWorldScale().y, transform->GetWorldRotation());
+	Renderer::GetInstance().RenderTexture(texture, transform->GetPosition().x, transform->GetPosition().y, transform->GetScale().x, transform->GetScale().y, transform->GetRotation());
 }

@@ -164,11 +164,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="helpers.h" />
+    <ClInclude Include="IdleState.h" />
+    <ClInclude Include="Level1.h" />
+    <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestScript.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IdleState.cpp" />
+    <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

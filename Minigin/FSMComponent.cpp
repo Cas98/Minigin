@@ -2,8 +2,8 @@
 #include "FSMComponent.h"
 #include "GameObject.h"
 
-dae::FSMComponent::FSMComponent()
-	:BaseComponent(CompType::FSM)
+dae::FSMComponent::FSMComponent(State* pStartState)
+	:BaseComponent(CompType::FSM), m_pCurrentState(pStartState)
 {
 }
 

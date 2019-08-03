@@ -35,8 +35,8 @@ void dae::GameObject::Destroy()
 		scene->Remove(this);
 	}
 
-	//Delete gameobject
-	delete this;
+	////Delete gameobject
+	//delete this;
 }
 
 dae::GameObject::~GameObject()

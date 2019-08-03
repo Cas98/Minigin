@@ -47,6 +47,7 @@ namespace dae
 		GameObject& operator=(GameObject&& other) = delete;
 
 	private:
+		friend Scene;
 		~GameObject();
 
 		std::vector<BaseComponent*> mComponents;

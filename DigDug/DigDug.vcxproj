@@ -164,15 +164,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BlockScript.h" />
+    <ClInclude Include="BreakState.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerScript.h" />
+    <ClInclude Include="PushedState.h" />
+    <ClInclude Include="PushState.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestScript.h" />
+    <ClInclude Include="BlockIdleSate.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BlockScript.cpp" />
+    <ClCompile Include="BreakState.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="MoveState.cpp" />
@@ -183,8 +191,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PlayerScript.cpp" />
+    <ClCompile Include="PushedState.cpp" />
+    <ClCompile Include="PushState.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestScript.cpp" />
+    <ClCompile Include="BlockIdleSate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -22,6 +22,8 @@ void dae::FSMComponent::Init()
 	{
 		std::cout << "ERROR: FSM can't find input component\n";
 	}
+
+	m_pCurrentState->Enter();
 }
 
 void dae::FSMComponent::Update()

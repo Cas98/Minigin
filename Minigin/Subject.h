@@ -12,7 +12,6 @@ public:
 	void AddObserver(Observer* observer);
 	void RemoveObserver(Observer* observer);
 
-protected:
 	void Notify(std::string message);
 
 private:

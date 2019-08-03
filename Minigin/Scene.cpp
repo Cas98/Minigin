@@ -15,6 +15,8 @@ dae::Scene::~Scene()
 	{
 		mObjects[0]->Destroy();
 	}
+
+	DeleteObjects();
 };
 
 void dae::Scene::Add(GameObject* object)
@@ -26,6 +28,7 @@ void dae::Scene::Add(GameObject* object)
 void dae::Scene::Remove(dae::GameObject* object)
 {
 	auto it = std::find(mObjects.begin(), mObjects.end(), object);
+	m_pObjectsToDelete.push_back(*it);
 	if (it != mObjects.end())
 	{
 		mObjects.erase(it);
@@ -45,6 +48,7 @@ void dae::Scene::RootUpdate()
 	}
 
 	Update();
+	DeleteObjects();
 }
 
 void dae::Scene::RootRender() const
@@ -60,4 +64,12 @@ std::string dae::Scene::GetName()
 	return mName;
 }
 
+void dae::Scene::DeleteObjects()
+{
+	for(size_t i{0}; i < m_pObjectsToDelete.size();++i)
+	{
+		delete m_pObjectsToDelete[i];
+	}
 
+	m_pObjectsToDelete.clear();
+}

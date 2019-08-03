@@ -67,12 +67,12 @@ void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* p
 		return;
 	}
 
-	if(m_pGameObjects[width][height] != nullptr)
+	/*if(m_pGameObjects[width][height] != nullptr)
 	{
 		BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
-	}
+	}*/
 
-	BaseComponent::GetGameObject()->AddChild(pGameObject);
+	//BaseComponent::GetGameObject()->AddChild(pGameObject);
 	m_pGameObjects[width][height] = pGameObject;
 
 	//set pos gameobject
@@ -91,7 +91,7 @@ void dae::GridComponent::RemoveGameObject(dae::GameObject* pGameObject)
 		{
 			if(pGameObject == m_pGameObjects[w][h])
 			{
-				BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[w][h]);
+				//BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[w][h]);
 				m_pGameObjects[w][h] = nullptr;
 				return;
 			}
@@ -113,7 +113,7 @@ void dae::GridComponent::RemoveGameObject(int width, int height)
 		return;
 	}
 
-	BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
+	//BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
 	m_pGameObjects[width][height] = nullptr;
 }
 

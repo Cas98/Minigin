@@ -4,24 +4,25 @@
 #include "GameObject.h"
 #include "GridComponent.h"
 #include "Time.h"
+#include "PushedState.h"
 
 
 MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir)
-	:m_pPlayerRef(pPlayer), m_pGridRef(pGrid)
+	:m_pPlayerRef(pPlayer), m_pGridRef(pGrid), m_Direction(dir)
 {
 	switch(dir)
 	{
 	case dae::Direction::Down:
-		m_Direction = { 0,-1 };
+		m_DirectionCoord = { 0,-1 };
 		break;
 	case dae::Direction::Up:
-		m_Direction = { 0,1 };
+		m_DirectionCoord = { 0,1 };
 		break;
 	case dae::Direction::Right:
-		m_Direction = { 1,0 };
+		m_DirectionCoord = { 1,0 };
 		break;
 	case dae::Direction::Left:
-		m_Direction = { -1,0 };
+		m_DirectionCoord = { -1,0 };
 		break;
 	}
 }
@@ -49,7 +50,7 @@ void MoveState::Exit()
 	auto gridcomp = m_pGridRef->GetComponent<dae::GridComponent>();
 	glm::vec2 coords = gridcomp->GetGameObjectPos(m_pPlayerRef);
 	gridcomp->RemoveGameObject(int(coords.x), int(coords.y));
-	coords += m_Direction;
+	coords += m_DirectionCoord;
 	gridcomp->SetGameObject(coords.x, coords.y, m_pPlayerRef);
 	std::cout << "Player coords: " << coords.x << ", " << coords.y << std::endl;
 }
@@ -57,7 +58,7 @@ void MoveState::Exit()
 void MoveState::Update()
 {
 	//move 
-	glm::vec2 translation = m_Direction * dae::Time::GetInstance().GetDeltaTime() * m_Speed;
+	glm::vec2 translation = m_DirectionCoord * dae::Time::GetInstance().GetDeltaTime() * m_Speed;
 	m_pPlayerRef->GetTransformComponent()->Translate(translation.x, translation.y);
 
 	m_Offset -= abs(translation.x);
@@ -73,7 +74,14 @@ dae::State* MoveState::HandleInput(dae::InputComponent* )
 {
 	if(m_ChangeState)
 	{
-		return new IdleState(m_pPlayerRef, m_pGridRef);
+		if(m_pPlayerRef->GetTag() == "Wall")
+		{
+			return new PushedState(m_pPlayerRef, m_pGridRef, m_Direction, false);
+		}
+		else
+		{
+			return new IdleState(m_pPlayerRef, m_pGridRef);
+		}
 	}
 
 	return nullptr;

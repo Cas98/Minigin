@@ -14,7 +14,6 @@ void Subject::RemoveObserver(Observer* observer)
 
 	if (found != m_pObservers.end())
 	{
-		delete *found;
 		m_pObservers.erase(found);
 	}
 }

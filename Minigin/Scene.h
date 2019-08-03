@@ -29,9 +29,11 @@ namespace dae
 		void RootInitialize();
 		void RootUpdate();
 		void RootRender() const;
+		void DeleteObjects();
 
 		std::string mName{};
 		std::vector <GameObject*> mObjects{};
+		std::vector <GameObject*> m_pObjectsToDelete{};
 
 		static unsigned int idCounter; 
 	};

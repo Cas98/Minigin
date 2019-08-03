@@ -17,7 +17,8 @@ private:
 	dae::GameObject* m_pPlayerRef;
 	dae::GameObject* m_pGridRef;
 
-	glm::vec2 m_Direction;
+	glm::vec2 m_DirectionCoord;
+	dae::Direction m_Direction;
 	bool m_ChangeState = false;
 	float m_Offset;
 	float m_Speed = 128.0f;

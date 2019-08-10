@@ -18,7 +18,7 @@ namespace dae
 		~GridComponent() = default;
 
 		GameObject* GetGameObject(int width, int height);
-		void SetGameObject(int width, int height, GameObject* pGameObject);
+		void SetGameObject(int width, int height, GameObject* pGameObject, bool updatePos = true);
 		void RemoveGameObject(GameObject* pGameObject);
 		void RemoveGameObject(int width, int height);
 
@@ -27,6 +27,7 @@ namespace dae
 		float GetOffset() const;
 
 		glm::vec2 GetGameObjectPos(GameObject* pGameObject);
+		void UpdatePos(GameObject* pGameObject);
 
 	private:
 		std::vector<std::vector<GameObject*>> m_pGameObjects;

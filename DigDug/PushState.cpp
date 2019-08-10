@@ -47,7 +47,7 @@ dae::State* PushState::HandleInput(dae::InputComponent* )
 
 	if(targetObject)
 	{
-		if(targetObject->GetTag() == "Wall")
+		if(targetObject->GetTag() == "Wall" || targetObject->GetTag() == "Diamond")
 		{
 			targetObject->GetComponent<BlockScript>()->MoveBlock(direction);
 		}

@@ -70,18 +70,18 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 		if(coords.y < height - 1)
 		{
-			bool canMove = true;
+			//bool canMove = true;
 			//check for wall
 			auto obj = gridComp->GetGameObject(coords.x, coords.y + 1);
-			if (obj)
+			/*if (obj)
 			{
-				if (obj->GetTag() == "Wall")
+				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond" || obj->GetTag() == "Snobee")
 				{
 					canMove = false;
 				}
-			}
+			}*/
 
-			if (canMove)
+			if (obj == nullptr)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up);
 			}
@@ -96,18 +96,18 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 		if (coords.x > 0)
 		{
-			bool canMove = true;
+			//bool canMove = true;
 			//check for wall
 			auto obj = gridComp->GetGameObject(coords.x - 1, coords.y);
-			if (obj)
+			/*if (obj)
 			{
-				if (obj->GetTag() == "Wall")
+				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
 				{
 					canMove = false;
 				}
-			}
+			}*/
 
-			if (canMove)
+			if (obj == nullptr)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left);
 			}
@@ -122,17 +122,17 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		
 		if (coords.y > 0)
 		{
-			bool canMove = true;
+			//bool canMove = true;
 			//check for wall
 			auto obj = gridComp->GetGameObject(coords.x, coords.y - 1);
-			if (obj)
+			/*if (obj)
 			{
-				if (obj->GetTag() == "Wall")
+				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
 				{
 					canMove = false;
 				}
-			}
-			if (canMove)
+			}*/
+			if (obj == nullptr)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down);
 			}
@@ -148,17 +148,17 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		
 		if (coords.x < width - 1)
 		{
-			bool canMove = true;
+			//bool canMove = true;
 			//check for wall
 			auto obj = gridComp->GetGameObject(coords.x + 1, coords.y);
-			if (obj)
+			/*if (obj)
 			{
-				if (obj->GetTag() == "Wall")
+				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
 				{
 					canMove = false;
 				}
-			}
-			if (canMove)
+			}*/
+			if (obj == nullptr)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right);
 			}

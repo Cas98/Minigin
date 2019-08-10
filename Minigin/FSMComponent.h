@@ -12,10 +12,7 @@ namespace dae
 
 		void Init() override;
 		void Update() override;
-		//current states 
-		//update
-		//handle input
-		//input component
+	
 	private:
 		State* m_pCurrentState = nullptr;
 		InputComponent* m_pInputRef = nullptr;

@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "BlockIdleSate.h"
 #include "GameObject.h"
-#include "ScriptComponent.h"
 #include "BlockScript.h"
 #include "PushedState.h"
 
@@ -16,28 +15,46 @@ void BlockIdleSate::Enter()
 
 	if(script)
 	{
-		script->GetSubject()->AddObserver(this);
+		script->SetIsPushed(false);
+	}
+
+	//check diamond alignment
+	if(m_pBlockRef->GetTag() == "Diamond")
+	{
+		auto script = m_pBlockRef->GetComponent<BlockScript>();
+		if(script)
+		{
+			if(script->AreDiamondsAligned(m_pGridRef))
+			{
+				std::cout << "Diamonds are aligned!!!" << std::endl;
+			}
+			else
+			{
+				std::cout << "Diamonds are NOT aligned" << std::endl;
+			}
+		}
 	}
 }
 
 void BlockIdleSate::Exit()
 {
-	auto script = m_pBlockRef->GetComponent<BlockScript>();
+	/*auto script = m_pBlockRef->GetComponent<BlockScript>();
 
 	if (script)
 	{
 		script->GetSubject()->RemoveObserver(this);
-	}
+	}*/
 }
 
 void BlockIdleSate::Update()
 {
-	
+
 }
 
 dae::State* BlockIdleSate::HandleInput(dae::InputComponent* )
 {
-	if(m_Move)
+	auto script = m_pBlockRef->GetComponent<BlockScript>();
+	if(script->GetIsPushed())
 	{
 		//pushed state
 		return new PushedState(m_pBlockRef,m_pGridRef, m_pBlockRef->GetComponent<BlockScript>()->GetDirection(), true);
@@ -46,10 +63,3 @@ dae::State* BlockIdleSate::HandleInput(dae::InputComponent* )
 	return nullptr;
 }
 
-void BlockIdleSate::OnNotify(std::string message)
-{
-	if(message == "Move")
-	{
-		m_Move = true;
-	}
-}

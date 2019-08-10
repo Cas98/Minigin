@@ -53,7 +53,7 @@ dae::GameObject* dae::GridComponent::GetGameObject(int width, int height)
 	return m_pGameObjects[width][height];
 }
 
-void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* pGameObject)
+void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* pGameObject, bool updatePos)
 {
 	if (width < 0 || width >= m_Width)
 	{
@@ -76,11 +76,27 @@ void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* p
 	m_pGameObjects[width][height] = pGameObject;
 
 	//set pos gameobject
-	auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
-	newPos.x += m_Offset * width;
-	newPos.y += m_Offset * height;
+	if (updatePos)
+	{
+		auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
+		newPos.x += m_Offset * width;
+		newPos.y += m_Offset * height;
 
-	pGameObject->GetTransformComponent()->SetPosition(newPos);
+		pGameObject->GetTransformComponent()->SetPosition(newPos);
+	}
+}
+
+void dae::GridComponent::UpdatePos(GameObject* pGameObject)
+{
+	auto coords = GetGameObjectPos(pGameObject);
+	if(coords.x != -1 && coords.y != -1)
+	{
+		auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
+		newPos.x += m_Offset * coords.x;
+		newPos.y += m_Offset * coords.y;
+
+		pGameObject->GetTransformComponent()->SetPosition(newPos);
+	}
 }
 
 void dae::GridComponent::RemoveGameObject(dae::GameObject* pGameObject)

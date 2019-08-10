@@ -63,6 +63,12 @@
     <ClInclude Include="BreakState.h">
       <Filter>Source Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="SnobeeScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="SnobeeIdleState.h">
+      <Filter>Source Files\States</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -102,6 +108,12 @@
       <Filter>Source Files\States</Filter>
     </ClCompile>
     <ClCompile Include="BreakState.cpp">
+      <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="SnobeeScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="SnobeeIdleState.cpp">
       <Filter>Source Files\States</Filter>
     </ClCompile>
   </ItemGroup>

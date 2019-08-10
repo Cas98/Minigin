@@ -2,14 +2,11 @@
 #include <State.h>
 #include "Observer.h"
 
-class BlockIdleSate final: public dae::State , public Observer
+class BlockIdleSate final: public dae::State
 {
 public:
 	BlockIdleSate(dae::GameObject* pBlock, dae::GameObject* pGrid);
 	~BlockIdleSate() = default;
-
-protected:
-	void OnNotify(std::string message) override;
 
 private:
 	virtual void Enter();

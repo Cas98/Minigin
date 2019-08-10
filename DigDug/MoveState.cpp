@@ -5,6 +5,7 @@
 #include "GridComponent.h"
 #include "Time.h"
 #include "PushedState.h"
+#include "SnobeeIdleState.h"
 
 
 MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir)
@@ -40,19 +41,21 @@ void MoveState::Enter()
 
 	//get offset from grid component
 	m_Offset = m_pGridRef->GetComponent<dae::GridComponent>()->GetOffset();
-}
-
-void MoveState::Exit()
-{
-	std::cout << "Exit move state" << std::endl;
 
 	//set object on new position on the grid
 	auto gridcomp = m_pGridRef->GetComponent<dae::GridComponent>();
 	glm::vec2 coords = gridcomp->GetGameObjectPos(m_pPlayerRef);
 	gridcomp->RemoveGameObject(int(coords.x), int(coords.y));
 	coords += m_DirectionCoord;
-	gridcomp->SetGameObject(coords.x, coords.y, m_pPlayerRef);
+	gridcomp->SetGameObject(coords.x, coords.y, m_pPlayerRef, false);
 	std::cout << "Player coords: " << coords.x << ", " << coords.y << std::endl;
+}
+
+void MoveState::Exit()
+{
+	std::cout << "Exit move state" << std::endl;
+
+	m_pGridRef->GetComponent<dae::GridComponent>()->UpdatePos(m_pPlayerRef);
 }
 
 void MoveState::Update()
@@ -74,9 +77,13 @@ dae::State* MoveState::HandleInput(dae::InputComponent* )
 {
 	if(m_ChangeState)
 	{
-		if(m_pPlayerRef->GetTag() == "Wall")
+		if(m_pPlayerRef->GetTag() == "Wall" || m_pPlayerRef->GetTag() == "Diamond")
 		{
 			return new PushedState(m_pPlayerRef, m_pGridRef, m_Direction, false);
+		}
+		else if(m_pPlayerRef->GetTag() == "Snobee")
+		{
+			return new SnobeeIdleState(m_pPlayerRef, m_pGridRef);
 		}
 		else
 		{

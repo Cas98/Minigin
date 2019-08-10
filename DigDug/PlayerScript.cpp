@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "PlayerScript.h"
+#include "GameObject.h"
 
-
-PlayerScript::PlayerScript(dae::Direction diretcion)
-	:m_Direction(diretcion)
+PlayerScript::PlayerScript(dae::Direction direction)
+	:m_Direction(direction)
 {
 
 }
@@ -30,4 +30,9 @@ dae::Direction PlayerScript::GetDirection() const
 void PlayerScript::SetDirection(dae::Direction direction)
 {
 	m_Direction = direction;
+}
+
+void PlayerScript::Kill()
+{
+	GetGameObject()->Destroy();
 }

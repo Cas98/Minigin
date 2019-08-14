@@ -2,10 +2,13 @@
 #include "BlockScript.h"
 #include "GameObject.h"
 #include "GridComponent.h"
+#include "SnobeeManagerScript.h"
 
-BlockScript::BlockScript()
+BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee)
+	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger)
 {
 	//m_pSubject = new Subject();
+	m_pGridCompRef = pGrid->GetComponent<dae::GridComponent>();
 }
 
 BlockScript::~BlockScript()
@@ -39,24 +42,23 @@ dae::Direction BlockScript::GetDirection() const
 	return m_Direction;
 }
 
-bool BlockScript::AreDiamondsAligned(dae::GameObject* pGrid)
+bool BlockScript::AreDiamondsAligned()
 {
-	auto gridComp = pGrid->GetComponent<dae::GridComponent>();
-	auto gridCoords = gridComp->GetGameObjectPos(GetGameObject());
+	//auto gridComp = pGrid->GetComponent<dae::GridComponent>();
+	auto gridCoords = m_pGridCompRef->GetGameObjectPos(GetGameObject());
 	std::vector<glm::vec2> directions = { {1,0},{0,1},{-1,0},{0,-1} };
 
-	if(!gridComp)return false;
 
 	for(size_t i{0}; i < directions.size(); ++i)
 	{
 		auto targetPos = gridCoords + directions[i];
 		
-		if(IsObjectDiamond(gridComp ,targetPos))
+		if(IsObjectDiamond(targetPos))
 		{
 			//option 1
 			targetPos = gridCoords + (2.0f * directions[i]);
 			
-			if(IsObjectDiamond(gridComp, targetPos))
+			if(IsObjectDiamond(targetPos))
 			{
 				return true;
 			}
@@ -64,7 +66,7 @@ bool BlockScript::AreDiamondsAligned(dae::GameObject* pGrid)
 			//option 2 
 			targetPos = gridCoords - directions[i];
 
-			if(IsObjectDiamond(gridComp, targetPos))
+			if(IsObjectDiamond(targetPos))
 			{
 				return true;
 			}
@@ -76,9 +78,9 @@ bool BlockScript::AreDiamondsAligned(dae::GameObject* pGrid)
 	return false;
 }
 
-bool BlockScript::IsObjectDiamond(dae::GridComponent* pGridComp, glm::vec2 targetPos)
+bool BlockScript::IsObjectDiamond(glm::vec2 targetPos)
 {
-	auto neighbouringObject = pGridComp->GetGameObject(int(targetPos.x), int(targetPos.y));
+	auto neighbouringObject = m_pGridCompRef->GetGameObject(int(targetPos.x), int(targetPos.y));
 
 	if (neighbouringObject)
 	{
@@ -99,4 +101,18 @@ void BlockScript::SetIsPushed(bool isPushed)
 bool BlockScript::GetIsPushed() const
 {
 	return m_IsPushed;
+}
+
+void BlockScript::Break()
+{
+	//remove block from grid
+	m_pGridCompRef->RemoveGameObject(GetGameObject());
+
+	//destroy gameobject
+	GetGameObject()->Destroy();
+
+	if(m_CanSpawnSnobee && m_pSnobeeManager)
+	{
+		m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->RemoveWall(GetGameObject());
+	}
 }

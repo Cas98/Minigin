@@ -15,19 +15,25 @@ public:
 	//Subject* GetSubject() const;
 
 	dae::Direction GetDirection() const;
-	bool AreDiamondsAligned(dae::GameObject* pGrid);
+	bool AreDiamondsAligned();
 
 	void SetIsPushed(bool isPushed);
 	bool GetIsPushed() const;
 
-	BlockScript();
+	void Break();
+
+	BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger = nullptr, bool canSpawnSnobee = false);
 	~BlockScript();
 
 private:
-	bool IsObjectDiamond(dae::GridComponent* pGridComp , glm::vec2 targetPos);
+	bool IsObjectDiamond(glm::vec2 targetPos);
 
 	//Subject* m_pSubject;
 	dae::Direction m_Direction;
 	bool m_IsPushed = false;
+	bool m_CanSpawnSnobee;
+
+	dae::GridComponent* m_pGridCompRef;
+	dae::GameObject* m_pSnobeeManager;
 };
 

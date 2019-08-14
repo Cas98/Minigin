@@ -69,6 +69,12 @@
     <ClInclude Include="SnobeeIdleState.h">
       <Filter>Source Files\States</Filter>
     </ClInclude>
+    <ClInclude Include="SnobeeManagerScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManagerScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -115,6 +121,12 @@
     </ClCompile>
     <ClCompile Include="SnobeeIdleState.cpp">
       <Filter>Source Files\States</Filter>
+    </ClCompile>
+    <ClCompile Include="SnobeeManagerScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManagerScript.cpp">
+      <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

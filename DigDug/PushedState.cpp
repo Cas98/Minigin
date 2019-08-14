@@ -86,7 +86,7 @@ dae::State* PushedState::HandleInput(dae::InputComponent* )
 		{
 			if (m_FirstMove && m_pBlockRef->GetTag() != "Diamond")
 			{
-				return new BreakState(m_pBlockRef, m_pGridRef);
+				return new BreakState(m_pBlockRef);
 			}
 			return new BlockIdleSate(m_pBlockRef, m_pGridRef);
 		}

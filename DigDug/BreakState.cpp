@@ -2,17 +2,15 @@
 #include "BreakState.h"
 #include "GameObject.h"
 #include "GridComponent.h"
+#include "BlockScript.h"
 
-BreakState::BreakState(dae::GameObject* pBlock, dae::GameObject* pGrid)
-	:m_pBlockRef(pBlock), m_pGridRef(pGrid)
+BreakState::BreakState(dae::GameObject* pBlock)
+	:m_pBlockRef(pBlock)
 {
 }
 
 void BreakState::Enter()
 {
-	//remove block from grid
-	m_pGridRef->GetComponent<dae::GridComponent>()->RemoveGameObject(m_pBlockRef);
-
 	//delete block
-	m_pBlockRef->Destroy();
+	m_pBlockRef->GetComponent<BlockScript>()->Break();
 }

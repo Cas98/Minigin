@@ -24,7 +24,7 @@ void BlockIdleSate::Enter()
 		auto script = m_pBlockRef->GetComponent<BlockScript>();
 		if(script)
 		{
-			if(script->AreDiamondsAligned(m_pGridRef))
+			if(script->AreDiamondsAligned())
 			{
 				std::cout << "Diamonds are aligned!!!" << std::endl;
 			}

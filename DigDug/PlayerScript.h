@@ -5,7 +5,7 @@
 class PlayerScript final : public dae::ScriptComponent
 {
 public:
-	PlayerScript(dae::Direction direction);
+	PlayerScript(dae::Direction direction, dae::GameObject* pPlayerManager);
 	~PlayerScript();
 
 	virtual void Init() override;
@@ -17,5 +17,6 @@ public:
 
 private:
 	dae::Direction m_Direction;
+	dae::GameObject* m_pPlayerManager;
 };
 

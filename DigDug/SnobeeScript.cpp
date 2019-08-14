@@ -2,9 +2,10 @@
 #include "SnobeeScript.h"
 #include "GameObject.h"
 
-SnobeeScript::SnobeeScript(dae::Direction direction)
-	:m_Direction(direction)
+SnobeeScript::SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger)
+	:m_Direction(direction), m_pSnobeeManager(pSnobeeManger)
 {
+
 }
 
 
@@ -49,6 +50,7 @@ int SnobeeScript::GetRandomDirChange() const
 
 void SnobeeScript::Kill()
 {
+	m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->DecrementActiveSnobees();
 	GetGameObject()->Destroy();
 }
 

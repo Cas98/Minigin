@@ -171,10 +171,12 @@
     <ClInclude Include="Level1.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerManagerScript.h" />
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PushedState.h" />
     <ClInclude Include="PushState.h" />
     <ClInclude Include="SnobeeIdleState.h" />
+    <ClInclude Include="SnobeeManagerScript.h" />
     <ClInclude Include="SnobeeScript.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestScript.h" />
@@ -193,10 +195,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="PlayerManagerScript.cpp" />
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PushedState.cpp" />
     <ClCompile Include="PushState.cpp" />
     <ClCompile Include="SnobeeIdleState.cpp" />
+    <ClCompile Include="SnobeeManagerScript.cpp" />
     <ClCompile Include="SnobeeScript.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestScript.cpp" />

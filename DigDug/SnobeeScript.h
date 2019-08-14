@@ -2,11 +2,12 @@
 #include <ScriptComponent.h>
 #include "helpers.h"
 #include "Subject.h"
+#include "SnobeeManagerScript.h"
 
 class SnobeeScript final: public dae::ScriptComponent
 {
 public:
-	SnobeeScript(dae::Direction direction);
+	SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger);
 	~SnobeeScript();
 
 	virtual void Init() override;
@@ -27,5 +28,7 @@ private:
 	int m_RandomDirChange;
 
 	bool m_IsPushed = false;
+
+	dae::GameObject* m_pSnobeeManager;
 };
 

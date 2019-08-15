@@ -18,10 +18,10 @@ void Subject::RemoveObserver(Observer* observer)
 	}
 }
 
-void Subject::Notify(std::string message)
+void Subject::Notify(dae::GameObject* gameObject, Event event)
 {
 	for (size_t i{ 0 }; i < m_pObservers.size(); i++)
 	{
-		m_pObservers[i]->OnNotify(message);
+		m_pObservers[i]->OnNotify(gameObject, event);
 	}
 }

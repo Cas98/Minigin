@@ -75,6 +75,9 @@
     <ClInclude Include="PlayerManagerScript.h">
       <Filter>Source Files\scripts</Filter>
     </ClInclude>
+    <ClInclude Include="ScoreScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -126,6 +129,9 @@
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
     <ClCompile Include="PlayerManagerScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>

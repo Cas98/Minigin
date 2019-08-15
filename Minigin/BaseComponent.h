@@ -16,7 +16,8 @@ namespace dae
 		Transform, 
 		Texture,
 		FSM,
-		Grid
+		Grid,
+		Subject
 	};
 
 	class BaseComponent

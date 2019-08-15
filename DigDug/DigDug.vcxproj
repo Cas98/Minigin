@@ -175,6 +175,7 @@
     <ClInclude Include="PlayerScript.h" />
     <ClInclude Include="PushedState.h" />
     <ClInclude Include="PushState.h" />
+    <ClInclude Include="ScoreScript.h" />
     <ClInclude Include="SnobeeIdleState.h" />
     <ClInclude Include="SnobeeManagerScript.h" />
     <ClInclude Include="SnobeeScript.h" />
@@ -199,6 +200,7 @@
     <ClCompile Include="PlayerScript.cpp" />
     <ClCompile Include="PushedState.cpp" />
     <ClCompile Include="PushState.cpp" />
+    <ClCompile Include="ScoreScript.cpp" />
     <ClCompile Include="SnobeeIdleState.cpp" />
     <ClCompile Include="SnobeeManagerScript.cpp" />
     <ClCompile Include="SnobeeScript.cpp" />

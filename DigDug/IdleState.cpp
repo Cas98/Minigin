@@ -83,7 +83,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up);
+				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
 			}
 		}
 	}
@@ -109,7 +109,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left);
+				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
 			}
 		}
 	}
@@ -134,7 +134,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			}*/
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down);
+				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
 			}
 		}
 	}
@@ -160,7 +160,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			}*/
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right);
+				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
 			}
 		}
 	}

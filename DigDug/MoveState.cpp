@@ -8,8 +8,8 @@
 #include "SnobeeIdleState.h"
 
 
-MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir)
-	:m_pPlayerRef(pPlayer), m_pGridRef(pGrid), m_Direction(dir)
+MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir, float speed)
+	:m_pPlayerRef(pPlayer), m_pGridRef(pGrid), m_Direction(dir), m_Speed(speed)
 {
 	switch(dir)
 	{
@@ -62,6 +62,8 @@ void MoveState::Update()
 {
 	//move 
 	glm::vec2 translation = m_DirectionCoord * dae::Time::GetInstance().GetDeltaTime() * m_Speed;
+	if ((abs(translation.x) + abs(translation.y)) > m_Offset) translation *= m_Offset;
+
 	m_pPlayerRef->GetTransformComponent()->Translate(translation.x, translation.y);
 
 	m_Offset -= abs(translation.x);

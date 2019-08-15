@@ -5,7 +5,7 @@
 class MoveState final: public dae::State
 {
 public:
-	MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir);
+	MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir, float speed);
 	~MoveState();
 
 private:

@@ -81,13 +81,13 @@ dae::State* SnobeeIdleState::HandleInput(dae::InputComponent* input)
 		if (object == nullptr)
 		{
 			snobeeScript->DecrementRandomDirChange();
-			return new MoveState(m_pSnobeeRef, m_pGridRef, currentDirection);
+			return new MoveState(m_pSnobeeRef, m_pGridRef, currentDirection, 80.0f);
 		}
 		else if(object->GetTag() == "Player")
 		{
 			object->GetComponent<PlayerScript>()->Kill();
 			snobeeScript->DecrementRandomDirChange();
-			return new MoveState(m_pSnobeeRef, m_pGridRef, currentDirection);
+			return new MoveState(m_pSnobeeRef, m_pGridRef, currentDirection, 80.0f);
 		}
 	}
 
@@ -137,7 +137,7 @@ dae::State* SnobeeIdleState::HandleInput(dae::InputComponent* input)
 				{
 					snobeeScript->SetDirection(randomDir);
 					snobeeScript->SetRandomDirChange();
-					return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir);
+					return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
 				}
 			}
 			/*else if(object->GetTag() == "Wall" || object->GetTag() == "Diamond")

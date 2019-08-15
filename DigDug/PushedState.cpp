@@ -88,7 +88,7 @@ dae::State* PushedState::HandleInput(dae::InputComponent* )
 			{
 				return new BreakState(m_pBlockRef);
 			}
-			return new BlockIdleSate(m_pBlockRef, m_pGridRef);
+			return new BlockIdleSate(m_pBlockRef, m_pGridRef);	
 		}
 		else//if snobee cant move anymore kill it
 		{
@@ -98,5 +98,5 @@ dae::State* PushedState::HandleInput(dae::InputComponent* )
 	}
 
 	//move
-	return new MoveState(m_pBlockRef, m_pGridRef, m_Direction);
+	return new MoveState(m_pBlockRef, m_pGridRef, m_Direction, 164.0f);
 }

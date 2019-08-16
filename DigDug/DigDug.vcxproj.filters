@@ -78,6 +78,9 @@
     <ClInclude Include="ScoreScript.h">
       <Filter>Source Files\scripts</Filter>
     </ClInclude>
+    <ClInclude Include="LevelLoaderScript.h">
+      <Filter>Source Files\scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -132,6 +135,9 @@
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
     <ClCompile Include="ScoreScript.cpp">
+      <Filter>Source Files\scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoaderScript.cpp">
       <Filter>Source Files\scripts</Filter>
     </ClCompile>
   </ItemGroup>

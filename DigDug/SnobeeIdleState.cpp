@@ -20,13 +20,13 @@ SnobeeIdleState::~SnobeeIdleState()
 
 void SnobeeIdleState::Enter()
 {
-	std::cout << "Enter snobee idle state" << std::endl;
+	//std::cout << "Enter snobee idle state" << std::endl;
 	auto script = m_pSnobeeRef->GetComponent<SnobeeScript>();
 }
 
 void SnobeeIdleState::Exit()
 {
-	std::cout << "Exit snobee idle state" << std::endl;
+	//std::cout << "Exit snobee idle state" << std::endl;
 }
 
 void SnobeeIdleState::Update()

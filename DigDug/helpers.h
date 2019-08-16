@@ -1,4 +1,5 @@
 #pragma once
+#include "Observer.h"
 
 namespace dae
 {
@@ -10,3 +11,9 @@ namespace dae
 		Right
 	};
 }
+
+enum Event
+{
+	Kill,
+
+};

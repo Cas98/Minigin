@@ -8,6 +8,7 @@
 #include "SnobeeScript.h"
 #include "BlockScript.h"
 #include "PlayerScript.h"
+#include "SubjectComponent.h"
 
 PushedState::PushedState(dae::GameObject* pBlock, dae::GameObject* pGrid, dae::Direction direction, bool firstMove)
 	:m_pBlockRef(pBlock), m_pGridRef(pGrid), m_Direction(direction), m_FirstMove(firstMove)
@@ -86,6 +87,7 @@ dae::State* PushedState::HandleInput(dae::InputComponent* )
 		{
 			if (m_FirstMove && m_pBlockRef->GetTag() != "Diamond")
 			{
+				m_pBlockRef->GetComponent<dae::SubjectComponent>()->Notify(m_pBlockRef, "BreakWall");//add score for breaking wall
 				return new BreakState(m_pBlockRef);
 			}
 			return new BlockIdleSate(m_pBlockRef, m_pGridRef);	

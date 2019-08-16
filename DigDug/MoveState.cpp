@@ -36,7 +36,7 @@ MoveState::~MoveState()
 
 void MoveState::Enter()
 {
-	std::cout << "Enter move state" << std::endl;
+	//std::cout << "Enter move state" << std::endl;
 
 
 	//get offset from grid component
@@ -48,12 +48,12 @@ void MoveState::Enter()
 	gridcomp->RemoveGameObject(int(coords.x), int(coords.y));
 	coords += m_DirectionCoord;
 	gridcomp->SetGameObject(coords.x, coords.y, m_pPlayerRef, false);
-	std::cout << "Player coords: " << coords.x << ", " << coords.y << std::endl;
+	//std::cout << "Player coords: " << coords.x << ", " << coords.y << std::endl;
 }
 
 void MoveState::Exit()
 {
-	std::cout << "Exit move state" << std::endl;
+	//std::cout << "Exit move state" << std::endl;
 
 	m_pGridRef->GetComponent<dae::GridComponent>()->UpdatePos(m_pPlayerRef);
 }

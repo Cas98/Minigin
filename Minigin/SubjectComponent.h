@@ -15,7 +15,7 @@ namespace dae
 		void AddObserver(Observer* pObserver);
 		void RemoveObserver(Observer* pObserver);
 
-		void Notify(dae::GameObject* gameObject, Event event);
+		void Notify(dae::GameObject* gameObject, const std::string& message);
 
 		SubjectComponent(const SubjectComponent& other) = delete;
 		SubjectComponent(SubjectComponent&& other) = delete;

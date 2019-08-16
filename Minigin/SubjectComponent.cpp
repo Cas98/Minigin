@@ -29,7 +29,7 @@ void dae::SubjectComponent::RemoveObserver(Observer* pObserver)
 	m_pSubject->RemoveObserver(pObserver);
 }
 
-void dae::SubjectComponent::Notify(dae::GameObject* gameObject, Event event)
+void dae::SubjectComponent::Notify(dae::GameObject* gameObject, const std::string& message)
 {
-	m_pSubject->Notify(gameObject, event);
+	m_pSubject->Notify(gameObject, message);
 }

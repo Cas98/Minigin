@@ -169,6 +169,7 @@
     <ClInclude Include="helpers.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="LevelLoaderScript.h" />
     <ClInclude Include="MoveState.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerManagerScript.h" />
@@ -188,6 +189,7 @@
     <ClCompile Include="BreakState.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="LevelLoaderScript.cpp" />
     <ClCompile Include="MoveState.cpp" />
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="pch.cpp">

@@ -12,7 +12,7 @@ public:
 	void AddObserver(Observer* observer);
 	void RemoveObserver(Observer* observer);
 
-	void Notify(dae::GameObject* gameObject, Event event);
+	void Notify(dae::GameObject* gameObject, const std::string& message);
 
 private:
 	std::vector<Observer*> m_pObservers;

@@ -11,9 +11,5 @@ public:
 protected:
 	virtual void Initialize() override;
 	virtual void Update() override;
-private:
-	void AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, bool canSpawnSnobee = false);
-	void AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager);
-	void AddDiamond(int x, int y, dae::GameObject* pGrid);
 };
 

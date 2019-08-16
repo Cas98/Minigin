@@ -30,9 +30,11 @@ namespace dae
 		void RootUpdate();
 		void RootRender() const;
 		void DeleteObjects();
+		void AddObjects();
 
 		std::string mName{};
 		std::vector <GameObject*> mObjects{};
+		std::vector <GameObject*> m_pAddedObjects{};
 		std::vector <GameObject*> m_pObjectsToDelete{};
 
 		static unsigned int idCounter; 

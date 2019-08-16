@@ -21,7 +21,14 @@ PlayerManagerScript::~PlayerManagerScript()
 
 void PlayerManagerScript::Init()
 {
-	
+	for(int i{0}; i < m_PlayerLives; ++i)
+	{
+		auto lifeUi = new dae::GameObject({ i * 16.0f,0.0f,1.0f });
+		lifeUi->AddComponent(new dae::RenderComponent());
+		lifeUi->AddComponent(new dae::TextureComponent("Images/PengoLife.png"));
+		GetGameObject()->GetScene()->Add(lifeUi);
+		m_pLifeUIs.push_back(lifeUi);
+	}
 }
 
 void PlayerManagerScript::Update()
@@ -32,6 +39,9 @@ void PlayerManagerScript::Update()
 void PlayerManagerScript::RespawnPlayer()
 {
 	m_PlayerLives--;
+	//remove ui
+	m_pLifeUIs[m_pLifeUIs.size() - 1]->Destroy();
+	m_pLifeUIs.pop_back();
 
 	if(m_PlayerLives >= 0)
 	{

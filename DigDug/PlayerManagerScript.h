@@ -1,5 +1,7 @@
 #pragma once
 #include <ScriptComponent.h>
+#include "GameObject.h"
+
 class PlayerManagerScript : public dae::ScriptComponent
 {
 public:
@@ -14,6 +16,7 @@ public:
 private:
 	int m_PlayerLives = 4;
 	dae::GameObject* m_pGrid;
+	std::vector<dae::GameObject*> m_pLifeUIs;
 
 };
 

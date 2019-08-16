@@ -22,7 +22,8 @@ dae::Scene::~Scene()
 void dae::Scene::Add(GameObject* object)
 {
 	object->SetScene(this);
-	mObjects.push_back(object);
+	//mObjects.push_back(object);
+	m_pAddedObjects.push_back(object);
 }
 
 void dae::Scene::Remove(dae::GameObject* object)
@@ -49,6 +50,7 @@ void dae::Scene::RootUpdate()
 
 	Update();
 	DeleteObjects();
+	AddObjects();
 }
 
 void dae::Scene::RootRender() const
@@ -72,4 +74,14 @@ void dae::Scene::DeleteObjects()
 	}
 
 	m_pObjectsToDelete.clear();
+}
+
+void dae::Scene::AddObjects()
+{
+	for (size_t i{ 0 }; i < m_pAddedObjects.size(); ++i)
+	{
+		mObjects.push_back(m_pAddedObjects[i]);
+	}
+
+	m_pAddedObjects.clear();
 }

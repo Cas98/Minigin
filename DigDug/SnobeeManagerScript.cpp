@@ -19,7 +19,6 @@ SnobeeManagerScript::~SnobeeManagerScript()
 
 void SnobeeManagerScript::Init()
 {
-	
 }
 
 void SnobeeManagerScript::Update()
@@ -43,6 +42,13 @@ void SnobeeManagerScript::Update()
 void SnobeeManagerScript::AddWall(dae::GameObject* pWall)
 {
 	m_pWallsThatSpawnSnobees.push_back(pWall);
+
+	//add ui
+	auto lifeUi = new dae::GameObject({ 224.0f - (8.0f * (m_pWallsThatSpawnSnobees.size() - 1)),0.0f,1.0f });
+	lifeUi->AddComponent(new dae::RenderComponent());
+	lifeUi->AddComponent(new dae::TextureComponent("Images/SnobeeLife.png"));
+	GetGameObject()->GetScene()->Add(lifeUi);
+	m_pLifeUIs.push_back(lifeUi);
 }
 
 void SnobeeManagerScript::RemoveWall(dae::GameObject* pWall)
@@ -67,6 +73,13 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 
 	GetGameObject()->GetScene()->Add(snobee);
 	m_pGridCompRef->SetGameObject(x, y, snobee);
+
+	//remove ui
+	if (m_pLifeUIs.size() > 0)
+	{
+		m_pLifeUIs[m_pLifeUIs.size() - 1]->Destroy();
+		m_pLifeUIs.pop_back();
+	}
 }
 
 void SnobeeManagerScript::DecrementActiveSnobees()

@@ -23,5 +23,6 @@ private:
 
 	dae::GridComponent* m_pGridCompRef;
 	void SpawnSnobee(int x, int y);
+	std::vector<dae::GameObject*> m_pLifeUIs;
 };
 

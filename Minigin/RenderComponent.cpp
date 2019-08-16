@@ -4,6 +4,7 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "Renderer.h"
+#include "InputComponent.h"
 
 dae::RenderComponent::RenderComponent()
 	:BaseComponent(dae::CompType::Render)
@@ -34,4 +35,20 @@ void dae::RenderComponent::Render()
 
 	//render texture
 	Renderer::GetInstance().RenderTexture(texture, transform->GetPosition().x, transform->GetPosition().y, transform->GetScale().x, transform->GetScale().y, transform->GetRotation());
+}
+
+//void * dae::RenderComponent::operator new(size_t size)
+//{
+//	return malloc(size);
+//}
+
+void * dae::RenderComponent::operator new(size_t size, bool isRenderer)
+{
+	if(isRenderer)return malloc(size);
+	else return Renderer::GetInstance().GetRenderComponent();
+}
+
+void dae::RenderComponent::operator delete(void* p)
+{
+	Renderer::GetInstance().SendRenderComponent((RenderComponent*)p);
 }

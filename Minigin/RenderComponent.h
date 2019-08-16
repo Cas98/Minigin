@@ -3,6 +3,7 @@
 
 namespace dae
 {
+	class Renderer;
 	class RenderComponent final : public BaseComponent
 	{
 	public:
@@ -15,6 +16,9 @@ namespace dae
 		RenderComponent(RenderComponent &&) = delete;
 		RenderComponent & operator= (const RenderComponent &) = delete;
 		RenderComponent & operator= (const RenderComponent &&) = delete;
+
+		void * operator new(size_t size, bool isRenderer = false);
+		void operator delete(void* p);
 	};
 }
 

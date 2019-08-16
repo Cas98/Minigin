@@ -7,6 +7,7 @@
 #include "TextureComponent.h"
 #include "RenderComponent.h"
 #include "FSMComponent.h"
+#include "Renderer.h"
 
 SnobeeManagerScript::SnobeeManagerScript(dae::GameObject* pGrid)
 {
@@ -44,7 +45,8 @@ void SnobeeManagerScript::AddWall(dae::GameObject* pWall)
 	m_pWallsThatSpawnSnobees.push_back(pWall);
 
 	//add ui
-	auto lifeUi = new dae::GameObject({ 224.0f - (8.0f * (m_pWallsThatSpawnSnobees.size() - 1)),0.0f,1.0f });
+	float screenWidth = float(dae::Renderer::GetInstance().GetWindowSize().x);
+	auto lifeUi = new dae::GameObject({ screenWidth - (8.0f * (m_pWallsThatSpawnSnobees.size() - 1)),0.0f,1.0f });
 	lifeUi->AddComponent(new dae::RenderComponent());
 	lifeUi->AddComponent(new dae::TextureComponent("Images/SnobeeLife.png"));
 	GetGameObject()->GetScene()->Add(lifeUi);

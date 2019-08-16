@@ -31,7 +31,7 @@ void dae::Minigin::Initialize()
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Init(window);
+	Renderer::GetInstance().Initialize(window,50,25);
 	ResourceManager::GetInstance().Init("../Data/");
 	Time::GetInstance().Init();
 	InputManager::GetInstance().Init();
@@ -47,9 +47,9 @@ void dae::Minigin::LoadGame() const
 
 void dae::Minigin::Cleanup()
 {
-	Renderer::GetInstance().Destroy();
 	InputManager::GetInstance().Destroy();
 	SceneManager::GetInstance().Destroy();
+	Renderer::GetInstance().Destroy();
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	SDL_Quit();

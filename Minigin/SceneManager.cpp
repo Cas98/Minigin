@@ -2,16 +2,12 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include <algorithm>
+#include "Renderer.h"
 
 
 void dae::SceneManager::Update()
 {
 	if (mpActiveScene) mpActiveScene->RootUpdate();
-}
-
-void dae::SceneManager::Render()
-{
-	if (mpActiveScene) mpActiveScene->RootRender();
 }
 
 void  dae::SceneManager::Destroy()
@@ -26,8 +22,19 @@ void dae::SceneManager::AddScene(Scene* scene)
 {
 	if (scene)
 	{
-		mScenes.push_back(scene);
-		scene->RootInitialize();
+		auto it = std::find_if(mScenes.begin(), mScenes.end(), [scene](Scene* s)->bool
+		{
+			return scene->GetName() == s->GetName();
+		});
+
+		if (it == mScenes.end())
+		{
+			mScenes.push_back(scene);
+		}
+		else
+		{
+			std::cout << "There already is a scene with name " << scene->GetName() << std::endl;
+		}
 	}
 }
 
@@ -38,8 +45,6 @@ void dae::SceneManager::RemoveScene(const std::string& name)
 		return scene->GetName() == name;
 	});
 
-	//id active scene == scene to remove set to nullptr 
-	//else active scene will keep the removed scene alive
 	if(mpActiveScene == *it)
 	{
 		mpActiveScene = nullptr;
@@ -47,7 +52,10 @@ void dae::SceneManager::RemoveScene(const std::string& name)
 
 	if (it != mScenes.end())
 	{
+		//remove render buffer
+		Renderer::GetInstance().RemoveRenderBuffer(*it);
 		mScenes.erase(it);
+		delete *it;
 	}
 }
 
@@ -60,6 +68,9 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 
 	if(it != mScenes.end())
 	{
+		//set render buffer
+		Renderer::GetInstance().SetActiveRenderBuffer(mpActiveScene,*it);
+		(*it)->RootInitialize();
 		mpActiveScene = *it;
 	}
 }

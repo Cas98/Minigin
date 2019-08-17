@@ -37,7 +37,7 @@ void LevelLoaderScript::Update()
 void LevelLoaderScript::Load(const std::vector<int>& map)
 {
 	//background
-	auto background = new dae::GameObject({ 0.0f,-16.0f,0.0f });
+	auto background = new dae::GameObject({ 0.0f,-16.0f,0.1f });
 	background->AddComponent(new dae::RenderComponent());
 	background->AddComponent(new dae::TextureComponent("Images/Background.png"));
 

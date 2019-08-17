@@ -10,7 +10,7 @@ namespace dae
 		RenderComponent();
 		~RenderComponent() = default;
 
-		void Render() override;
+		void Render();
 
 		RenderComponent(const RenderComponent &) = delete;
 		RenderComponent(RenderComponent &&) = delete;

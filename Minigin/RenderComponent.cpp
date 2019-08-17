@@ -37,10 +37,6 @@ void dae::RenderComponent::Render()
 	Renderer::GetInstance().RenderTexture(texture, transform->GetPosition().x, transform->GetPosition().y, transform->GetScale().x, transform->GetScale().y, transform->GetRotation());
 }
 
-//void * dae::RenderComponent::operator new(size_t size)
-//{
-//	return malloc(size);
-//}
 
 void * dae::RenderComponent::operator new(size_t size, bool isRenderer)
 {

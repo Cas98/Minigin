@@ -38,7 +38,12 @@ void dae::Scene::Remove(dae::GameObject* object)
 
 void dae::Scene::RootInitialize()
 {
-	Initialize();
+	if (!m_IsInizialized)
+	{
+		Initialize();
+		AddObjects();
+		m_IsInizialized = true;
+	}
 }
 
 void dae::Scene::RootUpdate()
@@ -53,13 +58,7 @@ void dae::Scene::RootUpdate()
 	AddObjects();
 }
 
-void dae::Scene::RootRender() const
-{
-	for (const auto gameObject : mObjects)
-	{
-		gameObject->Render();
-	}
-}
+
 
 std::string dae::Scene::GetName()
 {

@@ -2,6 +2,7 @@
 #include "Singleton.h"
 #include "TransformComponent.h"
 #include "RenderComponent.h"
+#include <map>
 
 struct SDL_Window;
 struct SDL_Renderer;
@@ -9,6 +10,7 @@ struct SDL_Texture;
 
 namespace dae
 {
+	class Scene;
 	class Texture2D;
 	class Renderer final : public Singleton<Renderer>
 	{
@@ -30,11 +32,18 @@ namespace dae
 		RenderComponent* GetRenderComponent();
 		void SendRenderComponent(RenderComponent* pRenderComponent);
 
+		void SetActiveRenderBuffer(Scene* pOldScene, Scene* pNewScene);
+		void RemoveRenderBuffer(Scene* scene);
+
 	private:
 		std::vector<RenderComponent*> m_pNonActiveRenderComponents;
+		std::map<std::string, std::vector<RenderComponent*>> m_ActiveRenderComponentsBuffers;
 		std::vector<RenderComponent*> m_pActiveRenderComponents;
 		int m_GrowSize;
 		void AddRenderComponents(int size);
+
+		bool m_Sort = false;
+		void AddActiveRenderBuffer(Scene* scene);
 	};
 }
 

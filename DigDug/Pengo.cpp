@@ -5,6 +5,7 @@
 #include "Minigin.h"
 #include "SceneManager.h"
 #include "Level1.h"
+#include "TestScene.h"
 
 
 int main(int , char **)
@@ -13,8 +14,10 @@ int main(int , char **)
 	engine.Initialize();
 
 	auto scene = new Level1();
+	auto scene2 = new TestScene();
 	dae::SceneManager::GetInstance().AddScene(scene);
-	dae::SceneManager::GetInstance().SetActiveScene("Level1");
+	dae::SceneManager::GetInstance().AddScene(scene2);
+	dae::SceneManager::GetInstance().SetActiveScene("TestScene");
 
 	engine.Run();
 	return 0;

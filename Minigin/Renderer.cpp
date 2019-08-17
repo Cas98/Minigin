@@ -2,7 +2,8 @@
 #include "Renderer.h"
 #include <SDL.h>
 #include "SceneManager.h"
-#include "Scene.h"
+#include "GameObject.h"
+#include <algorithm>
 #pragma warning(push)
 #pragma warning (disable:4291)
 
@@ -23,9 +24,18 @@ void dae::Renderer::Initialize(SDL_Window * window, int startSize, int growSize)
 
 void dae::Renderer::Render()
 {
+	if(m_Sort)
+	{
+		std::sort(m_pActiveRenderComponents.begin(), m_pActiveRenderComponents.end(),
+			[](RenderComponent* obj1, RenderComponent* obj2)
+		{
+			return obj1->GetGameObject()->GetTransformComponent()->GetPosition().z > obj2->GetGameObject()->GetTransformComponent()->GetPosition().z;
+		});
+		m_Sort = false;
+	}
+
 	SDL_RenderClear(mRenderer);
 
-	//SceneManager::GetInstance().Render();
 	for (int i{ 0 }; i < m_pActiveRenderComponents.size(); ++i)
 	{
 		m_pActiveRenderComponents[i]->Render();
@@ -45,11 +55,6 @@ void dae::Renderer::Destroy()
 	for (int i{0}; i < m_pNonActiveRenderComponents.size(); ++i)
 	{
 		free(m_pNonActiveRenderComponents[i]);
-	}
-
-	for (int i{ 0 }; i < m_pActiveRenderComponents.size(); ++i)
-	{
-		free(m_pActiveRenderComponents[i]);
 	}
 }
 
@@ -103,6 +108,8 @@ dae::RenderComponent* dae::Renderer::GetRenderComponent()
 
 	std::cout << "Got render component" << std::endl;
 
+	m_Sort = true;
+
 	return renderComp;
 }
 
@@ -112,16 +119,10 @@ void dae::Renderer::SendRenderComponent(RenderComponent* pRenderComponent)
 
 	if(it != m_pActiveRenderComponents.end())
 	{
-		m_pNonActiveRenderComponents.push_back(*it);
 		m_pActiveRenderComponents.erase(it);
-
-		std::cout << "Returned render component" << std::endl;
 	}
-	else
-	{
-		free(pRenderComponent);
-		std::cout << "Returning render component FAILED" << std::endl;
-	}
+	m_pNonActiveRenderComponents.push_back(pRenderComponent);
+	std::cout << "Returned render component" << std::endl;
 }
 
 void dae::Renderer::AddRenderComponents(int size)
@@ -131,4 +132,47 @@ void dae::Renderer::AddRenderComponents(int size)
 		m_pNonActiveRenderComponents.push_back(new(true) RenderComponent());
 	}
 	std::cout << "Added " << size << " render components" << std::endl;
+}
+
+void dae::Renderer::SetActiveRenderBuffer(Scene* pOldScene, Scene* pNewScene)
+{
+	if (pOldScene != nullptr)
+	{
+		auto itOld = m_ActiveRenderComponentsBuffers.find(pOldScene->GetName());
+
+		//if buffer for current scene does not exists add one
+		if (itOld == m_ActiveRenderComponentsBuffers.end())
+		{
+			AddActiveRenderBuffer(pOldScene);
+			itOld = m_ActiveRenderComponentsBuffers.find(pOldScene->GetName());
+		}
+
+		//transfer active components t buffer old scene 
+		itOld->second = m_pActiveRenderComponents;
+	}
+
+	//transfer new scene components to active buffer
+	auto it = m_ActiveRenderComponentsBuffers.find(pNewScene->GetName());
+	if (it == m_ActiveRenderComponentsBuffers.end())
+	{
+		AddActiveRenderBuffer(pNewScene);
+		it = m_ActiveRenderComponentsBuffers.find(pNewScene->GetName());
+	}
+	m_pActiveRenderComponents = it->second;
+	it->second.clear();
+}
+
+void dae::Renderer::RemoveRenderBuffer(dae::Scene* scene)
+{
+	auto it = m_ActiveRenderComponentsBuffers.find(scene->GetName());
+	if (it != m_ActiveRenderComponentsBuffers.end())
+	{
+		m_ActiveRenderComponentsBuffers.erase(it);
+	}
+}
+
+void dae::Renderer::AddActiveRenderBuffer(dae::Scene* scene)
+{
+	std::vector<RenderComponent*> buffer;
+	m_ActiveRenderComponentsBuffers.insert(std::pair<std::string, std::vector<RenderComponent*>>(scene->GetName(), buffer));
 }

@@ -28,7 +28,6 @@ namespace dae
 
 		virtual void Init() {};
 		virtual void Update() {};
-		virtual void Render() {};
 
 		void SetGameObject(GameObject* object);
 		GameObject* GetGameObject() const;

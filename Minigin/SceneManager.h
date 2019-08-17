@@ -17,7 +17,6 @@ namespace dae
 		Scene* GetActiveScene();
 
 		void Update();
-		void Render();
 		void Destroy();
 
 	private:

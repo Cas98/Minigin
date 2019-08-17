@@ -15,7 +15,6 @@ namespace dae
 	{
 	public:
 		void Update();
-		void Render() const;
 
 		void Destroy();
 
@@ -39,7 +38,7 @@ namespace dae
 		template<typename compType>
 		compType* GetComponent();
 
-		GameObject(glm::vec3 pos = { 0.0f,0.0f,0.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
+		GameObject(glm::vec3 pos = { 0.0f,0.0f,1.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
 		
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;

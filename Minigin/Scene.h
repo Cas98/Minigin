@@ -28,7 +28,6 @@ namespace dae
 
 		void RootInitialize();
 		void RootUpdate();
-		void RootRender() const;
 		void DeleteObjects();
 		void AddObjects();
 
@@ -37,7 +36,9 @@ namespace dae
 		std::vector <GameObject*> m_pAddedObjects{};
 		std::vector <GameObject*> m_pObjectsToDelete{};
 
-		static unsigned int idCounter; 
+		static unsigned int idCounter;
+
+		bool m_IsInizialized = false;
 	};
 
 }

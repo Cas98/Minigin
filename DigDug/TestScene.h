@@ -7,6 +7,8 @@ public:
 	TestScene();
 	//~TestScene();
 
+	float sec = 10.0f;
+
 protected:
 	virtual void Initialize() override;
 	virtual void Update() override;

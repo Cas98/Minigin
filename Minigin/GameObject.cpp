@@ -65,14 +65,6 @@ void dae::GameObject::Update()
 	}
 }
 
-void dae::GameObject::Render() const
-{
-	for (auto component : mComponents)
-	{
-		component->Render();
-	}
-}
-
 void dae::GameObject::AddComponent(BaseComponent* component)
 {
 	if(HasComponent(component))

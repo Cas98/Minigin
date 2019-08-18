@@ -81,7 +81,7 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 	auto snobeeFSM = new dae::FSMComponent(new SnobeeIdleState(snobee, m_pGridCompRef->BaseComponent::GetGameObject()));
 	snobee->AddComponent(snobeeFSM);
 
-	GetGameObject()->GetScene()->Add(snobee);
+	GetGameObject()->GetScene()->AddThreaded(snobee);
 	m_pGridCompRef->SetGameObject(x, y, snobee);
 
 	auto subject = GetGameObject()->GetComponent<dae::SubjectComponent>();

@@ -38,13 +38,13 @@ void PlayerManagerScript::Update()
 
 void PlayerManagerScript::RespawnPlayer()
 {
-	m_PlayerLives--;
-	//remove ui
-	m_pLifeUIs[m_pLifeUIs.size() - 1]->Destroy();
-	m_pLifeUIs.pop_back();
-
-	if(m_PlayerLives >= 0)
+	if(m_PlayerLives > 0)
 	{
+		m_PlayerLives--;
+		//remove ui
+		m_pLifeUIs[m_pLifeUIs.size() - 1]->Destroy();
+		m_pLifeUIs.pop_back();
+
 		//respawn player
 		auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
 		player->AddComponent(new dae::RenderComponent());

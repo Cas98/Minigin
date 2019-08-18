@@ -9,6 +9,7 @@ namespace dae
 	public:
 		Scene(const std::string& name);
 		void Add(GameObject* object);
+		void AddThreaded(GameObject* object);
 		void Remove(GameObject* object);
 
 		std::string GetName();
@@ -35,6 +36,8 @@ namespace dae
 		std::vector <GameObject*> mObjects{};
 		std::vector <GameObject*> m_pAddedObjects{};
 		std::vector <GameObject*> m_pObjectsToDelete{};
+		std::vector <GameObject*> m_pObjectsThread{};
+		std::vector <GameObject*> m_pAddedObjectsThread{};
 
 		static unsigned int idCounter;
 

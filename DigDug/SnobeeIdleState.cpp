@@ -7,6 +7,8 @@
 #include "PlayerScript.h"
 #include "PushedState.h"
 #include "BlockScript.h"
+#include "StunState.h"
+#include "GridScript.h"
 
 SnobeeIdleState::SnobeeIdleState(dae::GameObject* pSnobee, dae::GameObject* pGrid)
 	:m_pSnobeeRef(pSnobee), m_pGridRef(pGrid)
@@ -21,7 +23,7 @@ SnobeeIdleState::~SnobeeIdleState()
 void SnobeeIdleState::Enter()
 {
 	//std::cout << "Enter snobee idle state" << std::endl;
-	auto script = m_pSnobeeRef->GetComponent<SnobeeScript>();
+	/*auto script = m_pSnobeeRef->GetComponent<SnobeeScript>();*/
 }
 
 void SnobeeIdleState::Exit()
@@ -45,15 +47,30 @@ dae::State* SnobeeIdleState::HandleInput(dae::InputComponent* input)
 		//pushed state
 		return new PushedState(m_pSnobeeRef, m_pGridRef, m_pSnobeeRef->GetComponent<SnobeeScript>()->GetDirection(), false);
 	}
+	if (snobeeScript->GetIsStunned())
+	{
+		//stun state
+		return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	}
 
 
 	auto currentDirection = snobeeScript->GetDirection();
-	//check if next spot is free
+	
 	auto gridComp = m_pGridRef->GetComponent<dae::GridComponent>();
+	auto gridScript = m_pGridRef->GetComponent<GridScript>();
 	auto currentCoords = gridComp->GetGameObjectPos(m_pSnobeeRef);
 	glm::vec2 nextCoords = currentCoords;
 	int randDirChange = snobeeScript->GetRandomDirChange();
+	int height = gridComp->GetHeight();
+	int width = gridComp->GetWidth();
 
+	//check if stunned by active wall
+	if(currentCoords.x == 0 && gridScript->IsWallActive(dae::Direction::Left)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.x == width - 1 && gridScript->IsWallActive(dae::Direction::Right)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.y == 0 && gridScript->IsWallActive(dae::Direction::Down)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.y == height  - 1 && gridScript->IsWallActive(dae::Direction::Up)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+
+	//check if next spot is free
 	switch (currentDirection)
 	{
 	case dae::Direction::Down:
@@ -71,9 +88,6 @@ dae::State* SnobeeIdleState::HandleInput(dae::InputComponent* input)
 	}
 
 	auto object = gridComp->GetGameObject(nextCoords.x, nextCoords.y);
-
-	int height = gridComp->GetHeight();
-	int width = gridComp->GetWidth();
 
 	//if spot free move in that direction
 	if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height && randDirChange > 0)

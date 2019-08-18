@@ -38,10 +38,9 @@ void dae::RenderComponent::Render()
 }
 
 
-void * dae::RenderComponent::operator new(size_t size, bool isRenderer)
+void * dae::RenderComponent::operator new(size_t )
 {
-	if(isRenderer)return malloc(size);
-	else return Renderer::GetInstance().GetRenderComponent();
+	return Renderer::GetInstance().GetRenderComponent();
 }
 
 void dae::RenderComponent::operator delete(void* p)

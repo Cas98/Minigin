@@ -8,6 +8,8 @@
 #include "TextureComponent.h"
 #include "PlayerScript.h"
 #include "PushState.h"
+#include "SnobeeScript.h"
+#include "GridScript.h"
 
 
 IdleState::IdleState(dae::GameObject* pPlayer, dae::GameObject* pGrid)
@@ -39,8 +41,12 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 {
 
 	auto gridComp = m_pGridRef->GetComponent<dae::GridComponent>();
+	auto gridScript = m_pGridRef->GetComponent<GridScript>();
 	glm::vec2 coords = gridComp->GetGameObjectPos(m_pPlayerRef);
 	auto scriptComp = m_pPlayerRef->GetComponent<PlayerScript>();
+	int height = gridComp->GetHeight();
+	int width = gridComp->GetWidth();
+	auto currentPlayerDir = scriptComp->GetDirection();
 
 	//enter push state
 	if (input->KeyboardPressed('Z'))
@@ -57,6 +63,12 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				}
 			}
 		}*/
+		//check if player activates wall
+		if (coords.x == 0 && currentPlayerDir == dae::Direction::Left) gridScript->ActivateWall(dae::Direction::Left);
+		if (coords.x == width - 1 && currentPlayerDir == dae::Direction::Right) gridScript->ActivateWall(dae::Direction::Right);
+		if (coords.y == 0 && currentPlayerDir == dae::Direction::Down) gridScript->ActivateWall(dae::Direction::Down);
+		if (coords.y == height - 1 && currentPlayerDir == dae::Direction::Up) gridScript->ActivateWall(dae::Direction::Up);
+
 		return new PushState(m_pPlayerRef, m_pGridRef);
 	}
 	
@@ -64,8 +76,6 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 	if(input->KeyboardDown('W'))
 	{
 		std::cout << "W pressed" << std::endl;
-		int height = gridComp->GetHeight();
-
 		scriptComp->SetDirection(dae::Direction::Up);
 
 		if(coords.y < height - 1)
@@ -85,13 +95,20 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
 			}
+			else if(obj->GetTag() == "Snobee")
+			{
+				if(obj->GetComponent<SnobeeScript>()->GetIsStunned())
+				{
+					obj->GetComponent<SnobeeScript>()->Kill();
+					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
+				}
+			}
 		}
 	}
 
 	if (input->KeyboardDown('A'))
 	{
 		std::cout << "A pressed" << std::endl;
-
 		scriptComp->SetDirection(dae::Direction::Left);
 
 		if (coords.x > 0)
@@ -111,13 +128,20 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
 			}
+			else if (obj->GetTag() == "Snobee")
+			{
+				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
+				{
+					obj->GetComponent<SnobeeScript>()->Kill();
+					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
+				}
+			}
 		}
 	}
 
 	if (input->KeyboardDown('S'))
 	{
 		std::cout << "S pressed" << std::endl;
-
 		scriptComp->SetDirection(dae::Direction::Down);
 		
 		if (coords.y > 0)
@@ -136,14 +160,20 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
 			}
+			else if (obj->GetTag() == "Snobee")
+			{
+				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
+				{
+					obj->GetComponent<SnobeeScript>()->Kill();
+					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
+				}
+			}
 		}
 	}
 
 	if (input->KeyboardDown('D'))
 	{
 		std::cout << "D pressed" << std::endl;
-		int width = gridComp->GetWidth();
-
 		scriptComp->SetDirection(dae::Direction::Right);
 		
 		if (coords.x < width - 1)
@@ -161,6 +191,14 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 			if (obj == nullptr)
 			{
 				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
+			}
+			else if (obj->GetTag() == "Snobee")
+			{
+				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
+				{
+					obj->GetComponent<SnobeeScript>()->Kill();
+					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
+				}
 			}
 		}
 	}

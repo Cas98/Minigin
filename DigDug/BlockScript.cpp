@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "GridComponent.h"
 #include "SnobeeManagerScript.h"
+#include "SnobeeScript.h"
 
 BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee)
 	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger)
@@ -32,11 +33,6 @@ void BlockScript::MoveBlock(const dae::Direction& newDirection)
 	SetIsPushed(true);
 }
 
-//Subject* BlockScript::GetSubject() const
-//{
-//	return m_pSubject;
-//}
-
 dae::Direction BlockScript::GetDirection() const
 {
 	return m_Direction;
@@ -60,6 +56,7 @@ bool BlockScript::AreDiamondsAligned()
 			
 			if(IsObjectDiamond(targetPos))
 			{
+				m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->StunSnobees();
 				return true;
 			}
 
@@ -68,6 +65,7 @@ bool BlockScript::AreDiamondsAligned()
 
 			if(IsObjectDiamond(targetPos))
 			{
+				m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->StunSnobees();
 				return true;
 			}
 

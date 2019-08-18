@@ -14,10 +14,10 @@ int main(int , char **)
 	engine.Initialize();
 
 	auto scene = new Level1();
-	auto scene2 = new TestScene();
+	//auto scene2 = new TestScene();
 	dae::SceneManager::GetInstance().AddScene(scene);
-	dae::SceneManager::GetInstance().AddScene(scene2);
-	dae::SceneManager::GetInstance().SetActiveScene("TestScene");
+	//dae::SceneManager::GetInstance().AddScene(scene2);
+	dae::SceneManager::GetInstance().SetActiveScene("Level1");
 
 	engine.Run();
 	return 0;

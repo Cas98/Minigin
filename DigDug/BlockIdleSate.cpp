@@ -21,7 +21,7 @@ void BlockIdleSate::Enter()
 	//check diamond alignment
 	if(m_pBlockRef->GetTag() == "Diamond")
 	{
-		auto script = m_pBlockRef->GetComponent<BlockScript>();
+		//auto script = m_pBlockRef->GetComponent<BlockScript>();
 		if(script)
 		{
 			if(script->AreDiamondsAligned())

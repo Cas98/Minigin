@@ -33,10 +33,10 @@ void Level1::Initialize()
 {
 	
 	std::vector<int> map = { 0,1,0,0,0,1,0,0,0,0,0,1,0,
-							 0,1,0,1,1,1,0,1,1,2,0,1,0,
+							 2,1,0,1,1,1,0,1,1,2,0,1,0,
 							 0,3,0,0,0,0,0,3,0,0,0,1,0,
-							 0,1,1,1,1,1,1,1,0,1,1,1,0,
-							 0,1,0,0,0,0,0,0,0,1,0,1,0,
+							 2,1,1,1,1,1,1,1,0,1,1,1,0,
+							 2,1,0,0,0,0,0,0,0,1,0,1,0,
 							 0,1,0,1,1,2,1,1,1,1,0,1,0,
 							 0,1,0,0,0,1,0,0,0,1,0,1,0,
 							 0,1,1,1,0,3,0,1,1,1,0,3,0,
@@ -60,10 +60,10 @@ void Level1::Initialize()
 
 void Level1::Update()
 {
-	if (sec <= 0.0f) sec = 10.0f;
+	/*if (sec <= 0.0f) sec = 10.0f;
 	sec -= dae::Time::GetInstance().GetDeltaTime();
 
 	if (sec <= 0.0f)
-		dae::SceneManager::GetInstance().SetActiveScene("TestScene");
+		dae::SceneManager::GetInstance().SetActiveScene("TestScene");*/
 }
 

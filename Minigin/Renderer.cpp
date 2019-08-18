@@ -129,7 +129,7 @@ void dae::Renderer::AddRenderComponents(int size)
 {
 	for (int i{ 0 }; i < size; ++i)
 	{
-		m_pNonActiveRenderComponents.push_back(new(true) RenderComponent());
+		m_pNonActiveRenderComponents.push_back((RenderComponent*) malloc(sizeof(RenderComponent)));
 	}
 	std::cout << "Added " << size << " render components" << std::endl;
 }

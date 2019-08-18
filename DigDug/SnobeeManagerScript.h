@@ -1,6 +1,7 @@
 #pragma once
 #include "ScriptComponent.h"
 #include "GridComponent.h"
+class SnobeeScript;
 
 class SnobeeManagerScript final: public dae::ScriptComponent
 {
@@ -15,6 +16,8 @@ public:
 	void RemoveWall(dae::GameObject* pWall);
 
 	void DecrementActiveSnobees();
+	void StunSnobees();
+	void RemoveObserver(SnobeeScript* pSnobeeObserver);
 
 private:
 	std::vector<dae::GameObject*> m_pWallsThatSpawnSnobees;

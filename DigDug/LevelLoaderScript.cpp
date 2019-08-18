@@ -14,6 +14,7 @@
 #include "PlayerManagerScript.h"
 #include "IdleState.h"
 #include "PlayerScript.h"
+#include "GridScript.h"
 
 LevelLoaderScript::LevelLoaderScript()
 {
@@ -46,12 +47,14 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 	//Grid
 	auto grid = new dae::GameObject({ 8.0f,248.0f,0.0f });
 	grid->AddComponent(new dae::GridComponent(13, 15, 16.0f));
+	grid->AddComponent(new GridScript());
 
 	GetGameObject()->GetScene()->Add(grid);
 
 	//snobee manager
 	auto snobeeManager = new dae::GameObject();
 	snobeeManager->AddComponent(new SnobeeManagerScript(grid));
+	snobeeManager->AddComponent(new dae::SubjectComponent());
 	GetGameObject()->GetScene()->Add(snobeeManager);
 
 	//PlayerManager
@@ -78,7 +81,7 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 			}
 			else if (map[x + (y * 13)] == 2)
 			{
-				AddDiamond(x, y, grid);
+				AddDiamond(x, y, grid, snobeeManager);
 			}
 		}
 	}
@@ -139,7 +142,7 @@ void LevelLoaderScript::AddSnobee(int x, int y, dae::GameObject* pGrid, dae::Gam
 	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, snobee);
 }
 
-void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid)
+void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
 {
 	auto diamond = new dae::GameObject();
 	diamond->AddComponent(new dae::RenderComponent());
@@ -147,7 +150,7 @@ void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid)
 	diamond->SetTag("Diamond");
 	auto diamondFSM = new dae::FSMComponent(new BlockIdleSate(diamond, pGrid));
 	diamond->AddComponent(diamondFSM);
-	diamond->AddComponent(new BlockScript(pGrid));
+	diamond->AddComponent(new BlockScript(pGrid, pSnobeeManager));
 
 	GetGameObject()->GetScene()->Add(diamond);
 	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, diamond);

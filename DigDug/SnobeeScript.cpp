@@ -50,7 +50,9 @@ int SnobeeScript::GetRandomDirChange() const
 
 void SnobeeScript::Kill()
 {
-	m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->DecrementActiveSnobees();
+	auto script = m_pSnobeeManager->GetComponent<SnobeeManagerScript>();
+	script->DecrementActiveSnobees();
+	script->RemoveObserver(this);
 	GetGameObject()->Destroy();
 }
 
@@ -63,4 +65,27 @@ void SnobeeScript::SetIsPushed(bool isPushed)
 bool SnobeeScript::GetIsPushed() const
 {
 	return m_IsPushed;
+}
+
+void SnobeeScript::SetIsStunned(bool isStunned)
+{
+	m_IsStunned = isStunned;
+}
+
+bool SnobeeScript::GetIsStunned() const
+{
+	return m_IsStunned;
+}
+
+void SnobeeScript::Stun()
+{
+	SetIsStunned(true);
+}
+
+void  SnobeeScript::OnNotify(dae::GameObject* gameObject, const std::string& message)
+{
+	if(message == "Stun")
+	{
+		SetIsStunned(true);
+	}
 }

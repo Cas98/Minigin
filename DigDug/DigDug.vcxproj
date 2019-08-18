@@ -166,6 +166,7 @@
   <ItemGroup>
     <ClInclude Include="BlockScript.h" />
     <ClInclude Include="BreakState.h" />
+    <ClInclude Include="GridScript.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Level1.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="SnobeeIdleState.h" />
     <ClInclude Include="SnobeeManagerScript.h" />
     <ClInclude Include="SnobeeScript.h" />
+    <ClInclude Include="StunState.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="TestScript.h" />
     <ClInclude Include="BlockIdleSate.h" />
@@ -187,6 +189,7 @@
   <ItemGroup>
     <ClCompile Include="BlockScript.cpp" />
     <ClCompile Include="BreakState.cpp" />
+    <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="LevelLoaderScript.cpp" />
@@ -206,6 +209,7 @@
     <ClCompile Include="SnobeeIdleState.cpp" />
     <ClCompile Include="SnobeeManagerScript.cpp" />
     <ClCompile Include="SnobeeScript.cpp" />
+    <ClCompile Include="StunState.cpp" />
     <ClCompile Include="TestScene.cpp" />
     <ClCompile Include="TestScript.cpp" />
     <ClCompile Include="BlockIdleSate.cpp" />

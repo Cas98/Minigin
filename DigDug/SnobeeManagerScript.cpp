@@ -8,6 +8,7 @@
 #include "RenderComponent.h"
 #include "FSMComponent.h"
 #include "Renderer.h"
+#include "SubjectComponent.h"
 
 SnobeeManagerScript::SnobeeManagerScript(dae::GameObject* pGrid)
 {
@@ -67,7 +68,8 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 	auto snobee = new dae::GameObject();
 	snobee->AddComponent(new dae::RenderComponent());
 	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
-	snobee->AddComponent(new SnobeeScript(dae::Direction::Up, GetGameObject()));
+	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject());
+	snobee->AddComponent(script);
 	snobee->SetTag("Snobee");
 
 	auto snobeeFSM = new dae::FSMComponent(new SnobeeIdleState(snobee, m_pGridCompRef->BaseComponent::GetGameObject()));
@@ -75,6 +77,12 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 
 	GetGameObject()->GetScene()->Add(snobee);
 	m_pGridCompRef->SetGameObject(x, y, snobee);
+
+	auto subject = GetGameObject()->GetComponent<dae::SubjectComponent>();
+	if (subject)
+	{
+		subject->AddObserver(script);
+	}
 
 	//remove ui
 	if (m_pLifeUIs.size() > 0)
@@ -87,4 +95,22 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 void SnobeeManagerScript::DecrementActiveSnobees()
 {
 	m_NumberOfActiveSnobees--;
+}
+
+void SnobeeManagerScript::StunSnobees()
+{
+	auto subject = GetGameObject()->GetComponent<dae::SubjectComponent>();
+	if(subject)
+	{
+		subject->Notify(GetGameObject(), "Stun");
+	}
+}
+
+void SnobeeManagerScript::RemoveObserver(SnobeeScript* pSnobeeObserver)
+{
+	auto subject = GetGameObject()->GetComponent<dae::SubjectComponent>();
+	if (subject)
+	{
+		subject->RemoveObserver(pSnobeeObserver);
+	}
 }

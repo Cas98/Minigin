@@ -14,6 +14,6 @@ public:
 private:
 	void AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee = false);
 	void AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager);
-	void AddDiamond(int x, int y, dae::GameObject* pGrid);
+	void AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager);
 };
 

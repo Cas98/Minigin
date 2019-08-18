@@ -20,7 +20,7 @@ public:
 	void SetIsPushed(bool isPushed);
 	bool GetIsPushed() const;
 
-	void Break();
+	void Break(bool isSnobeeManager = false);
 
 	BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger = nullptr, bool canSpawnSnobee = false);
 	~BlockScript();

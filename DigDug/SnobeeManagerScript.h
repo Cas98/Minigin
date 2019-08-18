@@ -1,12 +1,13 @@
 #pragma once
 #include "ScriptComponent.h"
 #include "GridComponent.h"
+#include "ScoreScript.h"
 class SnobeeScript;
 
 class SnobeeManagerScript final: public dae::ScriptComponent
 {
 public:
-	SnobeeManagerScript(dae::GameObject* pGrid);
+	SnobeeManagerScript(dae::GameObject* pGrid, dae::GameObject* pScore);
 	~SnobeeManagerScript();
 
 	virtual void Init() override;
@@ -27,5 +28,6 @@ private:
 	dae::GridComponent* m_pGridCompRef;
 	void SpawnSnobee(int x, int y);
 	std::vector<dae::GameObject*> m_pLifeUIs;
+	ScoreScript* m_pScoreScriptRef;
 };
 

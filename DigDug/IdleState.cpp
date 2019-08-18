@@ -10,6 +10,7 @@
 #include "PushState.h"
 #include "SnobeeScript.h"
 #include "GridScript.h"
+#include "SubjectComponent.h"
 
 
 IdleState::IdleState(dae::GameObject* pPlayer, dae::GameObject* pGrid)
@@ -100,6 +101,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				if(obj->GetComponent<SnobeeScript>()->GetIsStunned())
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
+					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
 				}
 			}
@@ -133,6 +135,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
+					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
 				}
 			}
@@ -165,6 +168,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
+					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
 				}
 			}
@@ -197,6 +201,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				if (obj->GetComponent<SnobeeScript>()->GetIsStunned())
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
+					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
 				}
 			}

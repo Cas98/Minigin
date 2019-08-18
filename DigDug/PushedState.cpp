@@ -95,6 +95,7 @@ dae::State* PushedState::HandleInput(dae::InputComponent* )
 		else//if snobee cant move anymore kill it
 		{
 			gridcomp->RemoveGameObject(m_pBlockRef);
+			m_pBlockRef->GetComponent<dae::SubjectComponent>()->Notify(m_pBlockRef, "KillSnobee");//add score for killing Snobee
 			m_pBlockRef->GetComponent<SnobeeScript>()->Kill();
 		}
 	}

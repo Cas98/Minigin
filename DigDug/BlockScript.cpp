@@ -4,6 +4,7 @@
 #include "GridComponent.h"
 #include "SnobeeManagerScript.h"
 #include "SnobeeScript.h"
+#include "SubjectComponent.h"
 
 BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee)
 	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger)
@@ -101,7 +102,7 @@ bool BlockScript::GetIsPushed() const
 	return m_IsPushed;
 }
 
-void BlockScript::Break()
+void BlockScript::Break(bool isSnobeeManager)
 {
 	//remove block from grid
 	m_pGridCompRef->RemoveGameObject(GetGameObject());
@@ -111,6 +112,7 @@ void BlockScript::Break()
 
 	if(m_CanSpawnSnobee && m_pSnobeeManager)
 	{
+		if(!isSnobeeManager)GetGameObject()->GetComponent <dae::SubjectComponent>()->Notify(GetGameObject(), "DestroyEgg");
 		m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->RemoveWall(GetGameObject());
 	}
 }

@@ -10,9 +10,10 @@
 #include "Renderer.h"
 #include "SubjectComponent.h"
 
-SnobeeManagerScript::SnobeeManagerScript(dae::GameObject* pGrid)
+SnobeeManagerScript::SnobeeManagerScript(dae::GameObject* pGrid, dae::GameObject* pScore)
 {
 	m_pGridCompRef = pGrid->GetComponent<dae::GridComponent>();
+	m_pScoreScriptRef = pScore->GetComponent<ScoreScript>();
 }
 
 SnobeeManagerScript::~SnobeeManagerScript()
@@ -30,7 +31,7 @@ void SnobeeManagerScript::Update()
 		if(m_pWallsThatSpawnSnobees.size() > 0)//spawn snobee
 		{
 			auto coords = m_pGridCompRef->GetGameObjectPos(m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]);
-			m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]->GetComponent<BlockScript>()->Break();
+			m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]->GetComponent<BlockScript>()->Break(true);
 			SpawnSnobee(coords.x, coords.y);
 			m_NumberOfActiveSnobees++;
 		}
@@ -69,6 +70,11 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y)
 	snobee->AddComponent(new dae::RenderComponent());
 	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
 	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject());
+
+	auto subjectComp = new dae::SubjectComponent();
+	subjectComp->AddObserver(m_pScoreScriptRef);
+	snobee->AddComponent(subjectComp);
+
 	snobee->AddComponent(script);
 	snobee->SetTag("Snobee");
 

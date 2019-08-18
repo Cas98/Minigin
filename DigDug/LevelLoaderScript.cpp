@@ -15,6 +15,8 @@
 #include "IdleState.h"
 #include "PlayerScript.h"
 #include "GridScript.h"
+#include "TextComponent.h"
+#include "FPSComponent.h"
 
 LevelLoaderScript::LevelLoaderScript()
 {
@@ -37,7 +39,7 @@ void LevelLoaderScript::Update()
 
 void LevelLoaderScript::Load(const std::vector<int>& map)
 {
-	//background
+	////background
 	auto background = new dae::GameObject({ 0.0f,-16.0f,0.1f });
 	background->AddComponent(new dae::RenderComponent());
 	background->AddComponent(new dae::TextureComponent("Images/Background.png"));
@@ -51,9 +53,17 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 
 	GetGameObject()->GetScene()->Add(grid);
 
+	//score
+	auto score = new dae::GameObject({ 104.0f,1.0f,0.0f });
+	score->AddComponent(new dae::RenderComponent());
+	score->AddComponent(new dae::TextureComponent());
+	score->AddComponent(new dae::TextComponent("Lingua.otf", 20));
+	score->AddComponent(new ScoreScript());
+	GetGameObject()->GetScene()->Add(score);
+
 	//snobee manager
 	auto snobeeManager = new dae::GameObject();
-	snobeeManager->AddComponent(new SnobeeManagerScript(grid));
+	snobeeManager->AddComponent(new SnobeeManagerScript(grid, score));
 	snobeeManager->AddComponent(new dae::SubjectComponent());
 	GetGameObject()->GetScene()->Add(snobeeManager);
 
@@ -62,10 +72,6 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 	playerManager->AddComponent(new PlayerManagerScript(grid));
 	GetGameObject()->GetScene()->Add(playerManager);
 
-	//score
-	auto score = new dae::GameObject();
-	score->AddComponent(new ScoreScript());
-	GetGameObject()->GetScene()->Add(score);
 
 	for (int x{ 0 }; x < 13; ++x)
 	{
@@ -81,7 +87,7 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 			}
 			else if (map[x + (y * 13)] == 2)
 			{
-				AddDiamond(x, y, grid, snobeeManager);
+				AddDiamond(x, y, grid, snobeeManager, score);
 			}
 		}
 	}
@@ -93,6 +99,10 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 	player->AddComponent(new dae::InputComponent(1));
 	player->AddComponent(new PlayerScript(dae::Direction::Up, playerManager));
 	player->SetTag("Player");
+
+	auto subjectComp = new dae::SubjectComponent();
+	subjectComp->AddObserver(score->GetComponent<ScoreScript>());
+	player->AddComponent(subjectComp);
 
 	auto playerFSM = new dae::FSMComponent(new IdleState(player, grid));
 	player->AddComponent(playerFSM);
@@ -127,22 +137,22 @@ void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameO
 	}
 }
 
-void LevelLoaderScript::AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
-{
-	auto snobee = new dae::GameObject();
-	snobee->AddComponent(new dae::RenderComponent());
-	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
-	snobee->AddComponent(new SnobeeScript(dae::Direction::Up, pSnobeeManager));
-	snobee->SetTag("Snobee");
+//void LevelLoaderScript::AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
+//{
+//	auto snobee = new dae::GameObject();
+//	snobee->AddComponent(new dae::RenderComponent());
+//	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
+//	snobee->AddComponent(new SnobeeScript(dae::Direction::Up, pSnobeeManager));
+//	snobee->SetTag("Snobee");
+//
+//	auto snobeeFSM = new dae::FSMComponent(new SnobeeIdleState(snobee, pGrid));
+//	snobee->AddComponent(snobeeFSM);
+//
+//	GetGameObject()->GetScene()->Add(snobee);
+//	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, snobee);
+//}
 
-	auto snobeeFSM = new dae::FSMComponent(new SnobeeIdleState(snobee, pGrid));
-	snobee->AddComponent(snobeeFSM);
-
-	GetGameObject()->GetScene()->Add(snobee);
-	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, snobee);
-}
-
-void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
+void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore)
 {
 	auto diamond = new dae::GameObject();
 	diamond->AddComponent(new dae::RenderComponent());
@@ -151,6 +161,10 @@ void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::Ga
 	auto diamondFSM = new dae::FSMComponent(new BlockIdleSate(diamond, pGrid));
 	diamond->AddComponent(diamondFSM);
 	diamond->AddComponent(new BlockScript(pGrid, pSnobeeManager));
+
+	auto subjectComp = new dae::SubjectComponent();
+	subjectComp->AddObserver(pScore->GetComponent<ScoreScript>());
+	diamond->AddComponent(subjectComp);
 
 	GetGameObject()->GetScene()->Add(diamond);
 	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, diamond);

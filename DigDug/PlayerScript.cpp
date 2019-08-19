@@ -2,9 +2,10 @@
 #include "PlayerScript.h"
 #include "GameObject.h"
 #include "PlayerManagerScript.h"
+#include "InputComponent.h"
 
-PlayerScript::PlayerScript(dae::Direction direction, dae::GameObject* pPlayerManager)
-	:m_Direction(direction), m_pPlayerManager(pPlayerManager)
+PlayerScript::PlayerScript(dae::Direction direction, dae::GameObject* pPlayerManager, glm::vec2 spawnCoords)
+	:m_Direction(direction), m_pPlayerManager(pPlayerManager), m_SpawnCoords(spawnCoords)
 {
 
 }
@@ -35,6 +36,12 @@ void PlayerScript::SetDirection(dae::Direction direction)
 
 void PlayerScript::Kill()
 {
-	m_pPlayerManager->GetComponent<PlayerManagerScript>()->RespawnPlayer();
+	int playerIndex = GetGameObject()->GetComponent<dae::InputComponent>()->GetPlayerIndex();
+	m_pPlayerManager->GetComponent<PlayerManagerScript>()->RespawnPlayer(m_SpawnCoords.x, m_SpawnCoords.y,playerIndex);
 	GetGameObject()->Destroy();
+}
+
+glm::vec2 PlayerScript::GetSpawnCoords() const
+{
+	return m_SpawnCoords;
 }

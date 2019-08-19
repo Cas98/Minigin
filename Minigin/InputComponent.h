@@ -29,6 +29,8 @@ namespace dae
 		//mouse
 		glm::vec2 GetMousePos() const;
 
+		int GetPlayerIndex() const;
+
 	private:
 		int m_PlayerIndex;
 	};

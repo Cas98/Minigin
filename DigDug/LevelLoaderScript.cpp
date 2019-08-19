@@ -72,6 +72,7 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 	playerManager->AddComponent(new PlayerManagerScript(grid));
 	GetGameObject()->GetScene()->Add(playerManager);
 
+	int playerIndex = 0;
 
 	for (int x{ 0 }; x < 13; ++x)
 	{
@@ -81,35 +82,23 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 			{
 				AddWall(x, y, grid, snobeeManager, score);
 			}
-			else if (map[x + (y * 13)] == 3)
-			{
-				AddWall(x, y, grid, snobeeManager, score, true);
-			}
 			else if (map[x + (y * 13)] == 2)
 			{
 				AddDiamond(x, y, grid, snobeeManager, score);
 			}
+			else if (map[x + (y * 13)] == 3)
+			{
+				AddWall(x, y, grid, snobeeManager, score, true);
+			}
+			else if(map[x + (y * 13)] == 4)
+			{
+				AddPlayer(x, y, grid, playerManager, score, playerIndex);
+				playerIndex++;
+			}
 		}
 	}
 
-	//Player
-	auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
-	player->AddComponent(new dae::RenderComponent());
-	player->AddComponent(new dae::TextureComponent("Block.jpg"));
-	player->AddComponent(new dae::InputComponent(1));
-	player->AddComponent(new PlayerScript(dae::Direction::Up, playerManager));
-	player->SetTag("Player");
-
-	auto subjectComp = new dae::SubjectComponent();
-	subjectComp->AddObserver(score->GetComponent<ScoreScript>());
-	player->AddComponent(subjectComp);
-
-	auto playerFSM = new dae::FSMComponent(new IdleState(player, grid));
-	player->AddComponent(playerFSM);
-
-	GetGameObject()->GetScene()->Add(player);
-
-	grid->GetComponent<dae::GridComponent>()->SetGameObject(0, 0, player);
+	
 }
 
 void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee)
@@ -168,4 +157,26 @@ void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::Ga
 
 	GetGameObject()->GetScene()->Add(diamond);
 	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, diamond);
+}
+
+void LevelLoaderScript::AddPlayer(int x, int y, dae::GameObject* pGrid, dae::GameObject* pPlayerManager, dae::GameObject* pScore, int playerIndex)
+{
+	//Player
+	auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
+	player->AddComponent(new dae::RenderComponent());
+	player->AddComponent(new dae::TextureComponent("Block.jpg"));
+	player->AddComponent(new dae::InputComponent(playerIndex));
+	player->AddComponent(new PlayerScript(dae::Direction::Up, pPlayerManager,{x,y}));
+	player->SetTag("Player");
+
+	auto subjectComp = new dae::SubjectComponent();
+	subjectComp->AddObserver(pScore->GetComponent<ScoreScript>());
+	player->AddComponent(subjectComp);
+
+	auto playerFSM = new dae::FSMComponent(new IdleState(player, pGrid));
+	player->AddComponent(playerFSM);
+
+	GetGameObject()->GetScene()->Add(player);
+
+	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, player);
 }

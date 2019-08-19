@@ -11,7 +11,7 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 
-	void RespawnPlayer();
+	void RespawnPlayer(int x, int y, int playerIndex);
 
 private:
 	int m_PlayerLives = 4;

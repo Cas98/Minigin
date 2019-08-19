@@ -49,8 +49,25 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 	int width = gridComp->GetWidth();
 	auto currentPlayerDir = scriptComp->GetDirection();
 
+
+	//set key inputs
+	char pushKey = 'Q';
+	char moveUp = 'W';
+	char moveDown = 'S';
+	char moveRight = 'D';
+	char moveLeft = 'A';
+	int playerIndex = input->GetPlayerIndex();
+	if(playerIndex == 1)
+	{
+		pushKey = 13;
+		moveUp = 38;
+		moveDown = 40;
+		moveRight = 39;
+		moveLeft = 37;
+	}
+
 	//enter push state
-	if (input->KeyboardPressed('Z'))
+	if (input->KeyboardPressed(pushKey) || input->GamepadDown(dae::ControllerButton::ButtonA))
 	{
 		/*auto obj = gridComp->GetGameObject(coords.x + 1, coords.y );
 		if (obj)
@@ -74,9 +91,9 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 	}
 	
 
-	if(input->KeyboardDown('W'))
+	if(input->KeyboardDown(moveUp) || input->GamepadDown(dae::ControllerButton::DpadUp))
 	{
-		std::cout << "W pressed" << std::endl;
+		//std::cout << "W pressed" << std::endl;
 		scriptComp->SetDirection(dae::Direction::Up);
 
 		if(coords.y < height - 1)
@@ -108,9 +125,9 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		}
 	}
 
-	if (input->KeyboardDown('A'))
+	if (input->KeyboardDown(moveLeft) || input->GamepadDown(dae::ControllerButton::DpadLeft))
 	{
-		std::cout << "A pressed" << std::endl;
+		//std::cout << "A pressed" << std::endl;
 		scriptComp->SetDirection(dae::Direction::Left);
 
 		if (coords.x > 0)
@@ -142,9 +159,9 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		}
 	}
 
-	if (input->KeyboardDown('S'))
+	if (input->KeyboardDown(moveDown) || input->GamepadDown(dae::ControllerButton::DpadDown))
 	{
-		std::cout << "S pressed" << std::endl;
+		//std::cout << "S pressed" << std::endl;
 		scriptComp->SetDirection(dae::Direction::Down);
 		
 		if (coords.y > 0)
@@ -175,9 +192,9 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		}
 	}
 
-	if (input->KeyboardDown('D'))
+	if (input->KeyboardDown(moveRight) || input->GamepadDown(dae::ControllerButton::DpadRight))
 	{
-		std::cout << "D pressed" << std::endl;
+		//std::cout << "D pressed" << std::endl;
 		scriptComp->SetDirection(dae::Direction::Right);
 		
 		if (coords.x < width - 1)

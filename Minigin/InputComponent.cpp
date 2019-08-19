@@ -75,3 +75,8 @@ glm::vec2 dae::InputComponent::GetMousePos() const
 {
 	return(dae::InputManager::GetInstance().GetMousePos());
 }
+
+int dae::InputComponent::GetPlayerIndex() const
+{
+	return m_PlayerIndex;
+}

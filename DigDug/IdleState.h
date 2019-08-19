@@ -13,6 +13,7 @@ private:
 	virtual void Update();
 	virtual State* HandleInput(dae::InputComponent* input);
 
+	
 	dae::GameObject* m_pPlayerRef;
 	dae::GameObject* m_pGridRef;
 };

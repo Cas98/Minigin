@@ -12,7 +12,7 @@ public:
 	void Load(const std::vector<int>& map);
 
 private:
-	void AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee = false);
+	void AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee = false, bool isSnobeeAi = true);
 	//void AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager);
 	void AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore);
 	void AddPlayer(int x, int y, dae::GameObject* pGrid, dae::GameObject* pPlayerManager, dae::GameObject* pScore, int playerIndex);

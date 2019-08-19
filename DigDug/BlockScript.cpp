@@ -6,8 +6,8 @@
 #include "SnobeeScript.h"
 #include "SubjectComponent.h"
 
-BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee)
-	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger)
+BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee, bool isSnobeeAi)
+	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger), m_IsSnobeeAi(isSnobeeAi)
 {
 	//m_pSubject = new Subject();
 	m_pGridCompRef = pGrid->GetComponent<dae::GridComponent>();
@@ -100,6 +100,11 @@ void BlockScript::SetIsPushed(bool isPushed)
 bool BlockScript::GetIsPushed() const
 {
 	return m_IsPushed;
+}
+
+bool BlockScript::GetIsSnobeeAi() const
+{
+	return m_IsSnobeeAi;
 }
 
 void BlockScript::Break(bool isSnobeeManager)

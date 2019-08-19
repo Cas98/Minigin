@@ -31,9 +31,17 @@ void SnobeeManagerScript::Update()
 		if(m_pWallsThatSpawnSnobees.size() > 0)//spawn snobee
 		{
 			auto coords = m_pGridCompRef->GetGameObjectPos(m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]);
-			m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]->GetComponent<BlockScript>()->Break(true);
-			SpawnSnobee(coords.x, coords.y);
+			auto wallScript = m_pWallsThatSpawnSnobees[m_pWallsThatSpawnSnobees.size() - 1]->GetComponent<BlockScript>();
+			wallScript->Break(true);
+			bool isAi = wallScript->GetIsSnobeeAi();
+			if (m_IsNextSnobeePlayer)
+			{
+				isAi = false;
+				m_IsNextSnobeePlayer = false;
+			}
+			SpawnSnobee(coords.x, coords.y, isAi);
 			m_NumberOfActiveSnobees++;
+			
 		}
 		else if(m_NumberOfActiveSnobees == 0)//if no more snobees left game is won
 		{
@@ -64,12 +72,18 @@ void SnobeeManagerScript::RemoveWall(dae::GameObject* pWall)
 	}
 }
 
-void SnobeeManagerScript::SpawnSnobee(int x, int y)
+void SnobeeManagerScript::SpawnSnobee(int x, int y, bool isAi)
 {
 	auto snobee = new dae::GameObject();
 	snobee->AddComponent(new dae::RenderComponent());
 	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
-	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject());
+	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject(), isAi);
+
+	//if snobee is player controlled add input component
+	if(!script->GetIsAi())
+	{
+		snobee->AddComponent(new dae::InputComponent(1));
+	}
 
 	auto subjectComp = new dae::SubjectComponent();
 	subjectComp->AddObserver(m_pScoreScriptRef);
@@ -119,4 +133,9 @@ void SnobeeManagerScript::RemoveObserver(SnobeeScript* pSnobeeObserver)
 	{
 		subject->RemoveObserver(pSnobeeObserver);
 	}
+}
+
+void SnobeeManagerScript::SetIsNextSnobeePlayer(bool isPlayer)
+{
+	m_IsNextSnobeePlayer = isPlayer;
 }

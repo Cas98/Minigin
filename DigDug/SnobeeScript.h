@@ -7,7 +7,7 @@
 class SnobeeScript final: public dae::ScriptComponent, public Observer
 {
 public:
-	SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger);
+	SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger, bool isAi = true);
 	~SnobeeScript();
 
 	virtual void Init() override;
@@ -25,6 +25,7 @@ public:
 	void Stun();
 	void SetIsStunned(bool isStunned);
 	bool GetIsStunned() const;
+	bool GetIsAi() const;
 
 	void OnNotify(dae::GameObject* gameObject, const std::string& message) override;
 
@@ -34,6 +35,7 @@ private:
 
 	bool m_IsPushed = false;
 	bool m_IsStunned = false;
+	bool m_IsAi;
 
 	dae::GameObject* m_pSnobeeManager;
 };

@@ -2,8 +2,8 @@
 #include "SnobeeScript.h"
 #include "GameObject.h"
 
-SnobeeScript::SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger)
-	:m_Direction(direction), m_pSnobeeManager(pSnobeeManger)
+SnobeeScript::SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger, bool isAi)
+	:m_Direction(direction), m_pSnobeeManager(pSnobeeManger), m_IsAi(isAi)
 {
 
 }
@@ -53,6 +53,7 @@ void SnobeeScript::Kill()
 	auto script = m_pSnobeeManager->GetComponent<SnobeeManagerScript>();
 	script->DecrementActiveSnobees();
 	script->RemoveObserver(this);
+	if (!m_IsAi)script->SetIsNextSnobeePlayer(true);
 	GetGameObject()->Destroy();
 }
 
@@ -88,4 +89,9 @@ void  SnobeeScript::OnNotify(dae::GameObject* gameObject, const std::string& mes
 	{
 		SetIsStunned(true);
 	}
+}
+
+bool SnobeeScript::GetIsAi()const
+{
+	return m_IsAi;
 }

@@ -12,26 +12,26 @@ public:
 	virtual void Update() override;
 
 	void MoveBlock(const dae::Direction& newDirection);
-	//Subject* GetSubject() const;
 
 	dae::Direction GetDirection() const;
 	bool AreDiamondsAligned();
 
 	void SetIsPushed(bool isPushed);
 	bool GetIsPushed() const;
+	bool GetIsSnobeeAi() const;
 
 	void Break(bool isSnobeeManager = false);
 
-	BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger = nullptr, bool canSpawnSnobee = false);
+	BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger = nullptr, bool canSpawnSnobee = false, bool isSnobeeAi = true);
 	~BlockScript();
 
 private:
 	bool IsObjectDiamond(glm::vec2 targetPos);
 
-	//Subject* m_pSubject;
 	dae::Direction m_Direction;
 	bool m_IsPushed = false;
 	bool m_CanSpawnSnobee;
+	bool m_IsSnobeeAi;
 
 	dae::GridComponent* m_pGridCompRef;
 	dae::GameObject* m_pSnobeeManager;

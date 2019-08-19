@@ -95,13 +95,17 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 				AddPlayer(x, y, grid, playerManager, score, playerIndex);
 				playerIndex++;
 			}
+			else if (map[x + (y * 13)] == 5)
+			{
+				AddWall(x, y, grid, snobeeManager, score, true, false);
+			}
 		}
 	}
 
 	
 }
 
-void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee)
+void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore, bool canSpawnSnobee, bool isSnobeeAi)
 {
 	//Wall
 	auto wall = new dae::GameObject();
@@ -111,7 +115,7 @@ void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameO
 
 	auto wallFSM = new dae::FSMComponent(new BlockIdleSate(wall, pGrid));
 	wall->AddComponent(wallFSM);
-	wall->AddComponent(new BlockScript(pGrid, pSnobeeManager, canSpawnSnobee));
+	wall->AddComponent(new BlockScript(pGrid, pSnobeeManager, canSpawnSnobee, isSnobeeAi));
 
 	auto subjectComp = new dae::SubjectComponent();
 	subjectComp->AddObserver(pScore->GetComponent<ScoreScript>());

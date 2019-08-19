@@ -7,11 +7,15 @@
 bool dae::InputManager::ProcessInput()
 {
 	//gamepad
-	for (int i{ 0 };  i < mGamepadState.size(); ++i)
+	for (unsigned int i{ 0 };  i < mGamepadState.size(); ++i)
 	{
 		mPrevGamepadState[i] = mGamepadState[i];
 		XInputGetState(i, &mGamepadState[i]);
-		if (mGamepadState[i].Gamepad.wButtons == 52428) mGamepadState[i].Gamepad.wButtons = 0;
+	
+		if (mGamepadState[i].Gamepad.wButtons == 52428 || mGamepadState[i].Gamepad.wButtons == 32764 || mGamepadState[i].Gamepad.wButtons == 6333)
+		{
+			mGamepadState[i].Gamepad.wButtons = 0;
+		}
 	}
 
 	//keyboard

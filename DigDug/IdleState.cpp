@@ -225,6 +225,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 		}
 	}
 
+	
 	return nullptr;
 }
 

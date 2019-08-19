@@ -9,6 +9,7 @@
 #include <SDL.h>
 #include "Time.h"
 #include <vld.h>
+#include <SDL_image.h>
 #pragma comment (lib, "xinput.lib")
 
 void dae::Minigin::Initialize()
@@ -53,6 +54,7 @@ void dae::Minigin::Cleanup()
 	SDL_DestroyWindow(window);
 	window = nullptr;
 	SDL_Quit();
+	IMG_Quit();
 }
 
 void dae::Minigin::Run()

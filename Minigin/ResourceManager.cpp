@@ -11,16 +11,16 @@ void dae::ResourceManager::Init(std::string&& dataPath)
 	mDataPath = std::move(dataPath);
 
 	// load support for png and jpg, this takes a while!
-
+	  
 	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) 
 	{
 		throw std::runtime_error(std::string("Failed to load support for png's: ") + SDL_GetError());
 	}
 
-	if ((IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG) != IMG_INIT_JPG) 
+	/*if ((IMG_Init(IMG_INIT_JPG) & IMG_INIT_JPG) != IMG_INIT_JPG) 
 	{
 		throw std::runtime_error(std::string("Failed to load support for jpg's: ") + SDL_GetError());
-	}
+	}*/
 
 	if (TTF_Init() != 0) 
 	{

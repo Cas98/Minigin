@@ -48,7 +48,7 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 		//respawn player
 		auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
 		player->AddComponent(new dae::RenderComponent());
-		player->AddComponent(new dae::TextureComponent("Block.jpg"));
+		player->AddComponent(new dae::TextureComponent("Block.png"));
 		player->AddComponent(new dae::InputComponent(playerIndex));
 		player->AddComponent(new PlayerScript(dae::Direction::Up, GetGameObject(), {x,y}));
 		player->SetTag("Player");

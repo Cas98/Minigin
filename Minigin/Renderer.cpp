@@ -36,7 +36,7 @@ void dae::Renderer::Render()
 
 	SDL_RenderClear(mRenderer);
 
-	for (int i{ 0 }; i < m_pActiveRenderComponents.size(); ++i)
+	for (unsigned int i{ 0 }; i < m_pActiveRenderComponents.size(); ++i)
 	{
 		m_pActiveRenderComponents[i]->Render();
 	}
@@ -52,7 +52,7 @@ void dae::Renderer::Destroy()
 		mRenderer = nullptr;
 	}
 
-	for (int i{0}; i < m_pNonActiveRenderComponents.size(); ++i)
+	for (unsigned int i{0}; i < m_pNonActiveRenderComponents.size(); ++i)
 	{
 		free(m_pNonActiveRenderComponents[i]);
 	}

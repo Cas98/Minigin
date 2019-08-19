@@ -54,7 +54,7 @@ void Level1::Initialize()
 	Add(levelLoader);
 	script->Load(map);
 
-
+	/*int*/
 	
 }
 

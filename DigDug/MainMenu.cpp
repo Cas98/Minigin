@@ -7,6 +7,7 @@
 #include "TextureComponent.h"
 #include "Level1.h"
 #include "PauseMenu.h"
+#include "Level3.h"
 
 MainMenu::MainMenu()
 	:Scene("MainMenu")
@@ -30,9 +31,9 @@ void MainMenu::Initialize()
 	//solo button
 	auto soloFunction = []()
 	{
-		auto level = new Level1(GameMode::Solo);
+		auto level = new Level3(GameMode::Solo);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level1");
+		dae::SceneManager::GetInstance().SetActiveScene("Level3");
 	};
 
 	auto soloButton = new dae::GameObject({ 54.0f,-95.0f,0.1f });
@@ -45,9 +46,9 @@ void MainMenu::Initialize()
 	//coop button
 	auto coopFunction = []()
 	{
-		auto level = new Level1(GameMode::Coop);
+		auto level = new Level3(GameMode::Coop);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level1");
+		dae::SceneManager::GetInstance().SetActiveScene("Level3");
 	};
 
 	auto coopButton = new dae::GameObject({ 54.0f,-140.0f,0.1f });
@@ -60,9 +61,9 @@ void MainMenu::Initialize()
 	//versus button
 	auto versusFunction = []()
 	{
-		auto level = new Level1(GameMode::Versus);
+		auto level = new Level3(GameMode::Versus);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level1");
+		dae::SceneManager::GetInstance().SetActiveScene("Level3");
 	};
 
 	auto versusButton = new dae::GameObject({ 54.0f,-185.0f,0.1f });

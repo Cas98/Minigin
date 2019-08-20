@@ -1,11 +1,7 @@
 #include "pch.h"
 #include "Level1.h"
 #include "GameObject.h"
-#include "TextureComponent.h"
-#include "InputComponent.h"
-#include "BlockScript.h"
 #include "LevelLoaderScript.h"
-#include "Time.h"
 
 Level1::Level1(GameMode gameMode)
 	:Scene("Level1"), m_GameMode(gameMode)

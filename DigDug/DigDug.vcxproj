@@ -173,6 +173,8 @@
     <ClInclude Include="helpers.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Level1.h" />
+    <ClInclude Include="Level2.h" />
+    <ClInclude Include="Level3.h" />
     <ClInclude Include="LevelLoaderScript.h" />
     <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MoveState.h" />
@@ -199,6 +201,8 @@
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Level1.cpp" />
+    <ClCompile Include="Level2.cpp" />
+    <ClCompile Include="Level3.cpp" />
     <ClCompile Include="LevelLoaderScript.cpp" />
     <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MoveState.cpp" />

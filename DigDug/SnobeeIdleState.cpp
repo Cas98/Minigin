@@ -123,26 +123,31 @@ dae::State* SnobeeIdleState::HandleAi()
 	}
 
 	//Pick random new direction
-	std::vector<dae::Direction> unavailableDirections;
-	unavailableDirections.push_back(currentDirection);
-
-	while (unavailableDirections.size() < 4)
+	std::vector<dae::Direction> availableDirections{dae::Direction::Down,dae::Direction::Up,dae::Direction::Left,dae::Direction::Right };
+	auto it = std::find(availableDirections.begin(), availableDirections.end(), currentDirection);
+	availableDirections.erase(it);
+	int number = rand() % 10000000;
+	while (availableDirections.size() > 0)
 	{
-		auto randomDir = dae::Direction(rand() % 4);
+		srand(number);
+		auto randomDir = availableDirections[((rand() % 100000) % availableDirections.size())];
 
-		bool isNewDir = true;
+		/*bool isNewDir = true;
 		for (size_t i{ 0 }; i < unavailableDirections.size(); ++i)
 		{
 			if (randomDir == unavailableDirections[i])
 			{
 				isNewDir = false;
+				
 				break;
 			}
-		}
+		}*/
 
-		if (isNewDir)
-		{
-			unavailableDirections.push_back(randomDir);
+		/*if (isNewDir)
+		{*/
+			auto it = std::find(availableDirections.begin(), availableDirections.end(), randomDir);
+			availableDirections.erase(it);
+			
 			nextCoords = currentCoords;
 			switch (randomDir)
 			{
@@ -175,7 +180,8 @@ dae::State* SnobeeIdleState::HandleAi()
 			{
 				if(object->GetComponent<BlockScript>()->GetIsPushed())return nullptr;
 			}*/
-		}
+			number += rand() % 10000000000;
+		/*}*/
 	}
 
 

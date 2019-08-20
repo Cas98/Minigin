@@ -12,8 +12,10 @@ namespace dae
 	};
 }
 
-enum Event
+enum GameMode
 {
-	Kill,
+	Solo,
+	Coop,
+	Versus
 
 };

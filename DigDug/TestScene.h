@@ -9,7 +9,7 @@ public:
 
 	float sec = 10.0f;
 
-protected:
+private:
 	virtual void Initialize() override;
 	virtual void Update() override;
 

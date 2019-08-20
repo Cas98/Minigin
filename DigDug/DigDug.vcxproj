@@ -167,12 +167,16 @@
   <ItemGroup>
     <ClInclude Include="BlockScript.h" />
     <ClInclude Include="BreakState.h" />
+    <ClInclude Include="ButtonScript.h" />
+    <ClInclude Include="GameScript.h" />
     <ClInclude Include="GridScript.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="IdleState.h" />
     <ClInclude Include="Level1.h" />
     <ClInclude Include="LevelLoaderScript.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="MoveState.h" />
+    <ClInclude Include="PauseMenu.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerManagerScript.h" />
     <ClInclude Include="PlayerScript.h" />
@@ -190,11 +194,15 @@
   <ItemGroup>
     <ClCompile Include="BlockScript.cpp" />
     <ClCompile Include="BreakState.cpp" />
+    <ClCompile Include="ButtonScript.cpp" />
+    <ClCompile Include="GameScript.cpp" />
     <ClCompile Include="GridScript.cpp" />
     <ClCompile Include="IdleState.cpp" />
     <ClCompile Include="Level1.cpp" />
     <ClCompile Include="LevelLoaderScript.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="MoveState.cpp" />
+    <ClCompile Include="PauseMenu.cpp" />
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

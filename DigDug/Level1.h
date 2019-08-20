@@ -1,19 +1,19 @@
 #pragma once
 #include <Scene.h>
 #include "GridComponent.h"
+#include "helpers.h"
 
 class Level1 final: public dae::Scene
 {
 public:
-	Level1();
+	Level1(GameMode gameMode);
 	~Level1();
 
-	float sec = 10.0f;
 
-protected:
+private:
 	virtual void Initialize() override;
 	virtual void Update() override;
 
-	
+	GameMode m_GameMode;
 };
 

@@ -15,6 +15,7 @@ namespace dae
 
 		void SetActiveScene(const std::string& name);
 		Scene* GetActiveScene();
+		Scene* GetScene(const std::string& name);
 
 		void Update();
 		void Destroy();

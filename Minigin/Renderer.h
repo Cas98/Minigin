@@ -40,6 +40,7 @@ namespace dae
 		std::map<std::string, std::vector<RenderComponent*>> m_ActiveRenderComponentsBuffers;
 		std::vector<RenderComponent*> m_pActiveRenderComponents;
 		int m_GrowSize;
+
 		void AddRenderComponents(int size);
 
 		bool m_Sort = false;

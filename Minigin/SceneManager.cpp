@@ -34,6 +34,7 @@ void dae::SceneManager::AddScene(Scene* scene)
 		else
 		{
 			std::cout << "There already is a scene with name " << scene->GetName() << std::endl;
+			delete scene;
 		}
 	}
 }
@@ -54,8 +55,9 @@ void dae::SceneManager::RemoveScene(const std::string& name)
 	{
 		//remove render buffer
 		Renderer::GetInstance().RemoveRenderBuffer(*it);
+		Scene* pScene = *it;
 		mScenes.erase(it);
-		delete *it;
+		delete pScene;
 	}
 }
 
@@ -70,12 +72,27 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 	{
 		//set render buffer
 		Renderer::GetInstance().SetActiveRenderBuffer(mpActiveScene,*it);
-		(*it)->RootInitialize();
 		mpActiveScene = *it;
+		(*it)->RootInitialize();
 	}
 }
 
 dae::Scene* dae::SceneManager::GetActiveScene()
 {
 	return mpActiveScene;
+}
+
+dae::Scene* dae::SceneManager::GetScene(const std::string& name)
+{
+	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](Scene* scene)->bool
+	{
+		return scene->GetName() == name;
+	});
+
+	if (it != mScenes.end())
+	{
+		return *it;
+	}
+
+	return nullptr;
 }

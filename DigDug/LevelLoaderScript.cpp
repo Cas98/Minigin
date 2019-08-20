@@ -17,6 +17,7 @@
 #include "GridScript.h"
 #include "TextComponent.h"
 #include "FPSComponent.h"
+#include "GameScript.h"
 
 LevelLoaderScript::LevelLoaderScript()
 {
@@ -45,6 +46,12 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 	background->AddComponent(new dae::TextureComponent("Images/Background.png"));
 
 	GetGameObject()->GetScene()->Add(background);
+
+	//game manager
+	auto gameManager = new dae::GameObject();
+	gameManager->AddComponent(new GameScript());
+	gameManager->AddComponent(new dae::InputComponent(0));
+	GetGameObject()->GetScene()->Add(gameManager);
 
 	//Grid
 	auto grid = new dae::GameObject({ 8.0f,248.0f,0.0f });

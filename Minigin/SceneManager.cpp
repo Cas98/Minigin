@@ -8,6 +8,11 @@
 void dae::SceneManager::Update()
 {
 	if (mpActiveScene) mpActiveScene->RootUpdate();
+	if(m_pSceneToRemove)
+	{
+		RemoveScene(m_pSceneToRemove->GetName());
+		m_pSceneToRemove = nullptr;
+	}
 }
 
 void  dae::SceneManager::Destroy()
@@ -61,7 +66,7 @@ void dae::SceneManager::RemoveScene(const std::string& name)
 	}
 }
 
-void dae::SceneManager::SetActiveScene(const std::string& name)
+void dae::SceneManager::SetActiveScene(const std::string& name, bool deleteCurrentScene)
 {
 	auto it = std::find_if(mScenes.begin(), mScenes.end(), [name](Scene* scene)->bool
 	{
@@ -70,8 +75,10 @@ void dae::SceneManager::SetActiveScene(const std::string& name)
 
 	if(it != mScenes.end())
 	{
+		
 		//set render buffer
 		Renderer::GetInstance().SetActiveRenderBuffer(mpActiveScene,*it);
+		if (deleteCurrentScene) m_pSceneToRemove = mpActiveScene;
 		mpActiveScene = *it;
 		(*it)->RootInitialize();
 	}

@@ -38,8 +38,7 @@ void dae::TextComponent::TextComponent::Update()
 			throw std::runtime_error(std::string("Parent obnject doesn't have an texture component"));
 		}
 
-		const SDL_Color color = { 255,255,255 }; // only white text is supported now
-		const auto surf = TTF_RenderText_Blended(mFont->GetFont(), mText.c_str(), color);
+		const auto surf = TTF_RenderText_Blended(mFont->GetFont(), mText.c_str(), m_Color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -64,4 +63,8 @@ void dae::TextComponent::SetText(const std::string& text)
 	mNeedsUpdate = true;
 }
 
+void dae::TextComponent::SetColor(SDL_Color color)
+{
+	m_Color = color;
+}
 

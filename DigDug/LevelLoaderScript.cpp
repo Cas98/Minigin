@@ -19,7 +19,8 @@
 #include "FPSComponent.h"
 #include "GameScript.h"
 
-LevelLoaderScript::LevelLoaderScript()
+LevelLoaderScript::LevelLoaderScript(int nextLevel, GameMode gameMode, int playerLives, int score)
+	:m_NextLevel(nextLevel), m_GameMode(gameMode), m_PlayerLives(playerLives), m_Score(score)
 {
 }
 
@@ -47,12 +48,6 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 
 	GetGameObject()->GetScene()->Add(background);
 
-	//game manager
-	auto gameManager = new dae::GameObject();
-	gameManager->AddComponent(new GameScript());
-	gameManager->AddComponent(new dae::InputComponent(0));
-	GetGameObject()->GetScene()->Add(gameManager);
-
 	//Grid
 	auto grid = new dae::GameObject({ 8.0f,248.0f,0.0f });
 	grid->AddComponent(new dae::GridComponent(13, 15, 16.0f));
@@ -60,24 +55,41 @@ void LevelLoaderScript::Load(const std::vector<int>& map)
 
 	GetGameObject()->GetScene()->Add(grid);
 
+	//PlayerManager
+	auto playerManager = new dae::GameObject();
+	playerManager->AddComponent(new PlayerManagerScript(grid, m_PlayerLives));
+	auto playerManagerSubject = new dae::SubjectComponent();
+	playerManager->AddComponent(playerManagerSubject);
+	GetGameObject()->GetScene()->Add(playerManager);
+
 	//score
 	auto score = new dae::GameObject({ 104.0f,1.0f,0.0f });
 	score->AddComponent(new dae::RenderComponent());
 	score->AddComponent(new dae::TextureComponent());
 	score->AddComponent(new dae::TextComponent("Lingua.otf", 20));
-	score->AddComponent(new ScoreScript());
+	auto scoreScript = new ScoreScript();
+	score->AddComponent(scoreScript);
+	scoreScript->AddScore(m_Score);
 	GetGameObject()->GetScene()->Add(score);
+
+	//game manager
+	auto gameManager = new dae::GameObject();
+	auto gameScript = new GameScript(m_NextLevel, m_GameMode, playerManager, score);
+	gameManager->AddComponent(gameScript);
+	gameManager->AddComponent(new dae::InputComponent(0));
+	GetGameObject()->GetScene()->Add(gameManager);
+
+	//add game script to player Manager subject
+	playerManagerSubject->AddObserver(gameScript);
 
 	//snobee manager
 	auto snobeeManager = new dae::GameObject();
 	snobeeManager->AddComponent(new SnobeeManagerScript(grid, score));
-	snobeeManager->AddComponent(new dae::SubjectComponent());
+	auto subjectComp = new dae::SubjectComponent();
+	subjectComp->AddObserver(gameScript);
+	snobeeManager->AddComponent(subjectComp);
 	GetGameObject()->GetScene()->Add(snobeeManager);
 
-	//PlayerManager
-	auto playerManager = new dae::GameObject();
-	playerManager->AddComponent(new PlayerManagerScript(grid));
-	GetGameObject()->GetScene()->Add(playerManager);
 
 	int playerIndex = 0;
 

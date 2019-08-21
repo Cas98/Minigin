@@ -19,13 +19,17 @@ void ScoreScript::Init()
 
 void ScoreScript::Update()
 {
-	
+	if (m_NeedsUpdate)
+	{
+		m_pTextCompRef->SetText(std::to_string(m_Score));
+		m_NeedsUpdate = false;
+	}
 }
 
 void ScoreScript::AddScore(int score)
 {
 	m_Score += score;
-	m_pTextCompRef->SetText(std::to_string(m_Score));
+	m_NeedsUpdate = true;
 }
 
 void ScoreScript::OnNotify(dae::GameObject* gameObject, const std::string& message)
@@ -50,4 +54,9 @@ void ScoreScript::OnNotify(dae::GameObject* gameObject, const std::string& messa
 	{
 		AddScore(3000);
 	}
+}
+
+int ScoreScript::GetScore() const
+{
+	return m_Score;
 }

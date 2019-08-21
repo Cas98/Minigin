@@ -8,9 +8,10 @@
 #include "IdleState.h"
 #include "GameObject.h"
 #include "GridComponent.h"
+#include "SubjectComponent.h"
 
-PlayerManagerScript::PlayerManagerScript(dae::GameObject* pGrid)
-	:m_pGrid(pGrid)
+PlayerManagerScript::PlayerManagerScript(dae::GameObject* pGrid, int lives)
+	:m_pGrid(pGrid), m_PlayerLives(lives)
 {
 }
 
@@ -60,14 +61,27 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 
 		glm::vec2 coords{ x,y };
 		auto grid = m_pGrid->GetComponent<dae::GridComponent>();
+	
 		while(grid->GetGameObject(coords.x, coords.y) != nullptr)
 		{
-			coords.y += 1;
+			if (coords.y < grid->GetHeight())
+			{
+				coords.y += 1;
+			}
+			else if(coords.x > 0)
+			{
+				coords.x -= 1;
+			}
 		}
 		grid->SetGameObject(coords.x, coords.y, player);
 	}
 	else//game lost
 	{
-		
+		GetGameObject()->GetComponent<dae::SubjectComponent>()->Notify(GetGameObject(), "GameOver");
 	}
+}
+
+int PlayerManagerScript::GetPlayerLives() const
+{
+	return m_PlayerLives;
 }

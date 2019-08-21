@@ -74,7 +74,7 @@ void Level1::Initialize()
 	
 	
 	auto levelLoader = new dae::GameObject();
-	auto script = new LevelLoaderScript();
+	auto script = new LevelLoaderScript(2, m_GameMode,4,0);
 	levelLoader->AddComponent(script);
 	Add(levelLoader);
 	script->Load(map);

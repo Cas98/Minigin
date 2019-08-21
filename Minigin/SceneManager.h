@@ -13,7 +13,7 @@ namespace dae
 		void AddScene(Scene* scene);
 		void RemoveScene(const std::string& name);
 
-		void SetActiveScene(const std::string& name);
+		void SetActiveScene(const std::string& name, bool deleteCurrentScene = false);
 		Scene* GetActiveScene();
 		Scene* GetScene(const std::string& name);
 
@@ -23,6 +23,7 @@ namespace dae
 	private:
 		std::vector<Scene*> mScenes;
 		Scene* mpActiveScene;
+		Scene* m_pSceneToRemove = nullptr;
 	};
 
 }

@@ -7,7 +7,7 @@
 #include "TextureComponent.h"
 #include "Level1.h"
 #include "PauseMenu.h"
-#include "Level3.h"
+#include "TextComponent.h"
 
 MainMenu::MainMenu()
 	:Scene("MainMenu")
@@ -31,9 +31,9 @@ void MainMenu::Initialize()
 	//solo button
 	auto soloFunction = []()
 	{
-		auto level = new Level3(GameMode::Solo);
+		auto level = new Level1(GameMode::Solo);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level3");
+		dae::SceneManager::GetInstance().SetActiveScene("Level1");
 	};
 
 	auto soloButton = new dae::GameObject({ 54.0f,-95.0f,0.1f });
@@ -46,9 +46,9 @@ void MainMenu::Initialize()
 	//coop button
 	auto coopFunction = []()
 	{
-		auto level = new Level3(GameMode::Coop);
+		auto level = new Level1(GameMode::Coop);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level3");
+		dae::SceneManager::GetInstance().SetActiveScene("Level1");
 	};
 
 	auto coopButton = new dae::GameObject({ 54.0f,-140.0f,0.1f });
@@ -61,9 +61,9 @@ void MainMenu::Initialize()
 	//versus button
 	auto versusFunction = []()
 	{
-		auto level = new Level3(GameMode::Versus);
+		auto level = new Level1(GameMode::Versus);
 		dae::SceneManager::GetInstance().AddScene(level);
-		dae::SceneManager::GetInstance().SetActiveScene("Level3");
+		dae::SceneManager::GetInstance().SetActiveScene("Level1");
 	};
 
 	auto versusButton = new dae::GameObject({ 54.0f,-185.0f,0.1f });
@@ -93,9 +93,41 @@ void MainMenu::Initialize()
 	{
 		dae::SceneManager::GetInstance().AddScene(new PauseMenu());
 	}
+
+	//score
+	m_pScore = new dae::GameObject({ 145.0f,-25.0f,0.0f });
+	m_pScore->AddComponent(new dae::RenderComponent());
+	m_pScore->AddComponent(new dae::TextureComponent());
+	auto text = new dae::TextComponent("Lingua.otf", 20);
+	m_pScore->AddComponent(text);
+	text->SetText(std::to_string(m_Score));
+	text->SetColor({ 10,10,250 });
+	Add(m_pScore);
+
+	auto highScore = new dae::GameObject({ 20.0f,-25.0f,0.0f });
+	highScore->AddComponent(new dae::RenderComponent());
+	highScore->AddComponent(new dae::TextureComponent());
+	auto highScoreText = new dae::TextComponent("Lingua.otf", 20);
+	highScore->AddComponent(highScoreText);
+	highScoreText->SetText("HIGHSCORE - ");
+	highScoreText->SetColor({ 10,10,250 });
+	Add(highScore);
 }
 
 void MainMenu::Update()
 {
-	
+	if(m_NeedsUpdate)
+	{
+		m_pScore->GetComponent<dae::TextComponent>()->SetText(std::to_string(m_Score));
+		m_NeedsUpdate = false;
+	}
+}
+
+void MainMenu::SetScore(int score)
+{
+	if(score > m_Score)
+	{
+		m_Score = score;
+		m_NeedsUpdate = true;
+	}
 }

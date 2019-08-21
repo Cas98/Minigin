@@ -11,8 +11,9 @@ bool dae::InputManager::ProcessInput()
 	{
 		mPrevGamepadState[i] = mGamepadState[i];
 		XInputGetState(i, &mGamepadState[i]);
-	
-		if (mGamepadState[i].Gamepad.wButtons == 52428 || mGamepadState[i].Gamepad.wButtons == 32764 || mGamepadState[i].Gamepad.wButtons == 6333)
+
+		if (mGamepadState[i].Gamepad.wButtons == 52428 || mGamepadState[i].Gamepad.wButtons == 32764 
+			|| mGamepadState[i].Gamepad.wButtons == 6333 || mGamepadState[i].Gamepad.wButtons == 29793)
 		{
 			mGamepadState[i].Gamepad.wButtons = 0;
 		}

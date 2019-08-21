@@ -45,7 +45,7 @@ void SnobeeManagerScript::Update()
 		}
 		else if(m_NumberOfActiveSnobees == 0)//if no more snobees left game is won
 		{
-			
+			GetGameObject()->GetComponent<dae::SubjectComponent>()->Notify(GetGameObject(), "EndGame");
 		}
 	}
 }

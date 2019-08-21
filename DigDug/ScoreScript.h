@@ -13,11 +13,12 @@ public:
 	virtual void Update() override;
 
 	void OnNotify(dae::GameObject* gameObject, const std::string& message) override;
+	void AddScore(int score);
+	int GetScore() const;
 
 private:
 	int m_Score = 0;
-
-	void AddScore(int score);
 	dae::TextComponent* m_pTextCompRef;
+	bool m_NeedsUpdate = false;
 };
 

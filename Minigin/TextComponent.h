@@ -13,6 +13,7 @@ namespace dae
 
 		void Update() override;
 		void SetText(const std::string& text);
+		void SetColor(SDL_Color color);
 
 		TextComponent(const TextComponent &) = delete;
 		TextComponent(TextComponent &&) = delete;
@@ -23,6 +24,7 @@ namespace dae
 		bool mNeedsUpdate;
 		std::string mText;
 		Font* mFont;
+		SDL_Color m_Color = {255,255,255};
 	};
 }
 

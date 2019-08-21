@@ -3,8 +3,8 @@
 #include "LevelLoaderScript.h"
 #include "GameObject.h"
 
-Level2::Level2(GameMode gameMode)
-	:Scene("Level2"), m_GameMode(gameMode)
+Level2::Level2(GameMode gameMode, int playerLives, int score)
+	:Scene("Level2"), m_GameMode(gameMode), m_PlayerLives(playerLives), m_Score(score)
 {
 }
 
@@ -74,7 +74,7 @@ void Level2::Initialize()
 
 
 	auto levelLoader = new dae::GameObject();
-	auto script = new LevelLoaderScript();
+	auto script = new LevelLoaderScript(3, m_GameMode, m_PlayerLives, m_Score);
 	levelLoader->AddComponent(script);
 	Add(levelLoader);
 	script->Load(map);

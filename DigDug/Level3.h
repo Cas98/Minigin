@@ -5,7 +5,7 @@
 class Level3 final: public dae::Scene
 {
 public:
-	Level3(GameMode gameMode);
+	Level3(GameMode gameMode, int playerLives, int score);
 	~Level3();
 
 private:
@@ -13,5 +13,7 @@ private:
 	virtual void Update() override;
 
 	GameMode m_GameMode;
+	int m_PlayerLives;
+	int m_Score;
 };
 

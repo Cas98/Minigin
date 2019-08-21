@@ -121,6 +121,11 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
 				}
+				else
+				{
+					gridComp->RemoveGameObject(m_pPlayerRef);
+					scriptComp->Kill();
+				}
 			}
 		}
 	}
@@ -155,6 +160,11 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
 				}
+				else
+				{
+					gridComp->RemoveGameObject(m_pPlayerRef);
+					scriptComp->Kill();
+				}
 			}
 		}
 	}
@@ -188,6 +198,11 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
 				}
+				else
+				{
+					gridComp->RemoveGameObject(m_pPlayerRef);
+					scriptComp->Kill();
+				}
 			}
 		}
 	}
@@ -220,6 +235,11 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 					obj->GetComponent<SnobeeScript>()->Kill();
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
 					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
+				}
+				else
+				{
+					gridComp->RemoveGameObject(m_pPlayerRef);
+					scriptComp->Kill();
 				}
 			}
 		}

@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		SubjectComponent();
-		~SubjectComponent();
+		~SubjectComponent() override;
 
 		void Update() override;
 

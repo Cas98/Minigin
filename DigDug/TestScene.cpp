@@ -12,11 +12,7 @@
 #include "TestScript.h"
 #include "Time.h"
 
-class TestCommand : public dae::Command
-{
-public:
-	void Execute() override { std::cout << "test" << std::endl; }
-};
+
 
 TestScene::TestScene()
  :Scene("TestScene")
@@ -31,38 +27,38 @@ TestScene::TestScene()
 
 void TestScene::Initialize()
 {
-	////background
-	auto object0 = new dae::GameObject(glm::vec3(0.0f, 0.0f, 0.0f));
-	object0->AddComponent(new dae::RenderComponent());
-	object0->AddComponent(new dae::TextureComponent("background.jpg"));
-	dae::InputComponent* comp = new dae::InputComponent(1);
-	comp->MapKey(dae::ControllerButton::ButtonA, 'A', std::make_shared<TestCommand>(TestCommand()), dae::KeyState::Released);
-	object0->AddComponent(comp);
-	Add(object0);
+	//////background
+	//auto object0 = new dae::GameObject(glm::vec3(0.0f, 0.0f, 0.0f));
+	//object0->AddComponent(new dae::RenderComponent());
+	//object0->AddComponent(new dae::TextureComponent("background.jpg"));
+	//dae::InputComponent* comp = new dae::InputComponent(1);
+	//comp->MapKey(dae::ControllerButton::ButtonA, 'A', std::make_shared<TestCommand>(TestCommand()), dae::KeyState::Released);
+	//object0->AddComponent(comp);
+	//Add(object0);
 
-	////logo
-	for (int i{ 0 }; i < 10; ++i)
-	{
-		auto object1 = new dae::GameObject(glm::vec3(216.0f + i, -180.0f - i, 0.0f), 90.0f);
-		object1->AddComponent(new dae::RenderComponent());
-		object1->AddComponent(new dae::TextureComponent("logo.png"));
-		Add(object1);
-	}
+	//////logo
+	//for (int i{ 0 }; i < 10; ++i)
+	//{
+	//	auto object1 = new dae::GameObject(glm::vec3(216.0f + i, -180.0f - i, 0.0f), 90.0f);
+	//	object1->AddComponent(new dae::RenderComponent());
+	//	object1->AddComponent(new dae::TextureComponent("logo.png"));
+	//	Add(object1);
+	//}
 
-	////text
-	auto object2 = new dae::GameObject(glm::vec3(80.0f, -50.0f, 0.0f));
-	object2->AddComponent(new dae::RenderComponent());
-	object2->AddComponent(new dae::TextureComponent());
-	object2->AddComponent(new dae::TextComponent("Programming 4 Assignment", "Lingua.otf", 36));
-	Add(object2);
+	//////text
+	//auto object2 = new dae::GameObject(glm::vec3(80.0f, -50.0f, 0.0f));
+	//object2->AddComponent(new dae::RenderComponent());
+	//object2->AddComponent(new dae::TextureComponent());
+	//object2->AddComponent(new dae::TextComponent("Programming 4 Assignment", "Lingua.otf", 36));
+	//Add(object2);
 
-	////FPS
-	auto object3 = new dae::GameObject(glm::vec3(10.0f, -10.0f, 0.0f));
-	object3->AddComponent(new dae::RenderComponent());
-	object3->AddComponent(new dae::TextureComponent());
-	object3->AddComponent(new dae::TextComponent("Lingua.otf", 36));
-	object3->AddComponent(new dae::FPSComponent());
-	Add(object3);
+	//////FPS
+	//auto object3 = new dae::GameObject(glm::vec3(10.0f, -10.0f, 0.0f));
+	//object3->AddComponent(new dae::RenderComponent());
+	//object3->AddComponent(new dae::TextureComponent());
+	//object3->AddComponent(new dae::TextComponent("Lingua.otf", 36));
+	//object3->AddComponent(new dae::FPSComponent());
+	//Add(object3);
 
 	//////test object
 	//auto testObj = new dae::GameObject(glm::vec3(0, -100.0f, 0.0f), 0.0f, glm::vec2(0.5f, 0.5f));

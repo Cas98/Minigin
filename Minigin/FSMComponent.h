@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		FSMComponent(State* pStartState);
-		~FSMComponent();
+		~FSMComponent() override;
 
 		void Init() override;
 		void Update() override;

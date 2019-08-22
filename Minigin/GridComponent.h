@@ -15,7 +15,7 @@ namespace dae
 	{
 	public:
 		GridComponent(int width, int height, float offset);
-		~GridComponent() = default;
+		~GridComponent() override = default;
 
 		GameObject* GetGameObject(int width, int height);
 		void SetGameObject(int width, int height, GameObject* pGameObject, bool updatePos = true);

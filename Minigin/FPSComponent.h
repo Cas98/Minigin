@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		FPSComponent();
-		~FPSComponent() = default;
+		~FPSComponent() override = default;
 
 		void Update() override;
 

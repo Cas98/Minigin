@@ -9,7 +9,7 @@ namespace dae
 	public:
 		TextComponent(const std::string& text, const std::string& fontPath, unsigned int size);
 		TextComponent(const std::string& fontPath, unsigned int size);
-		~TextComponent();
+		~TextComponent() override;
 
 		void Update() override;
 		void SetText(const std::string& text);

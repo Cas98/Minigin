@@ -37,15 +37,6 @@ namespace dae
 		Up
 	};
 
-	struct KeyInfo
-	{
-		ControllerButton button;
-		int keyboard;
-		KeyState executeState;
-		std::shared_ptr<Command> command;
-		int userIndex;
-	};
-
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
@@ -70,7 +61,7 @@ namespace dae
 		//mouse
 		glm::vec2 GetMousePos() const;
 
-		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex);
+		//void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex);
 		void HandleInput();
 
 	private:
@@ -82,7 +73,7 @@ namespace dae
 		bool WasKeyboardPressed(int keyboardCode) const;
 		bool IsKeyboardPressed(int keyboardCode) const;
 
-		std::vector<KeyInfo> mMappings;
+		//std::vector<KeyInfo> mMappings;
 
 		const int m_MaxUsers = 4;
 		std::vector <XINPUT_STATE> mGamepadState;

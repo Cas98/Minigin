@@ -8,7 +8,7 @@ namespace dae
 	public:
 		ScriptComponent()
 			:BaseComponent(dae::CompType::Script){};
-		virtual ~ScriptComponent() = default;
+		virtual ~ScriptComponent() override = default;
 
 		virtual void Init() override = 0;
 		virtual void Update() override = 0;

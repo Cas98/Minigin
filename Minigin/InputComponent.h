@@ -4,11 +4,21 @@
 
 namespace dae
 {
+	struct KeyInfo
+	{
+		ControllerButton button;
+		int keyboard;
+		KeyState executeState;
+		Command* pCommand;
+	};
+
 	class InputComponent final : public BaseComponent
 	{
 	public:
 		InputComponent(int playerIndex);
-		~InputComponent() = default;
+		~InputComponent() override;
+
+		void Update() override;
 
 		//gamepad
 		bool GamepadDown(ControllerButton button) const;
@@ -24,7 +34,7 @@ namespace dae
 		bool KeyboardUp(int keyboardCode) const;
 		KeyState GetKeyboardKeyState(int keyboardCode) const;
 
-		void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, KeyState executeState);
+		void MapKey(ControllerButton button, int keyboard, Command* command, KeyState executeState);
 
 		//mouse
 		glm::vec2 GetMousePos() const;
@@ -33,6 +43,8 @@ namespace dae
 
 	private:
 		int m_PlayerIndex;
+
+		std::vector<KeyInfo> m_Mappings;
 	};
 }
 

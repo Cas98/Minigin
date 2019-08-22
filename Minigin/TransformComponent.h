@@ -9,7 +9,7 @@ namespace dae
 	public:
 		TransformComponent(const float x = 0.0f, const float y = 0.0f, const float z = 0.0f, const float rotation = 0.0f, const float scaleX = 1.0f, const float scaleY = 1.0f);
 		TransformComponent(const glm::vec3& pos = { 0.0f,0.0f,0.0f }, const float rotation = 0.0f, const glm::vec2& scale = {0.0f,0.0f});
-		~TransformComponent() = default;
+		~TransformComponent() override = default;
 
 		//pos
 		const glm::vec3 GetPosition() const;

@@ -8,6 +8,13 @@
 #include "Level1.h"
 #include "PauseMenu.h"
 #include "TextComponent.h"
+#include "State.h"
+
+class TestCommand : public dae::Command
+{
+public:
+	void Execute() override { std::cout << "test" << std::endl; }
+};
 
 MainMenu::MainMenu()
 	:Scene("MainMenu")

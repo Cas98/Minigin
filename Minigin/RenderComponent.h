@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		RenderComponent();
-		~RenderComponent() = default;
+		~RenderComponent() override = default;
 
 		void Render();
 

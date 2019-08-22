@@ -47,9 +47,13 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 		m_pLifeUIs.pop_back();
 
 		//respawn player
-		auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
+		auto player = new dae::GameObject({ 0.0f,0.0f,1.0f });
 		player->AddComponent(new dae::RenderComponent());
-		player->AddComponent(new dae::TextureComponent("Block.png"));
+
+		std::string path{ "Images/Pengo.png" };
+		if (playerIndex == 1) path = "Images/PengoBlue.png";
+		player->AddComponent(new dae::TextureComponent(path));
+
 		player->AddComponent(new dae::InputComponent(playerIndex));
 		player->AddComponent(new PlayerScript(dae::Direction::Up, GetGameObject(), {x,y}));
 		player->SetTag("Player");

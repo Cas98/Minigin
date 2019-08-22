@@ -5,6 +5,9 @@
 #include "SnobeeManagerScript.h"
 #include "SnobeeScript.h"
 #include "SubjectComponent.h"
+#include "GridScript.h"
+#include "Time.h"
+#include "TextureComponent.h"
 
 BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee, bool isSnobeeAi)
 	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger), m_IsSnobeeAi(isSnobeeAi)
@@ -24,7 +27,15 @@ void BlockScript::Init()
 
 void BlockScript::Update()
 {
-	
+	if(m_CanSpawnSnobee && m_IsEggShown)
+	{
+		m_ShowEggTime -= dae::Time::GetInstance().GetDeltaTime();
+		if(m_ShowEggTime <= 0.0f)
+		{
+			GetGameObject()->GetComponent<dae::TextureComponent>()->SetTexture("Images/Wall.png");
+			m_IsEggShown = false;
+		}
+	}
 }
 
 void BlockScript::MoveBlock(const dae::Direction& newDirection)
@@ -58,6 +69,7 @@ bool BlockScript::AreDiamondsAligned()
 			if(IsObjectDiamond(targetPos))
 			{
 				m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->StunSnobees();
+				m_pGridCompRef->BaseComponent::GetGameObject()->GetComponent<GridScript>()->ActivateStars();
 				return true;
 			}
 
@@ -67,6 +79,7 @@ bool BlockScript::AreDiamondsAligned()
 			if(IsObjectDiamond(targetPos))
 			{
 				m_pSnobeeManager->GetComponent<SnobeeManagerScript>()->StunSnobees();
+				m_pGridCompRef->BaseComponent::GetGameObject()->GetComponent<GridScript>()->ActivateStars();
 				return true;
 			}
 

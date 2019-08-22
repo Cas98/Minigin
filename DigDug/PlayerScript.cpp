@@ -32,6 +32,21 @@ dae::Direction PlayerScript::GetDirection() const
 void PlayerScript::SetDirection(dae::Direction direction)
 {
 	m_Direction = direction;
+	switch(direction)
+	{
+	case dae::Direction::Down:
+			GetGameObject()->GetTransformComponent()->SetRotation(0);
+			break;
+	case dae::Direction::Up:
+		GetGameObject()->GetTransformComponent()->SetRotation(180);
+		break;
+	case dae::Direction::Left:
+		GetGameObject()->GetTransformComponent()->SetRotation(90);
+		break;
+	case dae::Direction::Right:
+		GetGameObject()->GetTransformComponent()->SetRotation(270);
+		break;
+	}
 }
 
 void PlayerScript::Kill()

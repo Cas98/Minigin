@@ -76,8 +76,11 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y, bool isAi)
 {
 	auto snobee = new dae::GameObject();
 	snobee->AddComponent(new dae::RenderComponent());
-	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
 	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject(), isAi);
+
+	std::string path{ "Images/Snobee.png" };
+	if (!script->GetIsAi()) path = "Images/SnobeeYellow.png";
+	snobee->AddComponent(new dae::TextureComponent(path));
 
 	//if snobee is player controlled add input component
 	if(!script->GetIsAi())

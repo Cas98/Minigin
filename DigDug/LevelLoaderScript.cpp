@@ -129,7 +129,6 @@ void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameO
 	//Wall
 	auto wall = new dae::GameObject();
 	wall->AddComponent(new dae::RenderComponent());
-	wall->AddComponent(new dae::TextureComponent("Images/Wall.png"));
 	wall->SetTag("Wall");
 
 	auto wallFSM = new dae::FSMComponent(new BlockIdleSate(wall, pGrid));
@@ -143,10 +142,14 @@ void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameO
 	GetGameObject()->GetScene()->Add(wall);
 	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, wall);
 
+	std::string path{ "Images/Wall.png" };
 	if (canSpawnSnobee)//add to snobee manager
 	{
 		pSnobeeManager->GetComponent<SnobeeManagerScript>()->AddWall(wall);
+		path = "Images/WallEgg.png";
 	}
+
+	wall->AddComponent(new dae::TextureComponent(path));
 }
 
 //void LevelLoaderScript::AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
@@ -185,9 +188,13 @@ void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::Ga
 void LevelLoaderScript::AddPlayer(int x, int y, dae::GameObject* pGrid, dae::GameObject* pPlayerManager, dae::GameObject* pScore, int playerIndex)
 {
 	//Player
-	auto player = new dae::GameObject({ 0.0f,0.0f,1.0f }, { 0 }, { 0.25f,0.25f });
+	auto player = new dae::GameObject({ 0.0f,0.0f,1.0f });
 	player->AddComponent(new dae::RenderComponent());
-	player->AddComponent(new dae::TextureComponent("Block.png"));
+
+	std::string path{ "Images/Pengo.png" };
+	if (playerIndex == 1) path = "Images/PengoBlue.png";
+	player->AddComponent(new dae::TextureComponent(path));
+
 	player->AddComponent(new dae::InputComponent(playerIndex));
 	player->AddComponent(new PlayerScript(dae::Direction::Up, pPlayerManager,{x,y}));
 	player->SetTag("Player");

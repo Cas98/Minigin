@@ -33,6 +33,9 @@ private:
 	bool m_CanSpawnSnobee;
 	bool m_IsSnobeeAi;
 
+	float m_ShowEggTime = 3.0f;
+	bool m_IsEggShown = true;
+
 	dae::GridComponent* m_pGridCompRef;
 	dae::GameObject* m_pSnobeeManager;
 };

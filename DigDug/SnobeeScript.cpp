@@ -35,7 +35,8 @@ void SnobeeScript::SetDirection(dae::Direction direction)
 
 void SnobeeScript::SetRandomDirChange()
 {
-	m_RandomDirChange = rand() % 3 + 3;
+	srand(m_Direction * m_RandomDirChange);
+	m_RandomDirChange = rand() % 3 + 6;
 }
 
 void SnobeeScript::DecrementRandomDirChange()

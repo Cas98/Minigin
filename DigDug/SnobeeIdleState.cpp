@@ -105,7 +105,7 @@ dae::State* SnobeeIdleState::HandleAi()
 	}
 
 	auto object = gridComp->GetGameObject(nextCoords.x, nextCoords.y);
-
+	
 	//if spot free move in that direction
 	if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height && randDirChange > 0)
 	{
@@ -175,14 +175,14 @@ dae::State* SnobeeIdleState::HandleAi()
 				if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height)
 				{
 					snobeeScript->SetDirection(randomDir);
-					snobeeScript->SetRandomDirChange();
+					if (randomDir <= 4)snobeeScript->SetRandomDirChange();
 					return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
 				}
 			}
 			else if(object->GetTag() == "Player")
 			{
 				object->GetComponent<PlayerScript>()->Kill();
-				snobeeScript->SetRandomDirChange();
+				if(randomDir <= 4)snobeeScript->SetRandomDirChange();
 				snobeeScript->SetDirection(randomDir);
 				return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
 			}

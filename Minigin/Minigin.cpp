@@ -32,7 +32,7 @@ void dae::Minigin::Initialize()
 		throw std::runtime_error(std::string("SDL_CreateWindow Error: ") + SDL_GetError());
 	}
 
-	Renderer::GetInstance().Initialize(window,50,25);
+	Renderer::GetInstance().Init(window,50,25);
 	ResourceManager::GetInstance().Init("../Data/");
 	Time::GetInstance().Init();
 	InputManager::GetInstance().Init();

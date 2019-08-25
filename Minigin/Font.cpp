@@ -5,13 +5,13 @@
 
 //test
 TTF_Font* dae::Font::GetFont() const {
-	return mFont;
+	return m_pFont;
 }
 
-dae::Font::Font(const std::string& fullPath, unsigned size) : mFont(nullptr), mSize(size)
+dae::Font::Font(const std::string& fullPath, unsigned size) : m_pFont(nullptr), m_Size(size)
 {
-	mFont = ResourceManager::GetInstance().LoadFont(fullPath, size);
-	if (mFont == nullptr) 
+	m_pFont = ResourceManager::GetInstance().LoadFont(fullPath, size);
+	if (m_pFont == nullptr)
 	{
 		throw std::runtime_error(std::string("Failed to load font: ") + SDL_GetError());
 	}
@@ -19,5 +19,5 @@ dae::Font::Font(const std::string& fullPath, unsigned size) : mFont(nullptr), mS
 
 dae::Font::~Font()
 {
-	TTF_CloseFont(mFont);
+	TTF_CloseFont(m_pFont);
 }

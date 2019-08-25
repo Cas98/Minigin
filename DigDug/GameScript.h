@@ -6,7 +6,7 @@
 #include "PlayerManagerScript.h"
 #include "ScoreScript.h"
 
-class GameScript final: public dae::ScriptComponent, public Observer
+class GameScript final: public dae::ScriptComponent, public dae::Observer
 {
 public:
 	GameScript(int nextLevel, GameMode gameMode, dae::GameObject* pPlayerManager, dae::GameObject* pScore);
@@ -18,12 +18,12 @@ private:
 
 	void EndGame();
 
-	dae::InputComponent* m_InputRef;
+	dae::InputComponent* m_pInputRef;
 
 	void OnNotify(dae::GameObject* gameObject, const std::string& message) override;
 	int m_Nextlevel;
 	GameMode m_GameMode;
-	PlayerManagerScript* m_PlayerManagerRef;
+	PlayerManagerScript* m_pPlayerManagerRef;
 	ScoreScript* m_pScore;
 
 	float m_Time = 60.0f;

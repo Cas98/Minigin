@@ -1,13 +1,11 @@
 #include "MiniginPCH.h"
 #include "SubjectComponent.h"
 
-
 dae::SubjectComponent::SubjectComponent()
 	:BaseComponent(dae::CompType::Subject)
 {
 	m_pSubject = new Subject();
 }
-
 
 dae::SubjectComponent::~SubjectComponent()
 {

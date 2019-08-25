@@ -27,23 +27,23 @@ dae::State* PushState::HandleInput(dae::InputComponent* )
 
 	switch(direction)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		targetPos.y -= 1;
 		break;
-	case dae::Direction::Up:
+	case Direction::Up:
 		targetPos.y += 1;
 		break;
-	case dae::Direction::Right:
+	case Direction::Right:
 		targetPos.x += 1;
 		break;
-	case dae::Direction::Left:
+	case Direction::Left:
 		targetPos.x -= 1;
 		break;
 	}
 
 
 	//get target object
-	auto targetObject = gridComp->GetGameObject(targetPos.x, targetPos.y);
+	auto targetObject = gridComp->GetGameObject(int(targetPos.x), int(targetPos.y));
 
 	if(targetObject)
 	{

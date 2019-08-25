@@ -46,10 +46,10 @@ dae::State* SnobeeIdleState::HandleInput(dae::InputComponent* input)
 	int width = gridComp->GetWidth();
 
 	//check if stunned by active wall
-	if (currentCoords.x == 0 && gridScript->IsWallActive(dae::Direction::Left)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
-	if (currentCoords.x == width - 1 && gridScript->IsWallActive(dae::Direction::Right)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
-	if (currentCoords.y == 0 && gridScript->IsWallActive(dae::Direction::Down)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
-	if (currentCoords.y == height - 1 && gridScript->IsWallActive(dae::Direction::Up)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.x == 0 && gridScript->IsWallActive(Direction::Left)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.x == width - 1 && gridScript->IsWallActive(Direction::Right)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.y == 0 && gridScript->IsWallActive(Direction::Down)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
+	if (currentCoords.y == height - 1 && gridScript->IsWallActive(Direction::Up)) return new StunState(m_pSnobeeRef, m_pGridRef, 5.0f);
 
 	if (snobeeScript->GetIsPushed())
 	{
@@ -90,21 +90,21 @@ dae::State* SnobeeIdleState::HandleAi()
 	//check if next spot is free
 	switch (currentDirection)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		nextCoords.y -= 1;
 		break;
-	case dae::Direction::Up:
+	case Direction::Up:
 		nextCoords.y += 1;
 		break;
-	case dae::Direction::Left:
+	case Direction::Left:
 		nextCoords.x -= 1;
 		break;
-	case dae::Direction::Right:
+	case Direction::Right:
 		nextCoords.x += 1;
 		break;
 	}
 
-	auto object = gridComp->GetGameObject(nextCoords.x, nextCoords.y);
+	auto object = gridComp->GetGameObject(int(nextCoords.x), int(nextCoords.y));
 	
 	//if spot free move in that direction
 	if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height && randDirChange > 0)
@@ -116,7 +116,7 @@ dae::State* SnobeeIdleState::HandleAi()
 		}
 		else if (object)
 		{
-			if (object->GetTag() == "Player")
+			if (object->GetTag() == "Player")//if player kill
 			{
 				object->GetComponent<PlayerScript>()->Kill();
 				snobeeScript->DecrementRandomDirChange();
@@ -126,7 +126,7 @@ dae::State* SnobeeIdleState::HandleAi()
 	}
 
 	//Pick random new direction
-	std::vector<dae::Direction> availableDirections{dae::Direction::Down,dae::Direction::Up,dae::Direction::Left,dae::Direction::Right };
+	std::vector<Direction> availableDirections{Direction::Down,Direction::Up,Direction::Left,Direction::Right };
 	auto it = std::find(availableDirections.begin(), availableDirections.end(), currentDirection);
 	availableDirections.erase(it);
 	int number = rand() % 10000000;
@@ -134,67 +134,47 @@ dae::State* SnobeeIdleState::HandleAi()
 	{
 		srand(number);
 		auto randomDir = availableDirections[((rand() % 100000) % availableDirections.size())];
-
-		/*bool isNewDir = true;
-		for (size_t i{ 0 }; i < unavailableDirections.size(); ++i)
-		{
-			if (randomDir == unavailableDirections[i])
-			{
-				isNewDir = false;
-				
-				break;
-			}
-		}*/
-
-		/*if (isNewDir)
-		{*/
-			auto it = std::find(availableDirections.begin(), availableDirections.end(), randomDir);
-			availableDirections.erase(it);
+		auto itDir = std::find(availableDirections.begin(), availableDirections.end(), randomDir);
+		availableDirections.erase(itDir);
 			
-			nextCoords = currentCoords;
-			switch (randomDir)
-			{
-			case dae::Direction::Down:
-				nextCoords.y -= 1;
-				break;
-			case dae::Direction::Up:
-				nextCoords.y += 1;
-				break;
-			case dae::Direction::Left:
-				nextCoords.x -= 1;
-				break;
-			case dae::Direction::Right:
-				nextCoords.x += 1;
-				break;
-			}
+		nextCoords = currentCoords;
+		switch (randomDir)
+		{
+		case Direction::Down:
+			nextCoords.y -= 1;
+			break;
+		case Direction::Up:
+			nextCoords.y += 1;
+			break;
+		case Direction::Left:
+			nextCoords.x -= 1;
+			break;
+		case Direction::Right:
+			nextCoords.x += 1;
+			break;
+		}
 
-			object = gridComp->GetGameObject(nextCoords.x, nextCoords.y);
+		object = gridComp->GetGameObject(int(nextCoords.x), int(nextCoords.y));
 
-			if (object == nullptr)
+		if (object == nullptr)
+		{
+			if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height)
 			{
-				if (nextCoords.x >= 0 && nextCoords.x < width && nextCoords.y >= 0 && nextCoords.y < height)
-				{
-					snobeeScript->SetDirection(randomDir);
-					if (randomDir <= 4)snobeeScript->SetRandomDirChange();
-					return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
-				}
-			}
-			else if(object->GetTag() == "Player")
-			{
-				object->GetComponent<PlayerScript>()->Kill();
-				if(randomDir <= 4)snobeeScript->SetRandomDirChange();
 				snobeeScript->SetDirection(randomDir);
+				if (randomDir <= 4)snobeeScript->SetRandomDirChange();
 				return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
 			}
+		}
+		else if(object->GetTag() == "Player")//if player kill
+		{
+			object->GetComponent<PlayerScript>()->Kill();
+			if(randomDir <= 4)snobeeScript->SetRandomDirChange();
+			snobeeScript->SetDirection(randomDir);
+			return new MoveState(m_pSnobeeRef, m_pGridRef, randomDir, 80.0f);
+		}
 					
-			/*else if(object->GetTag() == "Wall" || object->GetTag() == "Diamond")
-			{
-				if(object->GetComponent<BlockScript>()->GetIsPushed())return nullptr;
-			}*/
-			number += rand() % 10000000000;
-		/*}*/
+		number += rand() % 10000000000;
 	}
-
 
 	return nullptr;
 }
@@ -215,84 +195,84 @@ dae::State* SnobeeIdleState::HandlePlayer(dae::InputComponent* input)
 	
 	if (input->KeyboardDown(moveUp) || input->GamepadDown(dae::ControllerButton::DpadUp))
 	{
-		scriptComp->SetDirection(dae::Direction::Up);
+		scriptComp->SetDirection(Direction::Up);
 
 		if (coords.y < height - 1)
 		{
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x, coords.y + 1);
+			auto obj = gridComp->GetGameObject(int(coords.x), int(coords.y + 1));
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Up, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Up, 80.0f);
 			}
-			else if (obj->GetTag() == "Player")
+			else if (obj->GetTag() == "Player")//if player kill
 			{
 				obj->GetComponent<PlayerScript>()->Kill();
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Up, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Up, 80.0f);
 			}
 		}
 	}
 
 	if (input->KeyboardDown(moveLeft) || input->GamepadDown(dae::ControllerButton::DpadLeft))
 	{
-		scriptComp->SetDirection(dae::Direction::Left);
+		scriptComp->SetDirection(Direction::Left);
 
 		if (coords.x > 0)
 		{
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x - 1, coords.y);
+			auto obj = gridComp->GetGameObject(int(coords.x - 1), int(coords.y));
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Left, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Left, 80.0f);
 			}
-			else if (obj->GetTag() == "Player")
+			else if (obj->GetTag() == "Player")//if player kill
 			{
 				obj->GetComponent<PlayerScript>()->Kill();
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Left, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Left, 80.0f);
 			}
 		}
 	}
 
 	if (input->KeyboardDown(moveDown) || input->GamepadDown(dae::ControllerButton::DpadDown))
 	{
-		scriptComp->SetDirection(dae::Direction::Down);
+		scriptComp->SetDirection(Direction::Down);
 
 		if (coords.y > 0)
 		{
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x, coords.y - 1);
+			auto obj = gridComp->GetGameObject(int(coords.x), int(coords.y - 1));
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Down, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Down, 80.0f);
 			}
-			else if (obj->GetTag() == "Player")
+			else if (obj->GetTag() == "Player")//if player kill
 			{
 				obj->GetComponent<PlayerScript>()->Kill();
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Down, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Down, 80.0f);
 			}
 		}
 	}
 
 	if (input->KeyboardDown(moveRight) || input->GamepadDown(dae::ControllerButton::DpadRight))
 	{
-		scriptComp->SetDirection(dae::Direction::Right);
+		scriptComp->SetDirection(Direction::Right);
 
 		if (coords.x < width - 1)
 		{
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x + 1, coords.y);
+			auto obj = gridComp->GetGameObject(int(coords.x + 1), int(coords.y));
 		
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Right, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Right, 80.0f);
 			}
-			else if (obj->GetTag() == "Player")
+			else if (obj->GetTag() == "Player")//if player kill
 			{
 				obj->GetComponent<PlayerScript>()->Kill();
-				return new MoveState(m_pSnobeeRef, m_pGridRef, dae::Direction::Right, 80.0f);
+				return new MoveState(m_pSnobeeRef, m_pGridRef, Direction::Right, 80.0f);
 			}
 		}
 	}

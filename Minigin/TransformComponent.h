@@ -13,7 +13,6 @@ namespace dae
 
 		//pos
 		const glm::vec3 GetPosition() const;
-		const glm::vec3 GetWorldPosition() const;
 		void SetPosition(const float x, const  float y, const  float z);
 		void SetPosition(const glm::vec3& pos);
 		void Translate(const float x, const  float y, const  float z = 0.0f);
@@ -21,13 +20,11 @@ namespace dae
 
 		//scale
 		const glm::vec2 GetScale() const;
-		const glm::vec2 GetWorldScale() const;
 		void SetScale(const float x, const  float y);
 		void SetScale(const glm::vec2& scale);
 
 		//rotate
 		const float GetRotation() const;
-		const float GetWorldRotation() const;
 		void SetRotation(const float rotation);
 		void Rotate(const float degrees);
 	

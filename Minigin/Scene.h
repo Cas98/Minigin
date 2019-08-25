@@ -33,13 +33,13 @@ namespace dae
 		void AddObjects();
 
 		std::string mName{};
-		std::vector <GameObject*> mObjects{};
+		std::vector <GameObject*> m_pObjects{};
 		std::vector <GameObject*> m_pAddedObjects{};
 		std::vector <GameObject*> m_pObjectsToDelete{};
 		std::vector <GameObject*> m_pObjectsThread{};
 		std::vector <GameObject*> m_pAddedObjectsThread{};
 
-		static unsigned int idCounter;
+		static unsigned int m_IdCounter;
 
 		bool m_IsInizialized = false;
 	};

@@ -2,7 +2,7 @@
 #include "SnobeeScript.h"
 #include "GameObject.h"
 
-SnobeeScript::SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger, bool isAi)
+SnobeeScript::SnobeeScript(Direction direction, dae::GameObject* pSnobeeManger, bool isAi)
 	:m_Direction(direction), m_pSnobeeManager(pSnobeeManger), m_IsAi(isAi)
 {
 
@@ -23,12 +23,12 @@ void SnobeeScript::Update()
 
 }
 
-dae::Direction SnobeeScript::GetDirection() const
+Direction SnobeeScript::GetDirection() const
 {
 	return m_Direction;
 }
 
-void SnobeeScript::SetDirection(dae::Direction direction)
+void SnobeeScript::SetDirection(Direction direction)
 {
 	m_Direction = direction;
 }
@@ -84,7 +84,7 @@ void SnobeeScript::Stun()
 	SetIsStunned(true);
 }
 
-void  SnobeeScript::OnNotify(dae::GameObject* gameObject, const std::string& message)
+void  SnobeeScript::OnNotify(dae::GameObject* , const std::string& message)
 {
 	if(message == "Stun")
 	{

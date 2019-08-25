@@ -19,11 +19,11 @@ void GridScript::Init()
 	
 }
 
-void GridScript::ActivateWall(dae::Direction direction)
+void GridScript::ActivateWall(Direction direction)
 {
 	switch(direction)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		m_IsLowerWallActive = true;
 		m_pLowerWall = new dae::GameObject({ 0.0f,-264.0f,0.1f });
 		m_pLowerWall->AddComponent(new dae::RenderComponent());
@@ -31,7 +31,7 @@ void GridScript::ActivateWall(dae::Direction direction)
 		GetGameObject()->GetScene()->Add(m_pLowerWall);
 		break;
 
-	case dae::Direction::Up:
+	case Direction::Up:
 		m_IsUpperWallActive = true;
 		m_pUpperWall = new dae::GameObject({ 0.0f,-16.0f,0.1f });
 		m_pUpperWall->AddComponent(new dae::RenderComponent());
@@ -39,7 +39,7 @@ void GridScript::ActivateWall(dae::Direction direction)
 		GetGameObject()->GetScene()->Add(m_pUpperWall);
 		break;
 
-	case dae::Direction::Right:
+	case Direction::Right:
 		m_IsRightWallActive = true;
 		m_pRightWall = new dae::GameObject({ 216.0f,-16.0f,0.1f });
 		m_pRightWall->AddComponent(new dae::RenderComponent());
@@ -47,7 +47,7 @@ void GridScript::ActivateWall(dae::Direction direction)
 		GetGameObject()->GetScene()->Add(m_pRightWall);
 		break;
 
-	case dae::Direction::Left:
+	case Direction::Left:
 		m_IsLeftWallActive = true;
 		m_pLeftWall = new dae::GameObject({ 0.0f,-16.0f,0.1f });
 		m_pLeftWall->AddComponent(new dae::RenderComponent());
@@ -57,26 +57,28 @@ void GridScript::ActivateWall(dae::Direction direction)
 	}
 }
 
-bool GridScript::IsWallActive(dae::Direction direction)
+bool GridScript::IsWallActive(Direction direction)
 {
 	switch (direction)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		return m_IsLowerWallActive;
 		break;
 
-	case dae::Direction::Up:
+	case Direction::Up:
 		return m_IsUpperWallActive;
 		break;
 
-	case dae::Direction::Right:
+	case Direction::Right:
 		return m_IsRightWallActive;
 		break;
 
-	case dae::Direction::Left:
+	case Direction::Left:
 		return m_IsLeftWallActive;
 		break;
 	}
+
+	return false;
 }
 
 void GridScript::ActivateStars()

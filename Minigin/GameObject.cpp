@@ -15,18 +15,6 @@ dae::GameObject::GameObject(glm::vec3 pos, float rotation, glm::vec2 scale)
 
 void dae::GameObject::Destroy()
 {
-	//Destroy children
-	for (auto child : mChildren)
-	{
-		child->Destroy();
-	}
-
-	//Remove from parent
-	if(mpParent)
-	{
-		mpParent->RemoveChild(this);
-	}
-
 	//Remove gameobject from scene
 	auto scene = GetScene();
 
@@ -34,9 +22,6 @@ void dae::GameObject::Destroy()
 	{
 		scene->Remove(this);
 	}
-
-	////Delete gameobject
-	//delete this;
 }
 
 dae::GameObject::~GameObject()
@@ -50,6 +35,7 @@ dae::GameObject::~GameObject()
 
 void dae::GameObject::Update()
 {
+	//if not initialized initialize;
 	if(!m_IsInit)
 	{
 		for (auto component : mComponents)
@@ -67,6 +53,7 @@ void dae::GameObject::Update()
 
 void dae::GameObject::AddComponent(BaseComponent* component)
 {
+	//every gameobject only can have 1 of each type of component
 	if(HasComponent(component))
 	{
 		std::cout << "ERROR: Can't give game object same component twice \n";
@@ -100,26 +87,6 @@ bool dae::GameObject::HasComponent(BaseComponent* component) const
 	}
 
 	return false;
-}
-
-void dae::GameObject::AddChild(GameObject* gameObject)
-{
-	mChildren.push_back(gameObject);
-	gameObject->mpParent = this;
-}
-
-void dae::GameObject::RemoveChild(dae::GameObject* gameObject)
-{
-	auto it = std::find(mChildren.begin(), mChildren.end(), gameObject);
-	if(it != mChildren.end())
-	{
-		mChildren.erase(it);
-	}
-}
-
-dae::GameObject* dae::GameObject::GetParentObject() const
-{
-	return mpParent;
 }
 
 void dae::GameObject::SetScene(dae::Scene* scene)

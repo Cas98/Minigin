@@ -5,30 +5,29 @@
 #include "TextureComponent.h"
 #include "ResourceManager.h"
 
-
 dae::TextComponent::TextComponent(const std::string& text, const std::string& fontPath, unsigned int size)
 	:BaseComponent(dae::CompType::Text)
 {
-	mText = text;
-	mFont = new Font(fontPath, size);
+	m_Text = text;
+	m_pFont = new Font(fontPath, size);
 
-	mNeedsUpdate = true;
+	m_NeedsUpdate = true;
 }
 
 dae::TextComponent::TextComponent(const std::string& fontPath, unsigned int size)
 	:BaseComponent(dae::CompType::Text)
 {
-	mFont = new Font(fontPath, size);
+	m_pFont = new Font(fontPath, size);
 }
 
 dae::TextComponent::~TextComponent()
 {
-	delete mFont;
+	delete m_pFont;
 }
 
 void dae::TextComponent::TextComponent::Update()
 {
-	if (mNeedsUpdate)
+	if (m_NeedsUpdate)
 	{
 		//look for parent texture component
 		auto textureComp = GetGameObject()->GetComponent<TextureComponent>();
@@ -38,7 +37,7 @@ void dae::TextComponent::TextComponent::Update()
 			throw std::runtime_error(std::string("Parent obnject doesn't have an texture component"));
 		}
 
-		const auto surf = TTF_RenderText_Blended(mFont->GetFont(), mText.c_str(), m_Color);
+		const auto surf = TTF_RenderText_Blended(m_pFont->GetFont(), m_Text.c_str(), m_Color);
 		if (surf == nullptr)
 		{
 			throw std::runtime_error(std::string("Render text failed: ") + SDL_GetError());
@@ -50,17 +49,18 @@ void dae::TextComponent::TextComponent::Update()
 		}
 		SDL_FreeSurface(surf);
 
+		//set texture
 		textureComp->SetTexture(texture);
 
-		mNeedsUpdate = false;
+		m_NeedsUpdate = false;
 	}
 }
 
 void dae::TextComponent::SetText(const std::string& text)
 {
 	//set text
-	mText = text;
-	mNeedsUpdate = true;
+	m_Text = text;
+	m_NeedsUpdate = true;
 }
 
 void dae::TextComponent::SetColor(SDL_Color color)

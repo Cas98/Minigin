@@ -6,33 +6,33 @@
 
 bool dae::InputManager::ProcessInput()
 {
-	//gamepad
-	for (unsigned int i{ 0 };  i < mGamepadState.size(); ++i)
+	//get gamepad states
+	for (unsigned int i{ 0 };  i < m_GamepadState.size(); ++i)
 	{
-		mPrevGamepadState[i] = mGamepadState[i];
-		XInputGetState(i, &mGamepadState[i]);
+		m_PrevGamepadState[i] = m_GamepadState[i];
+		XInputGetState(i, &m_GamepadState[i]);
 
-		if (mGamepadState[i].Gamepad.wButtons == 52428 || mGamepadState[i].Gamepad.wButtons == 32764 
-			|| mGamepadState[i].Gamepad.wButtons == 6333 || mGamepadState[i].Gamepad.wButtons == 29793)
+		if (m_GamepadState[i].Gamepad.wButtons == 52428 || m_GamepadState[i].Gamepad.wButtons == 32764 
+			|| m_GamepadState[i].Gamepad.wButtons == 6333 || m_GamepadState[i].Gamepad.wButtons == 29793)
 		{
-			mGamepadState[i].Gamepad.wButtons = 0;
+			m_GamepadState[i].Gamepad.wButtons = 0;
 		}
 	}
 
-	//keyboard
-	if (mKeyboardState0Active)
+	//get keyboard states
+	if (m_KeyboardState0Active)
 	{
-		GetKeyboardState(mpKeyboardState1);
-		mpPrevKeyboardState = mpKeyboardState0;
-		mpKeyboardState = mpKeyboardState1;
+		GetKeyboardState(m_pKeyboardState1);
+		m_pPrevKeyboardState = m_pKeyboardState0;
+		m_pKeyboardState = m_pKeyboardState1;
 	}
 	else
 	{
-		GetKeyboardState(mpKeyboardState0);
-		mpPrevKeyboardState = mpKeyboardState1;
-		mpKeyboardState = mpKeyboardState0;
+		GetKeyboardState(m_pKeyboardState0);
+		m_pPrevKeyboardState = m_pKeyboardState1;
+		m_pKeyboardState = m_pKeyboardState0;
 	}
-	mKeyboardState0Active = !mKeyboardState0Active;
+	m_KeyboardState0Active = !m_KeyboardState0Active;
 
 	SDL_Event e;
 	while (SDL_PollEvent(&e)) {
@@ -54,46 +54,30 @@ bool dae::InputManager::ProcessInput()
 
 void dae::InputManager::Destroy()
 {
-	delete mpKeyboardState;
-	delete mpPrevKeyboardState;
+	delete m_pKeyboardState;
+	delete m_pPrevKeyboardState;
 }
 
 void dae::InputManager::Init()
 {
-	mpKeyboardState0 = new BYTE[256];
-	mpKeyboardState1 = new BYTE[256];
+	m_pKeyboardState0 = new BYTE[256];
+	m_pKeyboardState1 = new BYTE[256];
 
-	GetKeyboardState(mpKeyboardState0);
-	GetKeyboardState(mpKeyboardState1);
+	GetKeyboardState(m_pKeyboardState0);
+	GetKeyboardState(m_pKeyboardState1);
 
 	for (int i{ 0 }; i < m_MaxUsers; ++i)
 	{
 		XINPUT_STATE state;
 		XINPUT_STATE prevstate;
-		mGamepadState.push_back(state);
-		mPrevGamepadState.push_back(prevstate);
+		m_GamepadState.push_back(state);
+		m_PrevGamepadState.push_back(prevstate);
 	}
 }
 
-//void dae::InputManager::MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex)
-//{
-//	KeyInfo keyInfo;
-//	keyInfo.button = button;
-//	keyInfo.keyboard = keyboard;
-//	keyInfo.command = command;
-//	keyInfo.executeState = executeState;
-//	keyInfo.userIndex = userIndex;
-//
-//	mMappings.push_back(keyInfo);
-//}
-
 void dae::InputManager::HandleInput()
 {
-	/*for (size_t i{ 0 }; i < mMappings.size(); ++i)
-	{
-		if (GetGamepadKeyState(mMappings[i].button, mMappings[i].userIndex) == mMappings[i].executeState
-			|| GetKeyboardKeyState(mMappings[i].keyboard) == mMappings[i].executeState) mMappings[i].command->Execute();
-	}*/
+
 }
 
 //gamepad
@@ -122,12 +106,12 @@ dae::KeyState dae::InputManager::GetGamepadKeyState(ControllerButton button, con
 
 bool dae::InputManager::IsGamepadPressed(ControllerButton button, const int playerIndex) const
 {
-	return (mGamepadState[playerIndex].Gamepad.wButtons & WORD(button)) != 0;
+	return (m_GamepadState[playerIndex].Gamepad.wButtons & WORD(button)) != 0;
 }
 
 bool dae::InputManager::WasGamepadPressed(ControllerButton button, const int playerIndex) const
 {
-	return (mPrevGamepadState[playerIndex].Gamepad.wButtons & WORD(button)) != 0;
+	return (m_PrevGamepadState[playerIndex].Gamepad.wButtons & WORD(button)) != 0;
 }
 
 bool dae::InputManager::GamepadReleased(ControllerButton button, const int playerIndex) const
@@ -180,14 +164,14 @@ dae::KeyState dae::InputManager::GetKeyboardKeyState(int key) const
 
 bool dae::InputManager::IsKeyboardPressed(int key) const
 {
-	if (mpKeyboardState == nullptr) return false;
-	return (mpKeyboardState[key] & 0xF0) != 0;
+	if (m_pKeyboardState == nullptr) return false;
+	return (m_pKeyboardState[key] & 0xF0) != 0;
 }
 
 bool dae::InputManager::WasKeyboardPressed(int key) const
 {
-	if (mpPrevKeyboardState == nullptr) return false;
-	return (mpPrevKeyboardState[key] & 0xF0) != 0;
+	if (m_pPrevKeyboardState == nullptr) return false;
+	return (m_pPrevKeyboardState[key] & 0xF0) != 0;
 }
 
 bool dae::InputManager::KeyboardReleased(int key) const

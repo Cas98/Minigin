@@ -1,6 +1,5 @@
 #pragma once
 
-
 namespace dae
 {
 	class GameObject;
@@ -29,7 +28,7 @@ namespace dae
 		virtual void Init() {};
 		virtual void Update() {};
 
-		void SetGameObject(GameObject* object);
+		void SetGameObject(GameObject* pObject);
 		GameObject* GetGameObject() const;
 		CompType GetComponentType();
 
@@ -39,7 +38,7 @@ namespace dae
 		BaseComponent& operator=(BaseComponent&& other) = delete;
 
 	private:
-		GameObject* m_GameObject;
+		GameObject* m_pGameObject;//GameObject component belongs to
 		CompType m_CompType;
 	};
 

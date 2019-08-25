@@ -1,11 +1,8 @@
 #pragma once
-#include <memory>
 #include "Transform.h"
-#include "SceneObject.h"
 #include <vector>
 #include "Scene.h"
 #include "TransformComponent.h"
-
 
 namespace dae
 {
@@ -14,32 +11,30 @@ namespace dae
 	class GameObject final 
 	{
 	public:
-		void Update();
+		GameObject(glm::vec3 pos = { 0.0f,0.0f,1.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
 
 		void Destroy();
 
+		void Update();
+
+		//components
 		void AddComponent(BaseComponent* component);
 		void RemoveComponent(BaseComponent* component);
-
-		void AddChild(GameObject* gameObject);
-		void RemoveChild(GameObject* gameObject);
-		GameObject* GetParentObject() const;
-
 		bool HasComponent(BaseComponent* component) const;
-
-		void SetScene(Scene* scene);
-		Scene* GetScene();
-
-		TransformComponent* GetTransformComponent() const;
-
-		std::string GetTag() const;
-		void SetTag(const std::string& newTag);
 
 		template<typename compType>
 		compType* GetComponent();
 
-		GameObject(glm::vec3 pos = { 0.0f,0.0f,1.0f }, float rotation = 0.0f, glm::vec2 scale = { 1.0f,1.0f });
-		
+		//scene
+		Scene* GetScene();
+
+		//transform
+		TransformComponent* GetTransformComponent() const;
+
+		//tags
+		std::string GetTag() const;
+		void SetTag(const std::string& newTag);
+
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
@@ -47,12 +42,15 @@ namespace dae
 
 	private:
 		friend Scene;
+
+		//destructor is private call destroy function instead
 		~GameObject();
 
+		//components
 		std::vector<BaseComponent*> mComponents;
-		std::vector<GameObject*> mChildren;
 
-		GameObject* mpParent = nullptr;
+		//scene
+		void SetScene(Scene* scene);
 		Scene* m_pScene = nullptr;
 
 		TransformComponent* m_pTransform = nullptr;

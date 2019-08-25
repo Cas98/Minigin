@@ -2,10 +2,10 @@
 #include <State.h>
 #include "helpers.h"
 
-class PushedState : public dae::State
+class PushedState final: public dae::State
 {
 public:
-	PushedState(dae::GameObject* pBlock, dae::GameObject* pGrid, dae::Direction direction, bool firstMove);
+	PushedState(dae::GameObject* pBlock, dae::GameObject* pGrid, Direction direction, bool firstMove);
 	~PushedState();
 
 private:
@@ -16,7 +16,7 @@ private:
 
 	dae::GameObject* m_pBlockRef;
 	dae::GameObject* m_pGridRef;
-	dae::Direction m_Direction;
+	Direction m_Direction;
 
 	bool m_FirstMove;
 

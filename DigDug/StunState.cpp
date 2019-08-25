@@ -41,7 +41,7 @@ void StunState::Update()
 	
 }
 
-dae::State* StunState::HandleInput(dae::InputComponent* input)
+dae::State* StunState::HandleInput(dae::InputComponent* )
 {
 	m_StunTime -= dae::Time::GetInstance().GetDeltaTime();
 	if(m_StunTime <= 0.0f)

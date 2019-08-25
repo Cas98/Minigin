@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "BreakState.h"
 #include "GameObject.h"
-#include "GridComponent.h"
 #include "BlockScript.h"
 
 BreakState::BreakState(dae::GameObject* pBlock)

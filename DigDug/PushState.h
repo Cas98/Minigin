@@ -1,7 +1,7 @@
 #pragma once
 #include <State.h>
 
-class PushState : public dae::State
+class PushState final: public dae::State
 {
 public:
 	PushState(dae::GameObject* pPlayer, dae::GameObject* pGrid);

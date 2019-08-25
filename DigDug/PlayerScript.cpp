@@ -4,7 +4,7 @@
 #include "PlayerManagerScript.h"
 #include "InputComponent.h"
 
-PlayerScript::PlayerScript(dae::Direction direction, dae::GameObject* pPlayerManager, glm::vec2 spawnCoords)
+PlayerScript::PlayerScript(Direction direction, dae::GameObject* pPlayerManager, glm::vec2 spawnCoords)
 	:m_Direction(direction), m_pPlayerManager(pPlayerManager), m_SpawnCoords(spawnCoords)
 {
 
@@ -24,26 +24,26 @@ void PlayerScript::Update()
 	
 }
 
-dae::Direction PlayerScript::GetDirection() const
+Direction PlayerScript::GetDirection() const
 {
 	return m_Direction;
 }
 
-void PlayerScript::SetDirection(dae::Direction direction)
+void PlayerScript::SetDirection(Direction direction)
 {
 	m_Direction = direction;
 	switch(direction)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 			GetGameObject()->GetTransformComponent()->SetRotation(0);
 			break;
-	case dae::Direction::Up:
+	case Direction::Up:
 		GetGameObject()->GetTransformComponent()->SetRotation(180);
 		break;
-	case dae::Direction::Left:
+	case Direction::Left:
 		GetGameObject()->GetTransformComponent()->SetRotation(90);
 		break;
-	case dae::Direction::Right:
+	case Direction::Right:
 		GetGameObject()->GetTransformComponent()->SetRotation(270);
 		break;
 	}
@@ -52,7 +52,7 @@ void PlayerScript::SetDirection(dae::Direction direction)
 void PlayerScript::Kill()
 {
 	int playerIndex = GetGameObject()->GetComponent<dae::InputComponent>()->GetPlayerIndex();
-	m_pPlayerManager->GetComponent<PlayerManagerScript>()->RespawnPlayer(m_SpawnCoords.x, m_SpawnCoords.y,playerIndex);
+	m_pPlayerManager->GetComponent<PlayerManagerScript>()->RespawnPlayer(int(m_SpawnCoords.x), int(m_SpawnCoords.y),playerIndex);
 	GetGameObject()->Destroy();
 }
 

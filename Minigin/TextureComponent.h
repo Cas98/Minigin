@@ -14,14 +14,14 @@ namespace dae
 
 		SDL_Texture* GetSDLTexture() const;
 		void SetTexture(const std::string& filePath);
-		void SetTexture(SDL_Texture* texture);
+		void SetTexture(SDL_Texture* pTexture);
 
 		TextureComponent(const TextureComponent &) = delete;
 		TextureComponent(TextureComponent &&) = delete;
 		TextureComponent & operator= (const TextureComponent &) = delete;
 		TextureComponent & operator= (const TextureComponent &&) = delete;
 	private:
-		Texture2D* mTexture{nullptr};
+		Texture2D* m_pTexture{nullptr};
 	};
 }
 

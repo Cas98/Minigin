@@ -11,9 +11,9 @@ public:
 	virtual void Init() override;
 	virtual void Update() override;
 
-	void MoveBlock(const dae::Direction& newDirection);
+	void MoveBlock(const Direction& newDirection);
 
-	dae::Direction GetDirection() const;
+	Direction GetDirection() const;
 	bool AreDiamondsAligned();
 
 	void SetIsPushed(bool isPushed);
@@ -28,7 +28,7 @@ public:
 private:
 	bool IsObjectDiamond(glm::vec2 targetPos);
 
-	dae::Direction m_Direction;
+	Direction m_Direction;
 	bool m_IsPushed = false;
 	bool m_CanSpawnSnobee;
 	bool m_IsSnobeeAi;

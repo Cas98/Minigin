@@ -10,7 +10,7 @@
 GameScript::GameScript(int nextLevel, GameMode gameMode, dae::GameObject* pPlayerManager, dae::GameObject* pScore)
 	:m_Nextlevel(nextLevel), m_GameMode(gameMode)
 {
-	m_PlayerManagerRef = pPlayerManager->GetComponent<PlayerManagerScript>();
+	m_pPlayerManagerRef = pPlayerManager->GetComponent<PlayerManagerScript>();
 	m_pScore = pScore->GetComponent<ScoreScript>();
 }
 
@@ -20,12 +20,12 @@ GameScript::~GameScript()
 
 void GameScript::Init()
 {
-	m_InputRef = GetGameObject()->GetComponent<dae::InputComponent>();
+	m_pInputRef = GetGameObject()->GetComponent<dae::InputComponent>();
 }
 
 void GameScript::Update()
 {
-	if(m_InputRef->KeyboardPressed(27))
+	if(m_pInputRef->KeyboardPressed(27))
 	{
 		auto scene = dae::SceneManager::GetInstance().GetScene("PauseMenu");
 		if(scene)
@@ -44,7 +44,7 @@ void GameScript::Update()
 	}
 }
 
-void GameScript::OnNotify(dae::GameObject* gameObject, const std::string& message)
+void GameScript::OnNotify(dae::GameObject* , const std::string& message)
 {
 	if(message == "EndGame")
 	{
@@ -77,13 +77,13 @@ void GameScript::EndGame()
 		break;
 
 	case 2:
-		level = new Level2(m_GameMode, m_PlayerManagerRef->GetPlayerLives(), m_pScore->GetScore());
+		level = new Level2(m_GameMode, m_pPlayerManagerRef->GetPlayerLives(), m_pScore->GetScore());
 		dae::SceneManager::GetInstance().AddScene(level);
 		dae::SceneManager::GetInstance().SetActiveScene("Level2", true);
 		break;
 
 	case 3:
-		level = new Level3(m_GameMode, m_PlayerManagerRef->GetPlayerLives(), m_pScore->GetScore());
+		level = new Level3(m_GameMode, m_pPlayerManagerRef->GetPlayerLives(), m_pScore->GetScore());
 		dae::SceneManager::GetInstance().AddScene(level);
 		dae::SceneManager::GetInstance().SetActiveScene("Level3", true);
 		break;

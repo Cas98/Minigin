@@ -2,19 +2,21 @@
 #include <vector>
 #include "Observer.h"
 
-
-class Subject
+namespace dae
 {
-public:
-	Subject() = default;
-	~Subject() = default;
+	class Subject
+	{
+	public:
+		Subject() = default;
+		~Subject() = default;
 
-	void AddObserver(Observer* observer);
-	void RemoveObserver(Observer* observer);
+		void AddObserver(dae::Observer* observer);
+		void RemoveObserver(dae::Observer* observer);
 
-	void Notify(dae::GameObject* gameObject, const std::string& message);
+		void Notify(dae::GameObject* gameObject, const std::string& message);
 
-private:
-	std::vector<Observer*> m_pObservers;
-};
+	private:
+		std::vector<dae::Observer*> m_pObservers;
+	};
+}
 

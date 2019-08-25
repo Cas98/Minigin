@@ -3,7 +3,7 @@
 #include "Observer.h"
 #include "TextComponent.h"
 
-class ScoreScript final: public dae::ScriptComponent , public Observer
+class ScoreScript final: public dae::ScriptComponent , public dae::Observer
 {
 public:
 	ScoreScript();

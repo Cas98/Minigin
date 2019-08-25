@@ -5,6 +5,7 @@
 dae::GridComponent::GridComponent(int width, int height, float offset)
 	:BaseComponent(CompType::Grid),m_Offset(offset)
 {
+	//check if initializer values are valid
 	if(width <= 0)
 	{
 		std::cout << "ERROR: Grid component width 0 or negative set to 1\n";
@@ -23,7 +24,7 @@ dae::GridComponent::GridComponent(int width, int height, float offset)
 		m_Height = height;
 	}
 
-
+	//create gameobject pointers for grid
 	for(int w(0); w < m_Width; ++w)
 	{
 		std::vector<GameObject*> objects;
@@ -67,15 +68,11 @@ void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* p
 		return;
 	}
 
-	/*if(m_pGameObjects[width][height] != nullptr)
-	{
-		BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
-	}*/
 
-	//BaseComponent::GetGameObject()->AddChild(pGameObject);
+	//set gameobject
 	m_pGameObjects[width][height] = pGameObject;
 
-	//set pos gameobject
+	//set pos gameobject on grid if updatePos is true
 	if (updatePos)
 	{
 		auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
@@ -89,8 +86,9 @@ void dae::GridComponent::SetGameObject(int width, int height, dae::GameObject* p
 void dae::GridComponent::UpdatePos(GameObject* pGameObject)
 {
 	auto coords = GetGameObjectPos(pGameObject);
-	if(coords.x != -1 && coords.y != -1)
+	if(coords.x != -1 && coords.y != -1)//check if gameobject exists on grid
 	{
+		//set new position
 		auto newPos = BaseComponent::GetGameObject()->GetTransformComponent()->GetPosition();
 		newPos.x += m_Offset * coords.x;
 		newPos.y += m_Offset * coords.y;
@@ -107,7 +105,6 @@ void dae::GridComponent::RemoveGameObject(dae::GameObject* pGameObject)
 		{
 			if(pGameObject == m_pGameObjects[w][h])
 			{
-				//BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[w][h]);
 				m_pGameObjects[w][h] = nullptr;
 				return;
 			}
@@ -129,7 +126,6 @@ void dae::GridComponent::RemoveGameObject(int width, int height)
 		return;
 	}
 
-	//BaseComponent::GetGameObject()->RemoveChild(m_pGameObjects[width][height]);
 	m_pGameObjects[width][height] = nullptr;
 }
 

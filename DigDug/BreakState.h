@@ -1,6 +1,6 @@
 #pragma once
 #include <State.h>
-class BreakState : public dae::State
+class BreakState final: public dae::State
 {
 public:
 	BreakState(dae::GameObject* pBlock);
@@ -10,7 +10,7 @@ private:
 	void Enter();
 	void Exit() {};
 	void Update() {};
-	State* HandleInput(dae::InputComponent* input) { return nullptr; };
+	State* HandleInput(dae::InputComponent* ) { return nullptr; };
 
 	dae::GameObject* m_pBlockRef;
 };

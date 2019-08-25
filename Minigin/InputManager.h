@@ -61,7 +61,6 @@ namespace dae
 		//mouse
 		glm::vec2 GetMousePos() const;
 
-		//void MapKey(ControllerButton button, int keyboard, std::shared_ptr<Command> command, dae::KeyState executeState, int userIndex);
 		void HandleInput();
 
 	private:
@@ -73,13 +72,11 @@ namespace dae
 		bool WasKeyboardPressed(int keyboardCode) const;
 		bool IsKeyboardPressed(int keyboardCode) const;
 
-		//std::vector<KeyInfo> mMappings;
-
 		const int m_MaxUsers = 4;
-		std::vector <XINPUT_STATE> mGamepadState;
-		std::vector <XINPUT_STATE> mPrevGamepadState;
-		BYTE *mpKeyboardState, *mpPrevKeyboardState, *mpKeyboardState0, *mpKeyboardState1;
-		bool mKeyboardState0Active = true;
+		std::vector <XINPUT_STATE> m_GamepadState;
+		std::vector <XINPUT_STATE> m_PrevGamepadState;
+		BYTE *m_pKeyboardState, *m_pPrevKeyboardState, *m_pKeyboardState0, *m_pKeyboardState1;
+		bool m_KeyboardState0Active = true;
 	};
 
 }

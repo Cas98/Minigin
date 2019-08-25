@@ -8,7 +8,7 @@
 #pragma warning (disable:4291)
 
 
-void dae::Renderer::Initialize(SDL_Window * window, int startSize, int growSize)
+void dae::Renderer::Init(SDL_Window * window, int startSize, int growSize)
 {
 	m_GrowSize = growSize;
 
@@ -19,11 +19,14 @@ void dae::Renderer::Initialize(SDL_Window * window, int startSize, int growSize)
 	}
 	m_pWindow = window;
 
+
+	//create some render components
 	AddRenderComponents(startSize);
 }
 
 void dae::Renderer::Render()
 {
+	//sort render components based on depth
 	if(m_Sort)
 	{
 		std::sort(m_pActiveRenderComponents.begin(), m_pActiveRenderComponents.end(),
@@ -36,6 +39,7 @@ void dae::Renderer::Render()
 
 	SDL_RenderClear(mRenderer);
 
+	//render active render components
 	for (unsigned int i{ 0 }; i < m_pActiveRenderComponents.size(); ++i)
 	{
 		m_pActiveRenderComponents[i]->Render();
@@ -99,10 +103,12 @@ glm::vec2 dae::Renderer::GetWindowSize() const
 
 dae::RenderComponent* dae::Renderer::GetRenderComponent()
 {
+	//check if there are still nonactive render components if not create new ones
 	if (m_pNonActiveRenderComponents.size() <= 0) AddRenderComponents(m_GrowSize);
 
 	auto renderComp = m_pNonActiveRenderComponents[m_pNonActiveRenderComponents.size() - 1];
 
+	//put nonactive render component in active vector
 	m_pNonActiveRenderComponents.pop_back();
 	m_pActiveRenderComponents.push_back(renderComp);
 
@@ -110,11 +116,13 @@ dae::RenderComponent* dae::Renderer::GetRenderComponent()
 
 	m_Sort = true;
 
+	//return the render component
 	return renderComp;
 }
 
 void dae::Renderer::SendRenderComponent(RenderComponent* pRenderComponent)
 {
+	//send render component back to non active render vector
 	auto it = std::find(m_pActiveRenderComponents.begin(), m_pActiveRenderComponents.end(), pRenderComponent);
 
 	if(it != m_pActiveRenderComponents.end())
@@ -127,6 +135,7 @@ void dae::Renderer::SendRenderComponent(RenderComponent* pRenderComponent)
 
 void dae::Renderer::AddRenderComponents(int size)
 {
+	//create new render components and add them to non active render vector
 	for (int i{ 0 }; i < size; ++i)
 	{
 		m_pNonActiveRenderComponents.push_back((RenderComponent*) malloc(sizeof(RenderComponent)));
@@ -147,7 +156,7 @@ void dae::Renderer::SetActiveRenderBuffer(Scene* pOldScene, Scene* pNewScene)
 			itOld = m_ActiveRenderComponentsBuffers.find(pOldScene->GetName());
 		}
 
-		//transfer active components t buffer old scene 
+		//transfer active components t0 buffer old scene 
 		itOld->second = m_pActiveRenderComponents;
 	}
 
@@ -164,6 +173,7 @@ void dae::Renderer::SetActiveRenderBuffer(Scene* pOldScene, Scene* pNewScene)
 
 void dae::Renderer::RemoveRenderBuffer(dae::Scene* scene)
 {
+	//remove the render buffer for a scene
 	auto it = m_ActiveRenderComponentsBuffers.find(scene->GetName());
 	if (it != m_ActiveRenderComponentsBuffers.end())
 	{
@@ -173,6 +183,7 @@ void dae::Renderer::RemoveRenderBuffer(dae::Scene* scene)
 
 void dae::Renderer::AddActiveRenderBuffer(dae::Scene* scene)
 {
+	//add the render buffer for a scene
 	std::vector<RenderComponent*> buffer;
 	m_ActiveRenderComponentsBuffers.insert(std::pair<std::string, std::vector<RenderComponent*>>(scene->GetName(), buffer));
 }

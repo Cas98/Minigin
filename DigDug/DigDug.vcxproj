@@ -96,6 +96,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdParty\vld\include;$(SolutionDir)Minigin;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -114,6 +115,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
       <AdditionalIncludeDirectories>$(SolutionDir)Minigin;$(SolutionDir)3rdParty\glm;$(SolutionDir)3rdParty\SDL2_ttf\include;$(SolutionDir)3rdParty\SDL2\include;$(SolutionDir)3rdParty\SDL2_image\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -191,8 +193,6 @@
     <ClInclude Include="SnobeeManagerScript.h" />
     <ClInclude Include="SnobeeScript.h" />
     <ClInclude Include="StunState.h" />
-    <ClInclude Include="TestScene.h" />
-    <ClInclude Include="TestScript.h" />
     <ClInclude Include="BlockIdleSate.h" />
   </ItemGroup>
   <ItemGroup>
@@ -225,8 +225,6 @@
     <ClCompile Include="SnobeeManagerScript.cpp" />
     <ClCompile Include="SnobeeScript.cpp" />
     <ClCompile Include="StunState.cpp" />
-    <ClCompile Include="TestScene.cpp" />
-    <ClCompile Include="TestScript.cpp" />
     <ClCompile Include="BlockIdleSate.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -21,9 +21,9 @@ namespace dae
 		TextComponent & operator= (const TextComponent &&) = delete;
 
 	private:
-		bool mNeedsUpdate;
-		std::string mText;
-		Font* mFont;
+		bool m_NeedsUpdate;
+		std::string m_Text;
+		Font* m_pFont;
 		SDL_Color m_Color = {255,255,255};
 	};
 }

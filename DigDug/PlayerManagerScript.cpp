@@ -55,7 +55,7 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 		player->AddComponent(new dae::TextureComponent(path));
 
 		player->AddComponent(new dae::InputComponent(playerIndex));
-		player->AddComponent(new PlayerScript(dae::Direction::Up, GetGameObject(), {x,y}));
+		player->AddComponent(new PlayerScript(Direction::Up, GetGameObject(), {x,y}));
 		player->SetTag("Player");
 
 		auto playerFSM = new dae::FSMComponent(new IdleState(player, m_pGrid));
@@ -66,7 +66,7 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 		glm::vec2 coords{ x,y };
 		auto grid = m_pGrid->GetComponent<dae::GridComponent>();
 	
-		while(grid->GetGameObject(coords.x, coords.y) != nullptr)
+		while(grid->GetGameObject(int(coords.x), int(coords.y)) != nullptr)
 		{
 			if (coords.y < grid->GetHeight())
 			{
@@ -77,7 +77,7 @@ void PlayerManagerScript::RespawnPlayer(int x, int y, int playerIndex)
 				coords.x -= 1;
 			}
 		}
-		grid->SetGameObject(coords.x, coords.y, player);
+		grid->SetGameObject(int(coords.x), int(coords.y), player);
 	}
 	else//game lost
 	{

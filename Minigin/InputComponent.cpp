@@ -16,6 +16,7 @@ dae::InputComponent::InputComponent(int playerIndex)
 
 dae::InputComponent::~InputComponent()
 {
+	//delete mapped commands
 	for (size_t i{ 0 }; i < m_Mappings.size(); ++i)
 	{
 		delete m_Mappings[i].pCommand;
@@ -24,11 +25,24 @@ dae::InputComponent::~InputComponent()
 
 void dae::InputComponent::Update()
 {
+	//execute mapped commands (if key their mapped to is triggered)
 	for (size_t i{ 0 }; i < m_Mappings.size(); ++i)
 	{
 		if (GetGamepadKeyState(m_Mappings[i].button) == m_Mappings[i].executeState
 			|| GetKeyboardKeyState(m_Mappings[i].keyboard) == m_Mappings[i].executeState) m_Mappings[i].pCommand->Execute();
 	}
+}
+
+//Map keys to command
+void dae::InputComponent::MapKey(dae::ControllerButton button, int keyboard, Command* command, dae::KeyState executeState)
+{
+	KeyInfo keyInfo;
+	keyInfo.button = button;
+	keyInfo.keyboard = keyboard;
+	keyInfo.pCommand = command;
+	keyInfo.executeState = executeState;
+
+	m_Mappings.push_back(keyInfo);
 }
 
 //gamepad
@@ -81,17 +95,6 @@ bool dae::InputComponent::KeyboardUp(int keyboardCode) const
 dae::KeyState dae::InputComponent::GetKeyboardKeyState(int keyboardCode) const
 {
 	return dae::InputManager::GetInstance().GetKeyboardKeyState(keyboardCode);
-}
-
-void dae::InputComponent::MapKey(dae::ControllerButton button, int keyboard, Command* command, dae::KeyState executeState)
-{
-	KeyInfo keyInfo;
-	keyInfo.button = button;
-	keyInfo.keyboard = keyboard;
-	keyInfo.pCommand = command;
-	keyInfo.executeState = executeState;
-
-	m_Mappings.push_back(keyInfo);
 }
 
 glm::vec2 dae::InputComponent::GetMousePos() const

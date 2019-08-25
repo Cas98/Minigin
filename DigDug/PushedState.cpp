@@ -10,7 +10,7 @@
 #include "PlayerScript.h"
 #include "SubjectComponent.h"
 
-PushedState::PushedState(dae::GameObject* pBlock, dae::GameObject* pGrid, dae::Direction direction, bool firstMove)
+PushedState::PushedState(dae::GameObject* pBlock, dae::GameObject* pGrid, Direction direction, bool firstMove)
 	:m_pBlockRef(pBlock), m_pGridRef(pGrid), m_Direction(direction), m_FirstMove(firstMove)
 {
 }
@@ -24,22 +24,21 @@ PushedState::~PushedState()
 dae::State* PushedState::HandleInput(dae::InputComponent* )
 {
 	//get target position
-
 	auto gridcomp = m_pGridRef->GetComponent<dae::GridComponent>();
 	glm::vec2 coords = gridcomp->GetGameObjectPos(m_pBlockRef);
 
 	switch(m_Direction)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		coords.y -= 1;
 		break;
-	case dae::Direction::Up:
+	case Direction::Up:
 		coords.y += 1;
 		break;
-	case dae::Direction::Left:
+	case Direction::Left:
 		coords.x -= 1;
 		break;
-	case dae::Direction::Right:
+	case Direction::Right:
 		coords.x += 1;
 		break;
 	}

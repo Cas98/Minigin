@@ -3,7 +3,7 @@
 #include "GameObject.h"
 #include <thread>
 
-unsigned int dae::Scene::idCounter = 0;
+unsigned int dae::Scene::m_IdCounter = 0;
 
 dae::Scene::Scene(const std::string& name)
 : mName(name)
@@ -12,9 +12,9 @@ dae::Scene::Scene(const std::string& name)
 
 dae::Scene::~Scene()
 {
-	while(mObjects.size() > 0)
+	while(m_pObjects.size() > 0)
 	{
-		mObjects[0]->Destroy();
+		m_pObjects[0]->Destroy();
 	}
 
 	while (m_pObjectsThread.size() > 0)
@@ -28,7 +28,6 @@ dae::Scene::~Scene()
 void dae::Scene::Add(GameObject* object)
 {
 	object->SetScene(this);
-	//mObjects.push_back(object);
 	m_pAddedObjects.push_back(object);
 }
 
@@ -40,11 +39,12 @@ void dae::Scene::AddThreaded(GameObject* object)
 
 void dae::Scene::Remove(dae::GameObject* object)
 {
-	auto it = std::find(mObjects.begin(), mObjects.end(), object);
-	if (it != mObjects.end())
+	//add gameobject to the delete vector
+	auto it = std::find(m_pObjects.begin(), m_pObjects.end(), object);
+	if (it != m_pObjects.end())
 	{
 		m_pObjectsToDelete.push_back(*it);
-		mObjects.erase(it);
+		m_pObjects.erase(it);
 	}
 
 	it = std::find(m_pObjectsThread.begin(), m_pObjectsThread.end(), object);
@@ -67,27 +67,29 @@ void dae::Scene::RootInitialize()
 
 void dae::Scene::RootUpdate()
 {
+	//update objects on thread vector on different thread
 	auto threadUpdate = [](std::vector<GameObject*> pObjectsThread)
 	{
 		for (auto gameObject : pObjectsThread)
 		{
 			gameObject->Update();
-			//std::cout << "Update gameobject threaded" << std::endl;
 		}
 	};
 
 	std::thread thread(threadUpdate, m_pObjectsThread);
 
-	for(auto gameObject : mObjects)
+	//update gameobjects
+	for(auto gameObject : m_pObjects)
 	{
 		gameObject->Update();
-		//std::cout << "Update gameobject" << std::endl;
 	}
 
 	thread.join();
 
 	Update();
+	//delete the objects in the delete vector
 	DeleteObjects();
+	//add the objects from the add vector to active object list
 	AddObjects();
 }
 
@@ -112,7 +114,7 @@ void dae::Scene::AddObjects()
 {
 	for (size_t i{ 0 }; i < m_pAddedObjects.size(); ++i)
 	{
-		mObjects.push_back(m_pAddedObjects[i]);
+		m_pObjects.push_back(m_pAddedObjects[i]);
 	}
 
 	for (size_t i{ 0 }; i < m_pAddedObjectsThread.size(); ++i)

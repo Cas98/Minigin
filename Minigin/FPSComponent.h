@@ -18,8 +18,8 @@ namespace dae
 		FPSComponent& operator=(FPSComponent&& other) = delete;
 
 	private:
-		std::deque<float> mPrevDeltaTimes;
-		const int mAverageAmount = 20;
+		std::deque<float> m_PrevDeltaTimes;
+		const int m_AverageAmount = 20;
 	};
 }
 

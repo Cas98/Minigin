@@ -39,7 +39,7 @@ void SnobeeManagerScript::Update()
 				isAi = false;
 				m_IsNextSnobeePlayer = false;
 			}
-			SpawnSnobee(coords.x, coords.y, isAi);
+			SpawnSnobee(int(coords.x), int(coords.y), isAi);
 			m_NumberOfActiveSnobees++;
 			
 		}
@@ -76,7 +76,7 @@ void SnobeeManagerScript::SpawnSnobee(int x, int y, bool isAi)
 {
 	auto snobee = new dae::GameObject();
 	snobee->AddComponent(new dae::RenderComponent());
-	auto script = new SnobeeScript(dae::Direction::Up, GetGameObject(), isAi);
+	auto script = new SnobeeScript(Direction::Up, GetGameObject(), isAi);
 
 	std::string path{ "Images/Snobee.png" };
 	if (!script->GetIsAi()) path = "Images/SnobeeYellow.png";

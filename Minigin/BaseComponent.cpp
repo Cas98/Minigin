@@ -8,14 +8,14 @@ dae::BaseComponent::BaseComponent(CompType compType)
 }
 
 
-void dae::BaseComponent::SetGameObject(GameObject* object)
+void dae::BaseComponent::SetGameObject(GameObject* pObject)
 {
-	m_GameObject = object;
+	m_pGameObject = pObject;
 }
 
 dae::GameObject* dae::BaseComponent::GetGameObject() const
 {
-	return m_GameObject;
+	return m_pGameObject;
 }
 
 dae::CompType dae::BaseComponent::GetComponentType()

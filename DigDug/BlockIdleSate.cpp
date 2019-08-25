@@ -12,20 +12,19 @@ BlockIdleSate::BlockIdleSate(dae::GameObject* pBlock, dae::GameObject* pGrid)
 
 void BlockIdleSate::Enter()
 {
-	auto script = m_pBlockRef->GetComponent<BlockScript>();
+	m_pBlockScriptRef = m_pBlockRef->GetComponent<BlockScript>();
 
-	if(script)
+	if(m_pBlockScriptRef)
 	{
-		script->SetIsPushed(false);
+		m_pBlockScriptRef->SetIsPushed(false);
 	}
 
 	//check diamond alignment
 	if(m_pBlockRef->GetTag() == "Diamond")
 	{
-		//auto script = m_pBlockRef->GetComponent<BlockScript>();
-		if(script)
+		if(m_pBlockScriptRef)
 		{
-			if(script->AreDiamondsAligned())
+			if(m_pBlockScriptRef->AreDiamondsAligned())
 			{
 				std::cout << "Diamonds are aligned!!!" << std::endl;
 				m_pBlockRef->GetComponent<dae::SubjectComponent>()->Notify(m_pBlockRef, "DiamondsAligned");//add score for aligning diamonds
@@ -40,12 +39,7 @@ void BlockIdleSate::Enter()
 
 void BlockIdleSate::Exit()
 {
-	/*auto script = m_pBlockRef->GetComponent<BlockScript>();
 
-	if (script)
-	{
-		script->GetSubject()->RemoveObserver(this);
-	}*/
 }
 
 void BlockIdleSate::Update()
@@ -55,11 +49,10 @@ void BlockIdleSate::Update()
 
 dae::State* BlockIdleSate::HandleInput(dae::InputComponent* )
 {
-	auto script = m_pBlockRef->GetComponent<BlockScript>();
-	if(script->GetIsPushed())
+	if(m_pBlockScriptRef->GetIsPushed())
 	{
 		//pushed state
-		return new PushedState(m_pBlockRef,m_pGridRef, m_pBlockRef->GetComponent<BlockScript>()->GetDirection(), true);
+		return new PushedState(m_pBlockRef,m_pGridRef, m_pBlockScriptRef->GetDirection(), true);
 	}
 
 	return nullptr;

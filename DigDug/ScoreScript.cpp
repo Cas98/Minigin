@@ -32,7 +32,7 @@ void ScoreScript::AddScore(int score)
 	m_NeedsUpdate = true;
 }
 
-void ScoreScript::OnNotify(dae::GameObject* gameObject, const std::string& message)
+void ScoreScript::OnNotify(dae::GameObject* , const std::string& message)
 {
 	if(message == "BreakWall")
 	{

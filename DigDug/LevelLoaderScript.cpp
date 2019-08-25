@@ -9,8 +9,6 @@
 #include "RenderComponent.h"
 #include "GameObject.h"
 #include "FSMComponent.h"
-#include "SnobeeIdleState.h"
-#include "SnobeeScript.h"
 #include "PlayerManagerScript.h"
 #include "IdleState.h"
 #include "PlayerScript.h"
@@ -152,21 +150,6 @@ void LevelLoaderScript::AddWall(int x, int y, dae::GameObject* pGrid, dae::GameO
 	wall->AddComponent(new dae::TextureComponent(path));
 }
 
-//void LevelLoaderScript::AddSnobee(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager)
-//{
-//	auto snobee = new dae::GameObject();
-//	snobee->AddComponent(new dae::RenderComponent());
-//	snobee->AddComponent(new dae::TextureComponent("Images/Snobee.png"));
-//	snobee->AddComponent(new SnobeeScript(dae::Direction::Up, pSnobeeManager));
-//	snobee->SetTag("Snobee");
-//
-//	auto snobeeFSM = new dae::FSMComponent(new SnobeeIdleState(snobee, pGrid));
-//	snobee->AddComponent(snobeeFSM);
-//
-//	GetGameObject()->GetScene()->Add(snobee);
-//	pGrid->GetComponent<dae::GridComponent>()->SetGameObject(x, y, snobee);
-//}
-
 void LevelLoaderScript::AddDiamond(int x, int y, dae::GameObject* pGrid, dae::GameObject* pSnobeeManager, dae::GameObject* pScore)
 {
 	auto diamond = new dae::GameObject();
@@ -196,7 +179,7 @@ void LevelLoaderScript::AddPlayer(int x, int y, dae::GameObject* pGrid, dae::Gam
 	player->AddComponent(new dae::TextureComponent(path));
 
 	player->AddComponent(new dae::InputComponent(playerIndex));
-	player->AddComponent(new PlayerScript(dae::Direction::Up, pPlayerManager,{x,y}));
+	player->AddComponent(new PlayerScript(Direction::Up, pPlayerManager,{x,y}));
 	player->SetTag("Player");
 
 	auto subjectComp = new dae::SubjectComponent();

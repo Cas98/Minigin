@@ -27,12 +27,6 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TestScript.h">
-      <Filter>Source Files\scripts</Filter>
-    </ClInclude>
-    <ClInclude Include="TestScene.h">
-      <Filter>Source Files\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Level1.h">
       <Filter>Source Files\Scenes</Filter>
     </ClInclude>
@@ -110,14 +104,8 @@
     <ClCompile Include="pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TestScript.cpp">
-      <Filter>Source Files\scripts</Filter>
-    </ClCompile>
     <ClCompile Include="Pengo.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="TestScene.cpp">
-      <Filter>Source Files\Scenes</Filter>
     </ClCompile>
     <ClCompile Include="Level1.cpp">
       <Filter>Source Files\Scenes</Filter>

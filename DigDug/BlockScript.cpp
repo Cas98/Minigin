@@ -12,13 +12,11 @@
 BlockScript::BlockScript(dae::GameObject* pGrid, dae::GameObject* pSnobeeManger, bool canSpawnSnobee, bool isSnobeeAi)
 	:m_CanSpawnSnobee(canSpawnSnobee), m_pSnobeeManager(pSnobeeManger), m_IsSnobeeAi(isSnobeeAi)
 {
-	//m_pSubject = new Subject();
 	m_pGridCompRef = pGrid->GetComponent<dae::GridComponent>();
 }
 
 BlockScript::~BlockScript()
 {
-	//delete m_pSubject;
 }
 
 void BlockScript::Init()
@@ -38,21 +36,19 @@ void BlockScript::Update()
 	}
 }
 
-void BlockScript::MoveBlock(const dae::Direction& newDirection)
+void BlockScript::MoveBlock(const Direction& newDirection)
 {
 	m_Direction = newDirection;
-	//m_pSubject->Notify("Move");
 	SetIsPushed(true);
 }
 
-dae::Direction BlockScript::GetDirection() const
+Direction BlockScript::GetDirection() const
 {
 	return m_Direction;
 }
 
 bool BlockScript::AreDiamondsAligned()
 {
-	//auto gridComp = pGrid->GetComponent<dae::GridComponent>();
 	auto gridCoords = m_pGridCompRef->GetGameObjectPos(GetGameObject());
 	std::vector<glm::vec2> directions = { {1,0},{0,1},{-1,0},{0,-1} };
 

@@ -21,8 +21,8 @@ namespace dae
 		void Destroy();
 
 	private:
-		std::vector<Scene*> mScenes;
-		Scene* mpActiveScene;
+		std::vector<Scene*> m_pScenes;
+		Scene* m_pActiveScene;
 		Scene* m_pSceneToRemove = nullptr;
 	};
 

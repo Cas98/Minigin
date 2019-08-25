@@ -14,13 +14,13 @@ dae::FPSComponent::FPSComponent()
 void dae::FPSComponent::Update()
 {
 	//update queue
-	if (mPrevDeltaTimes.size() > size_t(mAverageAmount))mPrevDeltaTimes.pop_back();
-	mPrevDeltaTimes.push_front(Time::GetInstance().GetDeltaTime());
+	if (m_PrevDeltaTimes.size() > size_t(m_AverageAmount))m_PrevDeltaTimes.pop_back();
+	m_PrevDeltaTimes.push_front(Time::GetInstance().GetDeltaTime());
 
 	//get average time
 	float averageTime = 0.0f;
-	std::for_each(mPrevDeltaTimes.begin(), mPrevDeltaTimes.end(), [&averageTime](float time) {averageTime += time; });
-	averageTime /= mPrevDeltaTimes.size();
+	std::for_each(m_PrevDeltaTimes.begin(), m_PrevDeltaTimes.end(), [&averageTime](float time) {averageTime += time; });
+	averageTime /= m_PrevDeltaTimes.size();
 
 	//print FPS
 	std::string str;

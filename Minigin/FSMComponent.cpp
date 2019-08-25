@@ -16,6 +16,7 @@ dae::FSMComponent::~FSMComponent()
 
 void dae::FSMComponent::Init()
 {
+	//Get input component
 	m_pInputRef = GetGameObject()->GetComponent<dae::InputComponent>();
 
 	if(m_pInputRef == nullptr)
@@ -23,6 +24,7 @@ void dae::FSMComponent::Init()
 		std::cout << "ERROR: FSM can't find input component\n";
 	}
 
+	//enter the start state
 	m_pCurrentState->Enter();
 }
 

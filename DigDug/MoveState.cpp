@@ -8,21 +8,21 @@
 #include "SnobeeIdleState.h"
 
 
-MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, dae::Direction dir, float speed)
+MoveState::MoveState(dae::GameObject* pPlayer, dae::GameObject* pGrid, Direction dir, float speed)
 	:m_pPlayerRef(pPlayer), m_pGridRef(pGrid), m_Direction(dir), m_Speed(speed)
 {
 	switch(dir)
 	{
-	case dae::Direction::Down:
+	case Direction::Down:
 		m_DirectionCoord = { 0,-1 };
 		break;
-	case dae::Direction::Up:
+	case Direction::Up:
 		m_DirectionCoord = { 0,1 };
 		break;
-	case dae::Direction::Right:
+	case Direction::Right:
 		m_DirectionCoord = { 1,0 };
 		break;
-	case dae::Direction::Left:
+	case Direction::Left:
 		m_DirectionCoord = { -1,0 };
 		break;
 	}
@@ -36,9 +36,6 @@ MoveState::~MoveState()
 
 void MoveState::Enter()
 {
-	//std::cout << "Enter move state" << std::endl;
-
-
 	//get offset from grid component
 	m_Offset = m_pGridRef->GetComponent<dae::GridComponent>()->GetOffset();
 
@@ -47,14 +44,11 @@ void MoveState::Enter()
 	glm::vec2 coords = gridcomp->GetGameObjectPos(m_pPlayerRef);
 	gridcomp->RemoveGameObject(int(coords.x), int(coords.y));
 	coords += m_DirectionCoord;
-	gridcomp->SetGameObject(coords.x, coords.y, m_pPlayerRef, false);
-	//std::cout << "Player coords: " << coords.x << ", " << coords.y << std::endl;
+	gridcomp->SetGameObject(int(coords.x), int(coords.y), m_pPlayerRef, false);
 }
 
 void MoveState::Exit()
 {
-	//std::cout << "Exit move state" << std::endl;
-
 	m_pGridRef->GetComponent<dae::GridComponent>()->UpdatePos(m_pPlayerRef);
 }
 

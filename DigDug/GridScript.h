@@ -8,8 +8,8 @@ public:
 	GridScript();
 	~GridScript();
 
-	void ActivateWall(dae::Direction direction);
-	bool IsWallActive(dae::Direction direction);
+	void ActivateWall(Direction direction);
+	bool IsWallActive(Direction direction);
 	void ActivateStars();
 
 private:

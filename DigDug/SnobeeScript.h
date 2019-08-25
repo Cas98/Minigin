@@ -4,17 +4,17 @@
 #include "Subject.h"
 #include "SnobeeManagerScript.h"
 
-class SnobeeScript final: public dae::ScriptComponent, public Observer
+class SnobeeScript final: public dae::ScriptComponent, public dae::Observer
 {
 public:
-	SnobeeScript(dae::Direction direction, dae::GameObject* pSnobeeManger, bool isAi = true);
+	SnobeeScript(Direction direction, dae::GameObject* pSnobeeManger, bool isAi = true);
 	~SnobeeScript();
 
 	virtual void Init() override;
 	virtual void Update() override;
 
-	dae::Direction GetDirection() const;
-	void SetDirection(dae::Direction direction);
+	Direction GetDirection() const;
+	void SetDirection(Direction direction);
 
 	void SetRandomDirChange();
 	void DecrementRandomDirChange();
@@ -30,7 +30,7 @@ public:
 	void OnNotify(dae::GameObject* gameObject, const std::string& message) override;
 
 private:
-	dae::Direction m_Direction;
+	Direction m_Direction;
 	int m_RandomDirChange;
 
 	bool m_IsPushed = false;

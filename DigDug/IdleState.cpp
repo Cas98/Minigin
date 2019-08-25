@@ -25,12 +25,10 @@ IdleState::~IdleState()
 
 void IdleState::Enter()
 {
-	std::cout << "Enter idle state" << std::endl;
 }
 
 void IdleState::Exit()
 {
-	std::cout << "Exit idle state" << std::endl;
 }
 
 void IdleState::Update()
@@ -69,23 +67,11 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 	//enter push state
 	if (input->KeyboardPressed(pushKey) || input->GamepadDown(dae::ControllerButton::ButtonA))
 	{
-		/*auto obj = gridComp->GetGameObject(coords.x + 1, coords.y );
-		if (obj)
-		{
-			if (obj->GetTag() == "Wall")
-			{
-				auto script = obj->GetComponent<BlockScript>();
-				if (script)
-				{
-					script->MoveBlock(dae::Direction::Right);	
-				}
-			}
-		}*/
 		//check if player activates wall
-		if (coords.x == 0 && currentPlayerDir == dae::Direction::Left) gridScript->ActivateWall(dae::Direction::Left);
-		if (coords.x == width - 1 && currentPlayerDir == dae::Direction::Right) gridScript->ActivateWall(dae::Direction::Right);
-		if (coords.y == 0 && currentPlayerDir == dae::Direction::Down) gridScript->ActivateWall(dae::Direction::Down);
-		if (coords.y == height - 1 && currentPlayerDir == dae::Direction::Up) gridScript->ActivateWall(dae::Direction::Up);
+		if (coords.x == 0 && currentPlayerDir == Direction::Left) gridScript->ActivateWall(Direction::Left);
+		if (coords.x == width - 1 && currentPlayerDir == Direction::Right) gridScript->ActivateWall(Direction::Right);
+		if (coords.y == 0 && currentPlayerDir == Direction::Down) gridScript->ActivateWall(Direction::Down);
+		if (coords.y == height - 1 && currentPlayerDir == Direction::Up) gridScript->ActivateWall(Direction::Up);
 
 		return new PushState(m_pPlayerRef, m_pGridRef);
 	}
@@ -94,24 +80,16 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 	if(input->KeyboardDown(moveUp) || input->GamepadDown(dae::ControllerButton::DpadUp))
 	{
 		//std::cout << "W pressed" << std::endl;
-		scriptComp->SetDirection(dae::Direction::Up);
+		scriptComp->SetDirection(Direction::Up);
 
 		if(coords.y < height - 1)
 		{
-			//bool canMove = true;
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x, coords.y + 1);
-			/*if (obj)
-			{
-				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond" || obj->GetTag() == "Snobee")
-				{
-					canMove = false;
-				}
-			}*/
+			auto obj = gridComp->GetGameObject(int(coords.x), int (coords.y + 1));
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
+				return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Up, 96.0f);
 			}
 			else if(obj->GetTag() == "Snobee")
 			{
@@ -119,7 +97,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
-					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Up, 96.0f);
+					return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Up, 96.0f);
 				}
 				else
 				{
@@ -132,25 +110,16 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 	if (input->KeyboardDown(moveLeft) || input->GamepadDown(dae::ControllerButton::DpadLeft))
 	{
-		//std::cout << "A pressed" << std::endl;
-		scriptComp->SetDirection(dae::Direction::Left);
+		scriptComp->SetDirection(Direction::Left);
 
 		if (coords.x > 0)
 		{
-			//bool canMove = true;
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x - 1, coords.y);
-			/*if (obj)
-			{
-				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
-				{
-					canMove = false;
-				}
-			}*/
+			auto obj = gridComp->GetGameObject(int(coords.x - 1), int(coords.y));
 
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
+				return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Left, 96.0f);
 			}
 			else if (obj->GetTag() == "Snobee")
 			{
@@ -158,7 +127,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
-					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Left, 96.0f);
+					return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Left, 96.0f);
 				}
 				else
 				{
@@ -171,24 +140,16 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 	if (input->KeyboardDown(moveDown) || input->GamepadDown(dae::ControllerButton::DpadDown))
 	{
-		//std::cout << "S pressed" << std::endl;
-		scriptComp->SetDirection(dae::Direction::Down);
+		scriptComp->SetDirection(Direction::Down);
 		
 		if (coords.y > 0)
 		{
-			//bool canMove = true;
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x, coords.y - 1);
-			/*if (obj)
-			{
-				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
-				{
-					canMove = false;
-				}
-			}*/
+			auto obj = gridComp->GetGameObject(int(coords.x), int(coords.y - 1));
+	
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
+				return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Down, 96.0f);
 			}
 			else if (obj->GetTag() == "Snobee")
 			{
@@ -196,7 +157,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
-					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Down, 96.0f);
+					return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Down, 96.0f);
 				}
 				else
 				{
@@ -209,24 +170,16 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 
 	if (input->KeyboardDown(moveRight) || input->GamepadDown(dae::ControllerButton::DpadRight))
 	{
-		//std::cout << "D pressed" << std::endl;
-		scriptComp->SetDirection(dae::Direction::Right);
+		scriptComp->SetDirection(Direction::Right);
 		
 		if (coords.x < width - 1)
 		{
-			//bool canMove = true;
 			//check for wall
-			auto obj = gridComp->GetGameObject(coords.x + 1, coords.y);
-			/*if (obj)
-			{
-				if (obj->GetTag() == "Wall" || obj->GetTag() == "Diamond")
-				{
-					canMove = false;
-				}
-			}*/
+			auto obj = gridComp->GetGameObject(int(coords.x + 1), int(coords.y));
+			
 			if (obj == nullptr)
 			{
-				return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
+				return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Right, 96.0f);
 			}
 			else if (obj->GetTag() == "Snobee")
 			{
@@ -234,7 +187,7 @@ dae::State* IdleState::HandleInput(dae::InputComponent* input)
 				{
 					obj->GetComponent<SnobeeScript>()->Kill();
 					m_pPlayerRef->GetComponent<dae::SubjectComponent>()->Notify(m_pPlayerRef, "KillStunnedSnobee");//add score for killing stunned snobee
-					return new MoveState(m_pPlayerRef, m_pGridRef, dae::Direction::Right, 96.0f);
+					return new MoveState(m_pPlayerRef, m_pGridRef, Direction::Right, 96.0f);
 				}
 				else
 				{

@@ -110,7 +110,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\vld\lib\Win32\vld_x86.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\vld\lib\Win32\dbghelp.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\vld\lib\Win32\Microsoft.DTfW.DHL.manifest" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\vld\lib\Win32\Microsoft.DTfW.DHL.manifest" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data" "$(OutputPath)..\Data" /R /Y/E/I</Command>
     </PostBuildEvent>
     <ProjectReference>
       <LinkLibraryDependencies>false</LinkLibraryDependencies>
@@ -143,7 +144,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\vld\lib\Win64\vld_x64.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\vld\lib\Win64\dbghelp.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\vld\lib\Win64\Microsoft.DTfW.DHL.manifest" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\vld\lib\Win64\Microsoft.DTfW.DHL.manifest" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data" "$(OutputPath)..\Data" /R /Y/E/I</Command>
     </PostBuildEvent>
     <Lib>
       <AdditionalLibraryDirectories>$(SolutionDir)3rdParty\vld\lib\Win64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
@@ -174,7 +176,8 @@ xcopy "$(SolutionDir)3rdParty\vld\lib\Win64\Microsoft.DTfW.DHL.manifest" "$(Outp
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\x86\SDL2.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x86\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data" "$(OutputPath)..\Data" /R /Y/E/I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -202,7 +205,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x86\*.dll" "$(OutputPath)" /R /Y</Com
     <PostBuildEvent>
       <Command>xcopy "$(SolutionDir)3rdParty\SDL2\lib\x64\SDL2.dll" "$(OutputPath)" /R /Y
 xcopy "$(SolutionDir)3rdParty\SDL2_image\lib\x64\*.dll" "$(OutputPath)" /R /Y
-xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Command>
+xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y
+xcopy "$(SolutionDir)Data" "$(OutputPath)..\Data" /R /Y/E/I</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
